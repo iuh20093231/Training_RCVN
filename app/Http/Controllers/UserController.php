@@ -15,8 +15,10 @@ class UserController extends Controller
     public function index()
     {
         $tittle = 'User';
-        $user = User::where('is_delete', 0)->orderByDesc('created_at');
-        return view('users.index',compact("tittle","user"));
+        $query = User::query();
+        //return view('users.index',compact("tittle"));
+        $users = $query->where('is_delete',0)->orderBy('created_at', 'desc')->paginate(20);
+        return view('users.index', compact('tittle','users'));
 
     }
     // Lấy dữ liệu json của người dùng
@@ -41,8 +43,13 @@ class UserController extends Controller
                 $query->where('is_active', $request->is_active);
             }
 
-            $users = $query->orderBy('created_at', 'desc')->paginate(20);
-
+            $users = $query->where('is_delete',0)->orderBy('created_at', 'desc')->paginate(20);;
+           // if ($users->count() > 20) {
+              //  $users = $query->paginate(20);
+              //  $pagination = true;
+            //} else {
+            //    $pagination = false;
+           // }
             return response()->json($users);
 
         } catch (\Exception $e) {
@@ -127,12 +134,24 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $user = User::find($id);
-        $user->update(['is_delete' => 1]);
-        if (auth()->id() == $user->id) {
-            auth()->logout();
-            return redirect()->route('login')->with('error', 'Tài khoản của bạn đã bị xóa. Liên hệ admin để làm rõ.');
+        $user = User::findOrFail($id);
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
         }
-        return redirect()->route('users.index')->with('success', 'Người dùng đã được đánh dấu là đã xóa.');
+        $user->is_delete = 1;
+        $user->save();
+
+        return response()->json(['message' => 'User deleted successfully']);
+    }
+    public function updateStatus($id)
+    {
+        $user = User::find($id);
+
+        if ($user->is_active == 1) {
+            $user->update(['is_active' => 0]);
+        } else {
+            $user->update(['is_active' => 1]);
+        }
+        return response()->json(['message' => 'Thành viên đã được khóa/mở khóa thành công!']);
     }
 }

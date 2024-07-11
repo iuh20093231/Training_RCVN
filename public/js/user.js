@@ -1,8 +1,10 @@
 $(document).ready(function(){
-    var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-    var formData = new FormData();
-    formData.append('_method', 'DELETE');
-    formData.append('_token', csrfToken);
+    var csrfToken = $('meta[name="csrf-token"]').attr('content');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': csrfToken
+        }
+    });
     function loadUser(page){
         const data = {
             name: $('#name').val(),
@@ -32,14 +34,11 @@ $(document).ready(function(){
                         let statusText;
                         switch(user.is_active) {
                             case 0:
-                                statusText = '<td class="text-danger">Không hoạt động</td>';
+                                statusText = '<td class="text-danger">Tạm khóa</td>';
         
                                 break;
                             case 1:
                                 statusText = '<td class="text-success">Đang hoạt động</td>';
-                                break;
-                            case 2:
-                                statusText = '<td class="text-danger">Tạm khóa</td>';
                                 break;
                             default:
                                 statusText = 'Không xác định';
@@ -47,11 +46,11 @@ $(document).ready(function(){
                         }                               // Index phân trang 10
                         userTable.append(`<tr><td>${index + 1 + (page - 1) * 20}</td><td>${user.name}</td><td>${user.email}</td><td>${user.group_role}</td>${statusText}<td>
                             <a href="/users/${user.id}/edit" class="update mr-1"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                            <button type="submit" id="buttonDelete" class="btn btn-delete delete" data-toggle="modal" data-target="#myModal"><i class="fa fa-trash" aria-hidden="true"></i></button>
-                            <a href="#" class="deloy  mr-1"><i class="fa fa-user-times" aria-hidden="true"></i></a>
+                            <button  class="btn delete mr-1 deleteUser" data-id="${user.id}" data-name="${user.name}"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                            <button  class="btn deloy  mr-1 lockUpUser" data-id="${user.id}" data-name="${user.name}" data-status="${user.is_active}"><i class="fa fa-user-times" aria-hidden="true"></i></button>
                             </td></tr>`);
                     });
-                    if(users.length >= 20){
+                    // if(response.pagination == true){
                         for (let i = 1; i <= response.last_page; i++) {
                             let activeClass = (i === response.current_page) ? 'active' : '';
                             pagination1.append(`
@@ -64,9 +63,9 @@ $(document).ready(function(){
                         $('.page-link').on('click', function(e) {
                             e.preventDefault();
                             let page = $(this).text();
-                            loadUsers(page);
+                            loadUser(page);
                         }); 
-                    }
+                    // } 
                     
                 }
             },
@@ -94,5 +93,66 @@ $(document).ready(function(){
         loadUser(1); // Gọi lại hàm loadUsers để load lại danh sách người dùng ban đầu
     });
     loadUser(1);
-    
+    // Delete Người dùng
+    $(document).on('click', '.deleteUser', function() {
+        var userID = $(this).data('id');
+        var userName = $(this).data('name');
+        $('#user-name-to-delete').text(userName);
+        $('#user-id-to-delete').text(userID);
+        $('#myModal').modal('show');
+    });
+    $(document).on('click','#btn-delete',function(){
+        var userId = $('#user-id-to-delete').text();
+        $.ajax({
+            url: '/users/'+userId,
+            method: 'DELETE',
+            success: function(response){
+                if(response.message === 'User deleted successfully'){
+                    // xóa 
+                    $(this).closest('tr').remove();
+                    // Hiển thị thông báo thành công
+                    alert('Xóa thành công');
+                    $('#myModal').modal('hide');
+                    loadUser(1);
+                }else{
+                    alert('Xóa thất bại!');
+                }
+            },
+            error: function(error) {
+                console.error(error);
+                alert('Error deleting user');
+            }
+        });
+    });
+    // Khóa/ Mở người dùng
+    $(document).on('click','.lockUpUser',function(){
+        var userID = $(this).data('id');
+        var userName = $(this).data('name');
+        var isActive = $(this).data('status');
+        $('#user-name-to-lock').text(userName);
+        $('#user-id-to-lock').text(userID);
+        $('#status').text(isActive);
+        $('#lockUser').modal('show');
+    });
+    $(document).on('click','#btn-lock',function(){
+        var userId = $('#user-id-to-lock').text();
+        var status = $('#status').text();
+        $.ajax({
+            url: '/users/'+userId+'/updatestatus',
+            method: 'POST',
+            data: {
+                is_active: status
+            },
+            success: function(response){
+                if(response.message === 'Thành viên đã được khóa/mở khóa thành công!'){
+                    alert('Thành viên đã được khóa/mở khóa thành công!');
+                    $('#lockUser').modal('hide');
+                    loadUser(1);
+                }else{
+                    alert('Thất bại');
+                }
+            }
+        });
+    });
+
 });

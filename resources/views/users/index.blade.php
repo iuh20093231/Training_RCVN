@@ -2,72 +2,18 @@
 <body>
     
     <div class="container">
-            <div class="header mt-1 row">
-                <div class="col-lg-9 col-xs-12 menu">
-                        <ul id="nav" class="nav nav-pills" role="tablist">
-                            <li class="nav-item">
-                                <a href="{{ route('product.index') }}" class="nav-link" >Sản phẩm</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('custormer.index') }}" class="nav-link ">Khách hàng</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('users.index') }}" class="nav-link active">User</a>
-                            </li>
-                        </ul>
-                </div>
-                <div class="col-lg-3 col-xs-12 admin pl-5">
-                    <i class="fa fa-user-circle-o" aria-hidden="true"></i>
-                    <p class="p">ADMIN</p>
-                </div>
-            </div>
+        @include('users.navbar')
             <div class="row tittle pt-2">
                 <p class="float-left col-10 pl-0">User</p>
             </div>
-            <form class=" row form mt-2 float-left" id="search-form">
-                    <div class="col-lg-3 form-group search-name float-left">
-                        <label for="name">Tên</label>
-                        <input type="text" name="name" id="name" placeholder="Nhập họ tên" class="form-control">
-                    </div>
-                    <div class="col-lg-3 form-group search-name float-left pl-5">
-                        <label for="email">Email</label>
-                        <input type="text" name="email" id="email" placeholder="Nhập email" class="form-control">
-                    </div>
-                    <div class="col-lg-3 form-group search-name float-left pl-5">
-                        <label for="group_role">Nhóm</label>
-                        <select name="group_role" id="group_role" class="form-control" style="width:200px;">
-                            <option value="">Chọn nhóm</option>
-                            <option value="Reviewer">Reviewer</option>
-                            <option value="Admin">Admin</option>
-                            <option value="Editor">Editor</option>
-                        </select> 
-                    </div>
-                    <div class="col-lg-3 form-group search-name float-left pl-5">
-                        <label for="is_active">Trạng thái</label>
-                        <select name="is_active" id="is_active" class="form-control" style="width:200px;">
-                            <option value="">Chọn trạng thái</option>
-                            <option value="0">Không hoạt động</option>
-                            <option value="1">Đang hoạt động</option>
-                            <option value="2">Tạm khóa</option>
-                        </select> 
-                    </div>
-                <div class="add-product pl-0">
-                        <i class="fa fa-user-plus user-plus" aria-hidden="true"></i>
-                        <button type="submit" id="add" name="add" class="btn btn-primary"><a href="{{ route('users.create') }}" class="add-a">Thêm mới</a></button>  
-                </div>
-                <div class="ml-5">
-                        <button type="submit" class="btn btn-search btn-primary" id="search"><i class="fa fa-search" aria-hidden="true"> Tìm kiếm</i></button>
-                </div>
-                <div class="ml-5">
-                        <button type="submit" class="btn btn-search btn-success" id="clear-search" ><i class="fa fa-times" aria-hidden="true">  Xóa tìm</i></button>
-                </div>
-            </form>
-            <div class="row text-center">
-                <nav class="mt-2">
+            @include('users.search')
+            <div class="row">
+                <nav class="col-lg-7 mt-2 p-0">
                     <ul class="pagination" id="pagination1">
                         <!-- Phân trang sẽ được thêm vào đây -->
                     </ul>
                 </nav>
+                <p class="col-lg-5 pl-5 text-center mt-2" style="font-size: 14px;">Hiển thị từ {{ $users->firstItem() }} đến {{ $users->lastItem() }} trong tổng số <strong>{{ $users->total() }}</strong> người dùng</p>
             </div>
             <div class="row mt-2" id="users-table">
                 <table class="table table-striped">
@@ -87,7 +33,7 @@
                   </table>
             </div>
             <div class="row mt-2 text-center">
-                <nav>
+                <nav >
                     <ul class="pagination" id="pagination2">
                         <!-- Phân trang sẽ được thêm vào đây -->
                     </ul>
@@ -95,36 +41,38 @@
             </div>
     </div>
     {{-- Modal Xóa thành viên --}}
-    <div class="modal fade" id="myModal">
-        <div class="modal-dialog">
-          <div class="modal-content">
-      
-            <!-- Modal Header -->
-            <div class="modal-header">
-              <h4 class="modal-title">Xác nhận xóa</h4>
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-      
-            <!-- Modal body -->
-            <div class="modal-body">
-                Bạn có chắc chắn muốn xóa user này không?
-            </div>
-      
-            <!-- Modal footer -->
-            <div class="modal-footer">
-            {{-- <form action="{{ route('users.destroy',$user) }}" method="POST">
-                @csrf
-                @method('DELETE') --}}
-              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-danger" id="confirmDeleteBtn">Xóa</button>
-            {{-- </form> --}}
-            </div>
-      
-          </div>
+    <div class='modal fade' id='myModal' role='dialog' aria-label='resultModalLabel'  aria-hidden='true'>
+        <div class='modal-dialog modal-dialog-centered'>
+            <div class='modal-content min-h-65'>
+                <div class='modal-body text-center'>
+                    <div class='icon-status mt-2 p-5'>     
+                        <i class="fa fa-exclamation-triangle text-warning " aria-hidden="true" style="font-size: 70px;"></i>
+                        <h3 class='text-danger mt-2'>Nhắc nhở</h3>
+                        <p class="p">Bạn có chắc muốn xóa người dùng <span id="user-name-to-delete"></span><span id="user-id-to-delete" style="display: none;"></span> này không?</p>
+                    </div>
+                        <input type='button' class='btn btn-dark mb-3' data-dismiss='modal' value='Hủy'>
+                        <input type='button' class='btn btn-danger mb-3' id="btn-delete" value='Okay'>
+                    </div>
+             </div>
         </div>
-      </div>   
+    </div>
+    {{-- Modal khóa người dùng --}}
+    <div class='modal fade' id='lockUser' role='dialog' aria-label='resultModalLabel'  aria-hidden='true'>
+        <div class='modal-dialog modal-dialog-centered'>
+            <div class='modal-content min-h-65'>
+                <div class='modal-body text-center'>
+                    <div class='icon-status mt-2 p-5'>     
+                        <i class="fa fa-lock text-warning" aria-hidden="true" style="font-size: 70px;"></i>
+                        <h3 class='text-danger mt-2'>Nhắc nhở</h3>
+                        <p class="p">Bạn có chắc muốn khóa/mở khóa người dùng <span id="user-name-to-lock"></span><span id="user-id-to-lock" style="display: none;"></span><span id="status" style="display: none;"></span>  này không?</p>
+                    </div>
+                        <input type='button' class='btn btn-dark mb-3' data-dismiss='modal' value='Hủy'>
+                        <input type='button' class='btn btn-danger mb-3' id="btn-lock" value='Okay'>
+                    </div>
+             </div>
+        </div>
+    </div>
     <script src="{{ asset('js/user.js') }}"></script>
-    
 </body>
 
 </html>

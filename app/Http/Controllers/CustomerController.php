@@ -4,9 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use App\Exports\CustomerExport;          
+use Illuminate\Foundation\Http\FormRequest;
 use App\Http\Requests\CustomerRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
+use Exception;
 class CustomerController extends Controller
 {
     /**
@@ -15,7 +19,8 @@ class CustomerController extends Controller
     public function index()
     {
         $tittle = 'Customer';
-        $customer = Customer::all();
+        $query = Customer::query();
+        $customer = $query->orderBy('created_at', 'desc')->paginate(20);
         return view('custormer.index',compact("tittle","customer"));
     }
     public function getCustomer(Request $request)
@@ -85,9 +90,11 @@ class CustomerController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Customer $custormer)
+    public function show($id)
     {
-        //
+       // $customer = Customer::where('customer_id', $customer_id)->firstOrFail();
+       $customer = Customer::findOrFail($id);
+        return response()->json($customer);
     }
 
     /**
@@ -101,11 +108,68 @@ class CustomerController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Customer $custormer)
+    public function update(Request $request,$id)
     {
-        //
-    }
+        try {
+            $request->validate([
+                'customer_name' => 'required|string|min:5',
+                'email' => 'required|string|email|max:255|unique:custormers,email,' . $id,
+                'tel_num' => 'required|string|regex:/^[0-9]{10,15}$/',
+                'address' => 'required',
+            ]);
 
+            $customer = Customer::findOrFail($id);
+
+            $customer->update([
+                'customer_name' => $request->customer_name,
+                'email' => $request->email,
+                'tel_num' => $request->tel_num,
+                'address' => $request->address,
+            ]);
+
+            return response()->json($customer);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return response()->json(['message' => 'Customer not found'], 404);
+        } catch (\Exception $e) {
+            \Log::error('Error updating customer: '.$e->getMessage());
+            return response()->json(['message' => 'Internal Server Error'], 500);
+        }
+    }
+    public function import(Request $request)
+    {
+        $request->validate([
+            'import' => 'required|mimes:csv',
+        ]);
+        try {
+            $file = $request->file('import');
+            $fileName = time() . '.' . $file->getClientOriginalExtension();
+            $filePath = $file->storeAs('imports', $fileName, 'public');
+            $csvData = array_map('str_getcsv', file(storage_path('app/public/' . $filePath)));
+            foreach ($csvData  as $row) {
+                Customer::create([
+                    'customer_name' => $row[0],
+                    'email' => $row[1],
+                    'tel_num' => $row[2],
+                    'address' => $row[3],
+                    'is_active' => $row[4],
+                    'created_at' => now()
+                    
+                ]);
+            }
+
+            return back()->with('success', 'Import thành công.');
+        } catch (Exception $e) {
+            return back()->with('error', 'Đã xảy ra lỗi: ' . $e->getMessage());
+        }
+    }
+    public function export()
+    {
+        try {
+            return Excel::download(new CustomerExport, 'customer.xlsx');
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
+        }
+    }
     /**
      * Remove the specified resource from storage.
      */

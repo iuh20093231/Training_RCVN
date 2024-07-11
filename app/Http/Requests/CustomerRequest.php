@@ -23,9 +23,9 @@ class CustomerRequest extends FormRequest
     {
         return [
             'customer_name' => 'required|min:5',
-            'email' => 'required|email|unique:users,email',
-            'tel_num' => 'required|string|max:11',
-            'address' => 'required',
+            'email' => 'required|email|unique:custormers,email',
+            'tel_num' => 'required|string|regex:/^[0-9]{10,15}$/',
+            'address' => 'required|string',
         ];
     }
     public function messages(): array
@@ -36,8 +36,8 @@ class CustomerRequest extends FormRequest
             'email.required' => 'Email không được để trống.',
             'email.email' => 'Email không đúng định dạng.',
             'tel_num.required' => 'Số điện thoại không được để trống',
-            'tel_num.max' => 'Số điện thoại không được vượt quá 11 số',
-            'address.required' => 'Địa chỉ không được trống'
+            'tel_num.regex' => 'Số điện thoại không đúng định dạng',
+            'address.required' => 'Địa chỉ không được trống',
         ];
     }
 }

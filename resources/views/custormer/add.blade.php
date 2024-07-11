@@ -31,6 +31,9 @@
                 <div class="row form-group">
                     <label for="address" class="col-3 lbl">Địa chỉ</label>
                     <input type="text" name="address" id="address" class="col-8 form-control" placeholder="Địa chỉ">
+                    @if ($errors->has('address'))
+                    <span class="text-danger">{{ $errors->first('address') }}</span>
+                    @endif
                 </div>
                 <div class="row form-group">
                     <label for="is_active" class="col-3 lbl">Trạng thái</label>

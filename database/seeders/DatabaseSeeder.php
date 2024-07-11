@@ -109,6 +109,6 @@ class DatabaseSeeder extends Seeder
                 'created_at' => now()
             ]
         ];
-        DB::table('custormer')->insert($data2);
+        DB::table('custormers')->insert($data2);
     }
 }

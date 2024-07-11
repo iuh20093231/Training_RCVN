@@ -28,7 +28,7 @@ return new class extends Migration
             $table->timestamps(); // Tạo 2 cột created_at và updated_at
 
             // Thiết lập khóa ngoại
-            $table->foreign('customer_id')->references('customer_id')->on('custormer')->onDelete('cascade');
+            $table->foreign('customer_id')->references('id')->on('custormers')->onDelete('cascade');
         });
     }
 
