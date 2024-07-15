@@ -43,13 +43,7 @@ class UserController extends Controller
                 $query->where('is_active', $request->is_active);
             }
 
-            $users = $query->where('is_delete',0)->orderBy('created_at', 'desc')->paginate(20);;
-           // if ($users->count() > 20) {
-              //  $users = $query->paginate(20);
-              //  $pagination = true;
-            //} else {
-            //    $pagination = false;
-           // }
+            $users = $query->where('is_delete',0)->orderBy('created_at', 'desc')->paginate(20);
             return response()->json($users);
 
         } catch (\Exception $e) {
@@ -95,7 +89,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $tittle = 'Update';
+        $tittle = 'Update User';
         $user = User::findOrFail($id);
         return view('users.edit',compact('tittle','user'));
     }

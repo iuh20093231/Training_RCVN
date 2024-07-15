@@ -51,7 +51,7 @@
                 </div>
                 <div class="row form-group float-right">
                     <button type="submit" class="btn btn-gray mr-3"><a href="{{ route('users.index') }}" style="text-decoration: none;">Hủy</a></button>
-                    <button type="submit" class="btn btn-danger">Lưu</button>
+                    <button type="submit" class="btn btn-danger">Cập nhật</button>
                 </div>
             </form>
         </div>

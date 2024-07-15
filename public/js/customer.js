@@ -38,6 +38,7 @@ $(document).ready(function(){
                         <td>${custormer.tel_num}</td>
                         <td>
                             <button type="button" name="update" id="update" class="btn update edit-customer" data-id="${custormer.id}"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                            <button  class="btn delete mr-1 deleteCustomer" data-id="${custormer.id}" data-name="${custormer.customer_name}"><i class="fa fa-trash" aria-hidden="true"></i></button>
                         </td>
                       </tr>`);
                     });
@@ -124,9 +125,6 @@ $(document).ready(function(){
                 
             },
             success: function(response){
-                // console.log('Response from server:', response);
-                // $customer = response.data;
-                // if(response.message === 'Customer updated successfully'){
                 var updateRow = `
                 <td>${row.find('td:eq(0)').text()}</td>
                 <td>${customer_name}</td>
@@ -135,13 +133,11 @@ $(document).ready(function(){
                 <td>${tel_num}</td>
                 <td>
                     <button type="button" name="update" id="update" class="btn update edit-customer" data-id="${customerID}"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                    <button  class="btn delete mr-1 deleteProduct" data-id="${customerID}" data-name="${customer_name}"><i class="fa fa-trash" aria-hidden="true"></i></button>
                 </td>
                 `;
                 row.html(updateRow);
-                alert('Update thành công');
-                // } else {
-                //     alert('Update thất bại!');
-                // }
+                // alert('Update thành công');
             },
             error: function(error) {
                 console.error('Error updating user:', error);
@@ -164,12 +160,48 @@ $(document).ready(function(){
                 <td>${customer.tel_num}</td>
                 <td>
                     <button type="button" name="update" id="update" class="btn update edit-customer" data-id="${customerID}"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                    <button  class="btn delete mr-1 deleteProduct" data-id="${customerID}" data-name="${customer.customer_name}"><i class="fa fa-trash" aria-hidden="true"></i></button>
                 </td>
             `;
                 row.html(originalRow);
             },
             error: function(error) {
                 console.error('Error fetching user:', error);
+            }
+        });
+    });
+    $('#file').change(function() {
+        var filename = $(this).val().split('\\').pop(); // Lấy tên file từ đường dẫn tập tin
+        $('#tenfile').val(filename); // Hiển thị tên file trong input
+    });
+    // Delete Customer
+    $(document).on('click', '.deleteCustomer', function() {
+        var id = $(this).data('id');
+        var customer_name = $(this).data('name');
+        $('#customer-id').text(id);
+        $('#customer-name').text(customer_name);
+        $('#myModal').modal('show');
+    });
+    $(document).on('click','#btn-delete',function(){
+        var id = $('#customer-id').text();
+        $.ajax({
+            url: '/custormer/'+id,
+            method: 'DELETE',
+            success: function(response){
+                if(response.message === 'Customer deleted successfully'){
+                    // xóa 
+                    $(this).closest('tr').remove();
+                    // Hiển thị thông báo thành công
+                   // alert('Xóa thành công');
+                    $('#myModal').modal('hide');
+                    loadCustomer(1);
+                }else{
+                    alert('Xóa thất bại!');
+                }
+            },
+            error: function(error) {
+                console.error(error);
+                alert('Error deleting product');
             }
         });
     });

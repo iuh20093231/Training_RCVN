@@ -48,8 +48,8 @@ $(document).ready(function(){
                         <td>$${product.product_price}</td>
                         ${statusText}
                         <td>
-                            <a href="#" class="update mr-1"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                            <a href="#" class="delete mr-1"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                            <a href="/product/${product.product_id}/edit" class="update mr-1"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                            <button  class="btn delete mr-1 deleteProduct" data-id="${product.product_id}" data-name="${product.product_name}"><i class="fa fa-trash" aria-hidden="true"></i></button>
                         </td>
                       </tr>`);
                     });
@@ -93,4 +93,35 @@ $(document).ready(function(){
         loadProduct(1); // Gọi lại hàm loadUsers để load lại danh sách người dùng ban đầu
     });
     loadProduct(1);
+    // Delete Product
+    $(document).on('click', '.deleteProduct', function() {
+        var product_id = $(this).data('id');
+        var product_name = $(this).data('name');
+        $('#product_name-to-delete').text(product_name);
+        $('#product-id-to-delete').text(product_id);
+        $('#myModal').modal('show');
+    });
+    $(document).on('click','#btn-delete',function(){
+        var product_id = $('#product-id-to-delete').text();
+        $.ajax({
+            url: '/product/'+product_id,
+            method: 'DELETE',
+            success: function(response){
+                if(response.message === 'Product deleted successfully'){
+                    // xóa 
+                    $(this).closest('tr').remove();
+                    // Hiển thị thông báo thành công
+                    alert('Xóa thành công');
+                    $('#myModal').modal('hide');
+                    loadProduct(1);
+                }else{
+                    alert('Xóa thất bại!');
+                }
+            },
+            error: function(error) {
+                console.error(error);
+                alert('Error deleting product');
+            }
+        });
+    });
 });

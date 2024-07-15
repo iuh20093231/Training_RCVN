@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
-
+use App\Http\Requests\ProductRequest;
+use Illuminate\Support\Facades\DB;
 class ProductController extends Controller
 {
     /**
@@ -36,7 +37,7 @@ class ProductController extends Controller
             if ($request->filled('product_price_to') && $request->filled('product_price_end')) {
                 $query->whereBetween('product_price', [$request->product_price_to, $request->product_price_end]);
             }
-            $product = $query->paginate(20);
+            $product = $query->orderBy('created_at', 'desc')->paginate(20);
 
             return response()->json($product);
 
@@ -56,9 +57,22 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
-        //
+        $product = new Product();
+        $product->product_id= Product::generateProductId();
+        $product->product_name= $request->product_name;
+        if($request->hasFile('product_image')){
+            $file = $request->file('product_image');
+            $path = $file->store('images','public');
+            $product->product_image = $path;
+        }
+        $product->product_price = $request->product_price;
+        $product->description = $request->description;
+        $product->is_sales = $request->is_sales;
+        $product->created_at=now();
+        $product->save();
+        return redirect()->route('product.index')->with('success', 'Sản phẩm đã được lưu thành công.');
     }
 
     /**
@@ -72,24 +86,39 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Product $product)
+    public function edit($product_id)
     {
-        //
-    }
+        $product = Product::find($product_id);
+        $tittle = 'Update Product';
+        return view('Product.edit',compact('product','tittle'));
+    } 
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Product $product)
+    public function update(ProductRequest $request,$product_id)
     {
-        //
+        $product = Product::find($product_id);
+        if(isset($request->product_image)) {
+                $file = $request->file('product_image');
+                $path = $file->store('images','public');
+                $product->product_image = $path;
+        }
+        $product->product_name = $request->product_name;
+        $product->product_price = $request->product_price;
+        $product->description = $request->description;
+        $product->is_sales = $request->is_sales;
+        $product->save();
+        return redirect()->route('product.index')->with('success', 'Sản phẩm đã được cập nhật thành công.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Product $product)
+    public function destroy($product_id)
     {
-        //
+        $product = Product::find($product_id);
+        $product->delete();
+        return response()->json(['message' => 'Product deleted successfully']);
     }
 }

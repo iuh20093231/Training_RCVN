@@ -26,17 +26,18 @@ class LoginController extends Controller
             'email' => $request->input('email'), 
             'password' =>$request->input('password')
         ];
-        if(Auth::attempt($credentials, $request->remember))
+        $remember = $request->has('remember');
+        if(Auth::attempt($credentials, $remember))
         {
             $user = Auth::user();
             $user->last_login_at = now();
             $user->last_login_ip = $request->ip();
             $user->updated_at = now();
             // nếu có nhấn remember
-            if ($request->has('remember_token')) {
-                $user->remember_token = Str::random(60);
-                Session::put('remember_token', $user->remember_token);
-            }
+           // if ($request->has('remember_token')) {
+               // $user->remember_token = Str::random(60);
+               // Session::put('remember_token', $user->remember_token);
+            //}
             $user->save();
 
             // Lưu thông tin vào session

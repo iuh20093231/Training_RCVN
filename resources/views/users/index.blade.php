@@ -40,6 +40,8 @@
                 </nav>
             </div>
     </div>
+    {{-- Popup addUsers --}}
+    @include('users.add')
     {{-- Modal Xóa thành viên --}}
     <div class='modal fade' id='myModal' role='dialog' aria-label='resultModalLabel'  aria-hidden='true'>
         <div class='modal-dialog modal-dialog-centered'>
@@ -73,6 +75,14 @@
         </div>
     </div>
     <script src="{{ asset('js/user.js') }}"></script>
+    @if ($errors->any())
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var addCustomerModal = new bootstrap.Modal(document.getElementById('addUsers'));
+            addCustomerModal.show();
+        });
+    </script>
+    @endif
 </body>
 
 </html>

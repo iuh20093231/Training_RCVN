@@ -26,12 +26,12 @@
     </div>
 <div class="add-product pl-0">
         <i class="fa fa-user-plus user-plus" aria-hidden="true"></i>
-        <button type="submit" id="add" name="add" class="btn btn-primary"><a href="{{ route('users.create') }}" class="add-a">Thêm mới</a></button>  
+        <button type="button" id="add" name="add" class="btn btn-primary" data-toggle="modal" data-target="#addUsers">Thêm mới</button>  
 </div>
 <div class="ml-5">
-        <button type="submit" class="btn btn-search btn-primary" id="search"><i class="fa fa-search" aria-hidden="true"> Tìm kiếm</i></button>
+        <button type="button" class="btn btn-search btn-primary" id="search"><i class="fa fa-search" aria-hidden="true"> Tìm kiếm</i></button>
 </div>
 <div class="ml-5">
-        <button type="submit" class="btn btn-search btn-success" id="clear-search" ><i class="fa fa-times" aria-hidden="true">  Xóa tìm</i></button>
+        <button type="button" class="btn btn-search btn-success" id="clear-search" ><i class="fa fa-times" aria-hidden="true">  Xóa tìm</i></button>
 </div>
 </form>

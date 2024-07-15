@@ -27,6 +27,10 @@ Route::group(['middleware'=> Authenticate::class], function()
     Route::get('/product',[ProductController::class,'index'])->name('product.index');
     Route::get('/product/list',[ProductController::class,'getProduct'])->name('product.list');
     Route::get('/product/add',[ProductController::class,'create'])->name('product.create');
+    Route::post('/product/add',[ProductController::class,'store'])->name('product.add');
+    Route::get('/product/{id}/edit',[ProductController::class,'edit'])->name('product.edit');
+    Route::put('/product/{id}',[ProductController::class,'update'])->name('product.update');
+    Route::delete('/product/{id}', [ProductController::class, 'destroy'])->name('product.destroy');
     //CUSTORMER
     Route::get('/custormer',[CustomerController::class,'index'])->name('custormer.index');
     Route::get('/custormer/list',[CustomerController::class,'getCustomer'])->name('custormer.list');
@@ -34,8 +38,9 @@ Route::group(['middleware'=> Authenticate::class], function()
     Route::post('/custormer/add',[CustomerController::class,'store'])->name('custormer.add');
     Route::get('/custormer/{id}',[CustomerController::class,'show'])->name('custormer.show');
     Route::put('/custormer/{id}',[CustomerController::class,'update'])->name('custormer.update');
-    Route::post('/custormer/import',[CustomerController::class,'import'])->name('custormer.import');
-    Route::get('/custormer/export',[CustomerController::class,'export'])->name('custormer.export');
+    Route::post('import',[CustomerController::class,'import'])->name('import');
+    Route::get('export',[CustomerController::class,'export'])->name('export');
+    Route::delete('/custormer/{id}',[CustomerController::class,'destroy'])->name('custormer.destroy');
     //USER
     Route::get('/users',[UserController::class,'index'])->name('users.index');
     Route::get('/users/list',[UserController::class,'getUsers'])->name('users.list'); // lấy dữ liệu JSON

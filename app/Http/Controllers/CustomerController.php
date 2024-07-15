@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use Illuminate\Http\Request;
-use App\Exports\CustomerExport;          
+use App\Exports\CustomerExport;  
+use App\Imports\CustomerImport;        
 use Illuminate\Foundation\Http\FormRequest;
 use App\Http\Requests\CustomerRequest;
 use Illuminate\Support\Facades\Hash;
@@ -113,7 +114,8 @@ class CustomerController extends Controller
         try {
             $request->validate([
                 'customer_name' => 'required|string|min:5',
-                'email' => 'required|string|email|max:255|unique:custormers,email,' . $id,
+                'email' => 'required|string|email|max:255'. $id,
+                // |unique:custormers,email,
                 'tel_num' => 'required|string|regex:/^[0-9]{10,15}$/',
                 'address' => 'required',
             ]);
@@ -137,35 +139,18 @@ class CustomerController extends Controller
     }
     public function import(Request $request)
     {
-        $request->validate([
-            'import' => 'required|mimes:csv',
-        ]);
-        try {
-            $file = $request->file('import');
-            $fileName = time() . '.' . $file->getClientOriginalExtension();
-            $filePath = $file->storeAs('imports', $fileName, 'public');
-            $csvData = array_map('str_getcsv', file(storage_path('app/public/' . $filePath)));
-            foreach ($csvData  as $row) {
-                Customer::create([
-                    'customer_name' => $row[0],
-                    'email' => $row[1],
-                    'tel_num' => $row[2],
-                    'address' => $row[3],
-                    'is_active' => $row[4],
-                    'created_at' => now()
-                    
-                ]);
-            }
-
-            return back()->with('success', 'Import thành công.');
-        } catch (Exception $e) {
-            return back()->with('error', 'Đã xảy ra lỗi: ' . $e->getMessage());
-        }
+        Excel::import(new CustomerImport, $request->file('file'));
+        return back();
     }
-    public function export()
+    public function export(Request $request)
     {
         try {
-            return Excel::download(new CustomerExport, 'customer.xlsx');
+            //$searchConditions = $request->all();
+            return Excel::download(new CustomerExport, 'customer.csv', \Maatwebsite\Excel\Excel::CSV, [
+            'Content-Type' => 'text/csv',
+            'charset' => 'UTF-8',
+            'encoding' => 'UTF-8-BOM',
+        ]);
         } catch (Exception $e) {
             return response()->json(['error' => $e->getMessage()]);
         }
@@ -173,8 +158,10 @@ class CustomerController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Custormer $custormer)
+    public function destroy($id)
     {
-        //
+        $customer = Customer::findOrFail($id);
+        $customer->delete();
+        return response()->json(['message' => 'Customer deleted successfully']);
     }
 }

@@ -34,6 +34,7 @@ class CustomerRequest extends FormRequest
             'customer_name.required' => 'Họ tên không được trống',
             'customer_name.min' => 'Tên phải lớn hơn 5 ký tự',
             'email.required' => 'Email không được để trống.',
+            'email.unique' => 'Email không được trùng.',
             'email.email' => 'Email không đúng định dạng.',
             'tel_num.required' => 'Số điện thoại không được để trống',
             'tel_num.regex' => 'Số điện thoại không đúng định dạng',

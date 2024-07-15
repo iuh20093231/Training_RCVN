@@ -50,7 +50,7 @@ $(document).ready(function(){
                             <button  class="btn deloy  mr-1 lockUpUser" data-id="${user.id}" data-name="${user.name}" data-status="${user.is_active}"><i class="fa fa-user-times" aria-hidden="true"></i></button>
                             </td></tr>`);
                     });
-                    // if(response.pagination == true){
+                    // if(users.count() > 20){
                         for (let i = 1; i <= response.last_page; i++) {
                             let activeClass = (i === response.current_page) ? 'active' : '';
                             pagination1.append(`

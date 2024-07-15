@@ -56,8 +56,8 @@ class DatabaseSeeder extends Seeder
                 'created_at' => now()
             ],
             [
-                'name' => 'Trần Trọng Tín',
-                'email' => 'TranTrongTin2100@gmail.com',
+                'name' => 'Trần Trọng Nghĩa',
+                'email' => 'nghiatran2100@gmail.com',
                 'password' => bcrypt('444444'),
                 'group_role' => 'Admin',
                 'created_at' => now()
@@ -107,8 +107,17 @@ class DatabaseSeeder extends Seeder
                 'address' => 'Phan Văn trị, Gò Vấp',
                 'is_active' => 1,
                 'created_at' => now()
+            ],
+            [
+                'customer_name' => 'Nguyễn Hoàng Nam',
+                'email' => 'namnguyen@gmail.com',
+                'tel_num' => '0123654998',
+                'address' => 'Phan Văn trị, Gò Vấp',
+                'is_active' => 1,
+                'created_at' => now()
             ]
         ];
         DB::table('custormers')->insert($data2);
+        
     }
 }

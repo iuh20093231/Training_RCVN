@@ -11,13 +11,11 @@ class Customer extends Model
     protected $table = 'custormers';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'id',
         'customer_name',
         'email',
         'tel_num',
         'address',
         'is_active',
         'created_at',
-        'updated_at'
     ];
 }
