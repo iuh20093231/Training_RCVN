@@ -1,6 +1,6 @@
 
 <div class="modal fade" id="addCustomer">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-form">
       <div class="modal-content">
         <div class="modal-header">
             <div class="header-add p-1">

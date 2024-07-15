@@ -18,4 +18,8 @@ class Customer extends Model
         'is_active',
         'created_at',
     ];
+    public function scopePopular($query)
+    {
+       return $query->orderBy('created_at', 'desc')->paginate(20);
+    }
 }

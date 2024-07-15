@@ -15,9 +15,8 @@ class UserController extends Controller
     public function index()
     {
         $tittle = 'User';
-        $query = User::query();
-        //return view('users.index',compact("tittle"));
-        $users = $query->where('is_delete',0)->orderBy('created_at', 'desc')->paginate(20);
+        //$query = User::query();
+        $users = User::popular();
         return view('users.index', compact('tittle','users'));
 
     }
@@ -43,7 +42,7 @@ class UserController extends Controller
                 $query->where('is_active', $request->is_active);
             }
 
-            $users = $query->where('is_delete',0)->orderBy('created_at', 'desc')->paginate(20);
+            $users = User::popular();
             return response()->json($users);
 
         } catch (\Exception $e) {

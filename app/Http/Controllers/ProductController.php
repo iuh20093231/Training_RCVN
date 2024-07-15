@@ -14,8 +14,8 @@ class ProductController extends Controller
     public function index()
     {
         $tittle = 'Product';
-        $query = Product::query();
-        $product = $query->orderBy('created_at', 'desc')->paginate(20);
+        // $query = Product::query();
+        $product = Product::popular();
         return view('Product.index', compact("tittle","product"));
     }
 
@@ -49,8 +49,8 @@ class ProductController extends Controller
     public function create()
     {
         $tittle = 'Add Product';
-        $query = Product::query();
-        $product = $query->orderBy('created_at', 'desc');
+        //$query = Product::query();
+        //$product = $query->orderBy('created_at', 'desc');
         return view('Product.add', compact('tittle','product'));
     }
 

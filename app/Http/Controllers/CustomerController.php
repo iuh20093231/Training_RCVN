@@ -11,6 +11,8 @@ use App\Http\Requests\CustomerRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Database\Eloquent\Builder;
 use Exception;
 class CustomerController extends Controller
 {
@@ -20,8 +22,8 @@ class CustomerController extends Controller
     public function index()
     {
         $tittle = 'Customer';
-        $query = Customer::query();
-        $customer = $query->orderBy('created_at', 'desc')->paginate(20);
+        //$query = Customer::query();
+        $customer = Customer::popular();
         return view('custormer.index',compact("tittle","customer"));
     }
     public function getCustomer(Request $request)
@@ -30,7 +32,7 @@ class CustomerController extends Controller
             $query = Customer::query();
 
             if ($request->filled('customer_name')) {
-            $query->where('customer_name', 'like', '%' . $request->customer_name . '%');
+                 $query->where('customer_name', 'like', '%' . $request->customer_name . '%');
             }
 
             if ($request->filled('email')) {
@@ -93,29 +95,16 @@ class CustomerController extends Controller
      */
     public function show($id)
     {
-       // $customer = Customer::where('customer_id', $customer_id)->firstOrFail();
        $customer = Customer::findOrFail($id);
         return response()->json($customer);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Customer $custormer)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request,$id)
     {
         try {
             $request->validate([
                 'customer_name' => 'required|string|min:5',
                 'email' => 'required|string|email|max:255'. $id,
-                // |unique:custormers,email,
                 'tel_num' => 'required|string|regex:/^[0-9]{10,15}$/',
                 'address' => 'required',
             ]);
@@ -139,18 +128,21 @@ class CustomerController extends Controller
     }
     public function import(Request $request)
     {
+
         Excel::import(new CustomerImport, $request->file('file'));
         return back();
     }
     public function export(Request $request)
     {
         try {
-            //$searchConditions = $request->all();
-            return Excel::download(new CustomerExport, 'customer.csv', \Maatwebsite\Excel\Excel::CSV, [
+            $customer_name = $request->input('customer_name');
+            $customer = Customer::where('customer_name','like','%'.$customer_name.'%')->get()->toArray();
+            //dd($customer);
+            return Excel::download(new CustomerExport( $customer), 'customer.csv', \Maatwebsite\Excel\Excel::CSV, [
             'Content-Type' => 'text/csv',
             'charset' => 'UTF-8',
             'encoding' => 'UTF-8-BOM',
-        ]);
+            ]);
         } catch (Exception $e) {
             return response()->json(['error' => $e->getMessage()]);
         }

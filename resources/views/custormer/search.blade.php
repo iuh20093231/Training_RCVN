@@ -1,4 +1,4 @@
-<form class="row form" id="search-form" >
+<form class="row form" id="search-form" method="GET" action="{{ route('export') }}" >
     <div class="col-lg-3 form-group search-name float-left">
         <label for="customer_name">Họ và tên</label>
         <input type="text" name="customer_name" id="customer_name" placeholder="Nhập họ tên" class="form-control">

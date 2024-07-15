@@ -151,3 +151,21 @@
     height: 400px; 
     border: 1px solid rgb(167, 167, 167);
 }
+.product-image {
+    display: none;
+    position: absolute;
+    z-index: 10;
+    max-width: 100px; /* Đặt kích thước tối đa cho hình ảnh */
+    bottom: 100%; /* Đặt hình ảnh nằm phía trên tên sản phẩm */
+    left: 50%;
+    transform: translateX(-50%);
+}
+.product-name {
+    position: relative;
+}
+.product-name:hover .product-image {
+    display: block;
+}
+.modal-dialog-form {
+    max-width: 1000px; /* Điều chỉnh kích thước theo ý muốn */
+}

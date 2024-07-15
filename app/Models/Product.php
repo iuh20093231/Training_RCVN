@@ -29,4 +29,8 @@ class Product extends Model
         $newId = $maxId ? $maxId + 1 : 1;
         return 'SP' . str_pad($newId, 3, '0', STR_PAD_LEFT);
     }
+    public function scopePopular($query)
+    {
+        return $query->orderBy('created_at', 'desc')->paginate(20);
+    }
 }

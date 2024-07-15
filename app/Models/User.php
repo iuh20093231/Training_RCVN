@@ -53,4 +53,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+    public function scopePopular($query)
+    {
+        return $query->where('is_delete',0)->orderBy('created_at', 'desc')->paginate(20);
+    }
 }

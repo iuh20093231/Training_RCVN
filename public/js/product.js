@@ -43,7 +43,12 @@ $(document).ready(function(){
                         }   
                         userTable.append(`<tr>
                         <td>${index + 1 + (page - 1) * 20}</td>
-                        <td>${product.product_name}</td>
+                        <td>
+                            <div class="product-name">
+                            ${product.product_name}
+                            <img class="product-image" src="storage/${product.product_image}" alt="Hình sản phẩm">
+                        </div>
+                        </td>
                         <td>${product.description}</td>
                         <td>$${product.product_price}</td>
                         ${statusText}
@@ -124,4 +129,5 @@ $(document).ready(function(){
             }
         });
     });
+
 });

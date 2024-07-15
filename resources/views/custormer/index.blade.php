@@ -39,6 +39,15 @@
                 </nav>
             </div> 
         </div>
+        @if (session('import_failures'))
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach (session('import_failures') as $failure)
+                            <li>Dòng {{ $failure['row'] }}: {{ implode(', ', $failure['errors']) }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+        @endif
         {{-- Popup add customer --}}
         @include('custormer.add')
         {{-- Modal xóa khách hàng --}}
