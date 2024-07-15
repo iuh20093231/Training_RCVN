@@ -42,7 +42,7 @@ class UserController extends Controller
                 $query->where('is_active', $request->is_active);
             }
 
-            $users = User::popular();
+            $users = $query->where('is_delete',0)->orderBy('created_at', 'desc')->paginate(20);
             return response()->json($users);
 
         } catch (\Exception $e) {

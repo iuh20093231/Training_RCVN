@@ -1,3 +1,4 @@
+
 <div class="modal fade" id="addUsers">
     <div class="modal-dialog modal-dialog-form">
       <div class="modal-content">
@@ -58,8 +59,8 @@
                     <label class="form-check-label" for="is_active">Trạng thái hoạt động</label>
                 </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-gray mr-3" data-dismiss="modal">Hủy</button>
-            <button type="submit" class="btn btn-danger">Lưu</button>
+          <button type="button" class="btn btn-gray mr-3" data-dismiss="modal">Hủy</button>
+          <button type="submit" class="btn btn-danger">Lưu</button>
         </div>
         </form>
       </div>
