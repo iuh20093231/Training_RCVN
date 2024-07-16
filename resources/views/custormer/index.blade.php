@@ -1,21 +1,26 @@
 @include('includes.header')
 <body>
         <div class="container">
-           @include('custormer.navbar')
+        @include('custormer.navbar')
             <div class="row tittle pt-2">
                 <p class="float-left col-10 pl-0">Danh sách khách hàng</p>
                 <a href="#" class="float-right col-2">Khách hàng</a>
             </div>
-            @include('custormer.search')
+        @include('custormer.search')
+        <form action="{{ route('import') }}" method="POST" enctype="multipart/form-data" class="form mt-3">
+            @csrf
+            <label for="file"><i class="fa fa-upload import-csv" aria-hidden="true"></i></label>
+            <input type="file" name="file" id="file" accept=".csv" style="display:none;">
+            <button  class="btn btn-success" type="submit">Import CSV</button>
+            <input type="text" name="tenfile" id="tenfile" readonly style="border: 1px solid white; width: auto;">
+        </form>        
         <div class="row">
-            <nav class="col-lg-7 mt-2 p-0">
-                <ul class="pagination" id="pagination1">
-                    <!-- Phân trang sẽ được thêm vào đây -->
-                </ul>
-            </nav>
-            <p class="col-lg-5 text-center pl-5 mt-2" style="font-size: 14px;">Hiển thị từ {{ $customer->firstItem() }} đến {{ $customer->lastItem() }} trong tổng số <strong>{{ $customer->total() }}</strong> khách hàng</p>
+            <div class="col-lg-7 pt-3 pl-0 pagination" id="pagination1">
+                {{-- Phân trang --}}
+            </div>
+            <p class="col-lg-5 text-center pt-5" style="font-size: 14px;">Hiển thị từ {{ $customer->firstItem() }} đến {{ $customer->lastItem() }} trong tổng số <strong>{{ $customer->total() }}</strong> khách hàng</p>
         </div>
-            <div class="row mt-1">
+         <div class="row mt-1">
                 <table class="table table-striped">
                     <thead class="thead-danger">
                       <tr>
@@ -30,13 +35,11 @@
                     <tbody id="user-table">
                     </tbody>
                   </table>
-            </div> 
+        </div> 
             <div class="row mt-2 text-center">
-                <nav>
-                    <ul class="pagination" id="pagination2">
-                        <!-- Phân trang sẽ được thêm vào đây -->
-                    </ul>
-                </nav>
+                <div class="pagination" id="pagination2">
+                    {{-- Phân trang --}}
+                </div>
             </div> 
         </div>
         @if (session('import_failures'))
@@ -67,7 +70,6 @@
             </div>
         </div>
         <script src="{{ asset('js/customer.js') }}"></script>
-      
         @if ($errors->any())
             <script>
                 document.addEventListener('DOMContentLoaded', function () {
@@ -76,15 +78,6 @@
                 });
             </script>
         @endif
-       <script>
-            document.addEventListener('DOMContentLoaded', function () {
-            var addCustomerModalElement = document.getElementById('addCustomer');
-            addCustomerModalElement.addEventListener('hidden.bs.modal', function () {
-                var addCustomerForm = document.getElementById('addCustomerForm');
-                addCustomerForm.reset();
-            });
-        });
-       </script>
 </body>
 
 </html>

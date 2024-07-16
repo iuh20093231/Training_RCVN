@@ -8,12 +8,10 @@
             </div>
             @include('users.search')
             <div class="row">
-                <nav class="col-lg-7 mt-2 p-0">
-                    <ul class="pagination" id="pagination1">
-                        <!-- Phân trang sẽ được thêm vào đây -->
-                    </ul>
-                </nav>
-                <p class="col-lg-5 pl-5 text-center mt-2" style="font-size: 14px;">Hiển thị từ {{ $users->firstItem() }} đến {{ $users->lastItem() }} trong tổng số <strong>{{ $users->total() }}</strong> người dùng</p>
+                <div class="col-lg-7 pt-3 pl-0 pagination" id="pagination1">
+                    {{-- Phân trang --}}
+                </div>
+                <p class="col-lg-5 pt-5 text-center" style="font-size: 14px;">Hiển thị từ {{ $users->firstItem() }} đến {{ $users->lastItem() }} trong tổng số <strong>{{ $users->total() }}</strong> người dùng</p>
             </div>
             <div class="row mt-2" id="users-table">
                 <table class="table table-striped">
@@ -33,15 +31,15 @@
                   </table>
             </div>
             <div class="row mt-2 text-center">
-                <nav >
-                    <ul class="pagination" id="pagination2">
-                        <!-- Phân trang sẽ được thêm vào đây -->
-                    </ul>
-                </nav>
+                <div class="pagination" id="pagination2">
+                    {{-- Phân trang --}}
+                </div>
             </div>
     </div>
     {{-- Popup addUsers --}}
     @include('users.add')
+    {{-- Popup updateUser --}}
+    {{-- @include('users.edit') --}}
     {{-- Modal Xóa thành viên --}}
     <div class='modal fade' id='myModal' role='dialog' aria-label='resultModalLabel'  aria-hidden='true'>
         <div class='modal-dialog modal-dialog-centered'>

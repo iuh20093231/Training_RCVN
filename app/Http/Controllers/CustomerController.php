@@ -135,10 +135,25 @@ class CustomerController extends Controller
     public function export(Request $request)
     {
         try {
-            $customer_name = $request->input('customer_name');
-            $customer = Customer::where('customer_name','like','%'.$customer_name.'%')->get()->toArray();
-            //dd($customer);
-            return Excel::download(new CustomerExport( $customer), 'customer.csv', \Maatwebsite\Excel\Excel::CSV, [
+            $query = Customer::query();
+
+            // Thêm các điều kiện tìm kiếm vào đây nếu cần
+            if ($request->filled('customer_name')) {
+                $query->where('customer_name', 'like', '%' . $request->input('customer_name') . '%');
+            }
+            if ($request->filled('email')) {
+                $query->where('email', 'like', '%' . $request->input('email') . '%');
+            }
+            if ($request->filled('is_active')) {
+                $query->where('is_active', $request->input('is_active'));
+            }
+            if ($request->filled('address')) {
+                $query->where('address', 'like', '%' . $request->input('address') . '%');
+            }
+
+            $customers = $query->get()->take(20);
+            //dd($customers);
+            return Excel::download(new CustomerExport($customers), 'customer.csv', \Maatwebsite\Excel\Excel::CSV, [
             'Content-Type' => 'text/csv',
             'charset' => 'UTF-8',
             'encoding' => 'UTF-8-BOM',

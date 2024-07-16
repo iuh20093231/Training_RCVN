@@ -78,19 +78,11 @@ class UserController extends Controller
         return redirect()->route('users.index')->with('success', 'Người dùng đã được tạo thành công.');
     }
 
-    public function show(User $user)
-    {
-       // return view('users.show', compact('user'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit($id)
     {
         $tittle = 'Update User';
         $user = User::findOrFail($id);
-        return view('users.edit',compact('tittle','user'));
+       return view('users.edit',compact('tittle','user'));
     }
 
     /**

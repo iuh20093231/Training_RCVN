@@ -49,9 +49,7 @@ class ProductController extends Controller
     public function create()
     {
         $tittle = 'Add Product';
-        //$query = Product::query();
-        //$product = $query->orderBy('created_at', 'desc');
-        return view('Product.add', compact('tittle','product'));
+        return view('Product.add', compact('tittle'));
     }
 
     /**

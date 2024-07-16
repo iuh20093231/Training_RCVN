@@ -13,19 +13,19 @@
             {{ csrf_field() }}
             <div class="float-left p-0" style="width:50%;">
                 <label for="product_name" class="lbl"> Tên sản phẩm </label>
-                <input type="text" name="product_name" id="product_name" placeholder="Nhập tên sản phẩm" class="form-control">
+                <input type="text" name="product_name" id="product_name" placeholder="Nhập tên sản phẩm" class="form-control" value="{{ old('product_name') }}">
                 @if ($errors->has('product_name'))
                 <span class="text-danger">{{ $errors->first('product_name') }}</span>
                 @endif
                 <br>
                 <label for="product_price" class="lbl pt-2">Giá bán</label>
-                <input type="text" name="product_price" id="product_price" placeholder="Nhập giá bán" class="form-control">
+                <input type="text" name="product_price" id="product_price" placeholder="Nhập giá bán" class="form-control" value="{{ old('product_price') }}">
                 @if ($errors->has('product_price'))
                 <span class="text-danger">{{ $errors->first('product_price') }}</span>
                 @endif
                 <br>
                 <label for="description" class="lbl pt-2">Mô tả</label>
-                <textarea name="description" id="description" cols="30" rows="10" class="form-control"></textarea>
+                <textarea name="description" id="description" cols="30" rows="10" class="form-control">{{ old('description') }}</textarea>
                 @if ($errors->has('description'))
                 <span class="text-danger">{{ $errors->first('description') }}</span>
                 @endif

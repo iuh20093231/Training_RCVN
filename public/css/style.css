@@ -169,3 +169,47 @@
 .modal-dialog-form {
     max-width: 1000px; /* Điều chỉnh kích thước theo ý muốn */
 }
+.pagination {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.pagination a {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    border: 1px solid #ccc;
+    margin: 0 3px;
+    text-decoration: none;
+    color: #000;
+    vertical-align: middle;
+}
+
+.pagination a:hover {
+    background-color: #ddd;
+}
+
+.pagination a.current {
+    background-color: #f90b0b;
+    color: #fff;
+}
+
+.next-page, .prev-page {
+    display: inline-block;
+    width: 60px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    border: 1px solid #ccc;
+    margin: 0 5px;
+    text-decoration: none;
+    color: #000;
+}
+
+.next-page:hover, .prev-page:hover {
+    background-color: #ddd;
+}

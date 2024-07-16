@@ -3,11 +3,11 @@
 namespace App\Exports;
 
 use App\Models\Customer;
-use Maatwebsite\Excel\Concerns\FromQuery;
+use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\Exportable;
-class CustomerExport implements FromQuery,WithHeadings, WithMapping
+class CustomerExport implements FromCollection,WithHeadings, WithMapping
 {
     use Exportable;
 
@@ -26,10 +26,9 @@ class CustomerExport implements FromQuery,WithHeadings, WithMapping
             'Địa chỉ',
         ];
     }
-    public function query()
+    public function collection()
     {
-        $query = Customer::query();
-        return $query->orderBy('created_at', 'desc');
+        return $this->request;
     }
     public function map($customer): array
     {

@@ -27,6 +27,9 @@ $(document).ready(function(){
                 userTable.empty();// Xóa nội dung hiện tại của bảng
                 pagination1.empty();// Xóa nội dung hiện tại của phân trang
                 pagination2.empty();
+                // Thêm nút phân trang ngược lại
+                pagination1.append('<a href="#" class="prev-page">&laquo;</a>');
+                pagination2.append('<a href="#" class="prev-page">&laquo;</a>');
                 if (users.length === 0) {
                     userTable.append('<tr><td colspan="6" id="no-data">Không có dữ liệu</td></tr>');
                 } else {
@@ -52,19 +55,37 @@ $(document).ready(function(){
                     });
                     // if(users.count() > 20){
                         for (let i = 1; i <= response.last_page; i++) {
-                            let activeClass = (i === response.current_page) ? 'active' : '';
+                            let activeClass = (i === response.current_page) ? 'current' : '';
                             pagination1.append(`
-                                <li class="page-item ${activeClass}"><a class="page-link" href="#">${i}</a></li>
+                                 <a href="#" data-page="${i}" class="page-link ${activeClass}" style="line-height:13px;">${i}</a>
                             `);
                             pagination2.append(`
-                                <li class="page-item ${activeClass}"><a class="page-link" href="#">${i}</a></li>
+                                <a href="#" data-page="${i}" class="page-link ${activeClass}" style="line-height:13px;">${i}</a>
                             `);
                         }
+                        // Thêm nút phân trang tiếp theo
+                        pagination1.append('<a href="#" class="next-page">&raquo;</a>');
+                        pagination2.append('<a href="#" class="next-page">&raquo;</a>');
                         $('.page-link').on('click', function(e) {
                             e.preventDefault();
                             let page = $(this).text();
                             loadUser(page);
                         }); 
+                        $('.next-page').on('click', function (e) {
+                            e.preventDefault();
+                            const currentPage = response.current_page;
+                            if (currentPage < response.last_page) {
+                                loadUser(currentPage + 1);
+                            }
+                        });
+    
+                        $('.prev-page').on('click', function (e) {
+                            e.preventDefault();
+                            const currentPage = response.current_page;
+                            if (currentPage > 1) {
+                                loadUser(currentPage - 1);
+                            }
+                        });
                     // } 
                     
                 }

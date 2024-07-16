@@ -26,6 +26,9 @@ $(document).ready(function(){
                 userTable.empty();// Xóa nội dung hiện tại của bảng
                 pagination1.empty();// Xóa nội dung hiện tại của phân trang
                 pagination2.empty();
+                 // Thêm nút phân trang ngược lại
+                 pagination1.append('<a href="#" class="prev-page">&laquo;</a>');
+                 pagination2.append('<a href="#" class="prev-page">&laquo;</a>');
                 if (custormer.length === 0) {
                     userTable.append('<tr><td colspan="6" id="no-data">Không có dữ liệu</td></tr>');
                 } else {
@@ -44,18 +47,36 @@ $(document).ready(function(){
                     });
                     // if(custormer.length >= 20){
                         for (let i = 1; i <= response.last_page; i++) {
-                            let activeClass = (i === response.current_page) ? 'active' : '';
+                            let activeClass = (i === response.current_page) ? 'current' : '';
                             pagination1.append(`
-                                <li class="page-item ${activeClass}"><a class="page-link" href="#">${i}</a></li>
+                                <a href="#" data-page="${i}" class="page-link ${activeClass}" style="line-height:13px;">${i}</a>
                             `);
                             pagination2.append(`
-                                <li class="page-item ${activeClass}"><a class="page-link" href="#">${i}</a></li>
+                                <a href="#" data-page="${i}" class="page-link ${activeClass}" style="line-height:13px;">${i}</a>
                             `);
                         }
+                         // Thêm nút phân trang tiếp theo
+                         pagination1.append('<a href="#" class="next-page">&raquo;</a>');
+                         pagination2.append('<a href="#" class="next-page">&raquo;</a>');
                         $('.page-link').on('click', function(e) {
                             e.preventDefault();
                             let page = $(this).text();
                             loadCustomer(page);
+                        });
+                        $('.next-page').on('click', function (e) {
+                            e.preventDefault();
+                            const currentPage = response.current_page;
+                            if (currentPage < response.last_page) {
+                                loadCustomer(currentPage + 1);
+                            }
+                        });
+    
+                        $('.prev-page').on('click', function (e) {
+                            e.preventDefault();
+                            const currentPage = response.current_page;
+                            if (currentPage > 1) {
+                                loadCustomer(currentPage - 1);
+                            }
                         });
                     // }
                 }
@@ -80,6 +101,18 @@ $(document).ready(function(){
         $('#is_active').val('');
         $('#address').val('');
         loadCustomer(1); // Gọi lại hàm loadUsers để load lại danh sách người dùng ban đầu
+    });
+    $('#export').on('click', function(e) {
+        e.preventDefault();
+        const data = {
+            customer_name: $('#customer_name').val(),
+            email: $('#email').val(),
+            is_active: $('#is_active').val(),
+            address: $('#address').val()
+        };
+        const queryString = $.param(data);
+        const url = `/export?${queryString}`;
+        window.location.href = url; // Chuyển hướng tới URL để tải file CSV
     });
     loadCustomer(1);
     $(document).on('click','.edit-customer',function(){
