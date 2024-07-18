@@ -31,7 +31,7 @@
                     {{ csrf_field() }}
                     <div class=" frm-top user">
                         <label for="email" class="label mr-3"><i class="fa fa-user" aria-hidden="true"></i></label>
-                        <input type="text" name="email" id="email"  placeholder="Email"><br>
+                        <input type="text" name="email" id="email"  placeholder="Email" ><br>
                         @if ($errors->has('email'))
                             <span class="text-danger">{{ $errors->first('email') }}</span>
                         @endif

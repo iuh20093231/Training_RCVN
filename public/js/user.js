@@ -33,6 +33,10 @@ $(document).ready(function(){
                 if (users.length === 0) {
                     userTable.append('<tr><td colspan="6" id="no-data">Không có dữ liệu</td></tr>');
                 } else {
+                    let from = (response.current_page - 1) * response.per_page + 1;
+                    let to = from + users.length - 1;
+                    let total = response.total;
+                    $('#pagination-info').html(`Hiển thị từ ${from} đến ${to} trong tổng số <strong>${total}</strong> người dùng`);
                     users.forEach(function(user,index){
                         let statusText;
                         switch(user.is_active) {
@@ -218,7 +222,7 @@ $(document).ready(function(){
                     // Hiển thị thông báo thành công
                     alert('Xóa thành công');
                     $('#myModal').modal('hide');
-                    loadUser(1);
+                    location.reload();
                 }else{
                     alert('Xóa thất bại!');
                 }
@@ -252,7 +256,7 @@ $(document).ready(function(){
                 if(response.message === 'Thành viên đã được khóa/mở khóa thành công!'){
                     alert('Thành viên đã được khóa/mở khóa thành công!');
                     $('#lockUser').modal('hide');
-                    loadUser(1);
+                    location.reload();
                 }else{
                     alert('Thất bại');
                 }

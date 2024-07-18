@@ -47,7 +47,7 @@
             </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-gray mr-3" data-dismiss="modal">Hủy</button>
-          <button type="submit" class="btn btn-danger" id="btn-update">Lưu</button>
+          <button type="submit" class="btn btn-danger" id="btn-update">Cập nhật</button>
         </div>
         </form>
       </div>

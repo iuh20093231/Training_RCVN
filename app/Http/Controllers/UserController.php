@@ -13,9 +13,13 @@ class UserController extends Controller
     public function index()
     {
         $tittle = 'User';
-        //$query = User::query();
         $users = User::popular();
-        return view('users.index', compact('tittle','users'));
+        $currentPage = $users->currentPage();
+        $perPage = $users->perPage();
+        $total = $users->total();
+        $from = ($currentPage - 1) * $perPage + 1;
+        $to = min($total, $currentPage * $perPage);
+        return view('users.index', compact('tittle','users','from','to'));
 
     }
     // Lấy dữ liệu json của người dùng

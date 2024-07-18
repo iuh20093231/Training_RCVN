@@ -32,6 +32,10 @@ $(document).ready(function(){
                 if (custormer.length === 0) {
                     userTable.append('<tr><td colspan="6" id="no-data">Không có dữ liệu</td></tr>');
                 } else {
+                    let from = (response.current_page - 1) * response.per_page + 1;
+                    let to = from + custormer.length - 1;
+                    let total = response.total;
+                    $('#pagination-info').html(`Hiển thị từ ${from} đến ${to} trong tổng số <strong>${total}</strong> khách hàng`);
                     custormer.forEach(function(custormer,index){
                         userTable.append(`<tr id="custormer_${custormer.id}">
                         <td>${index + 1 + (page - 1) * 20}</td>

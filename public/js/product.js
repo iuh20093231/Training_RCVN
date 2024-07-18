@@ -31,6 +31,10 @@ $(document).ready(function(){
                 if(product.length === 0){
                     userTable.append('<tr><td colspan="6" id="no-data">Không có dữ liệu</td></tr>');
                 } else{
+                    let from = (response.current_page - 1) * response.per_page + 1;
+                    let to = from + product.length - 1;
+                    let total = response.total;
+                    $('#pagination-info').html(`Hiển thị từ ${from} đến ${to} trong tổng số <strong>${total}</strong> sản phẩm`);
                     product.forEach(function(product,index){
                         let statusText;
                         switch(product.is_sales) {

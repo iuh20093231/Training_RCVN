@@ -16,7 +16,7 @@
                         </div>
                     @endif
                 </div>
-                <p class="col-lg-5 pt-5 text-center float-right " style="font-size: 14px;">Hiển thị từ {{ $product->firstItem() }} đến {{ $product->lastItem() }} trong tổng số <strong>{{ $product->total() }}</strong> sản phẩm</p>
+                <p class="col-lg-5 pt-5 text-center float-right " style="font-size: 14px;" id="pagination-info"></p>
             </div>
             <div class="row">
                 <table class="table table-striped mt-3">
