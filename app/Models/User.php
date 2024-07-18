@@ -57,4 +57,27 @@ class User extends Authenticatable
     {
         return $query->where('is_delete',0)->orderBy('created_at', 'desc')->paginate(20);
     }
+    public function scopeNameLike($query, $name)
+    {
+        return $query->where('name', 'like', '%' . $name . '%');
+    }
+
+    public function scopeEmailLike($query, $email)
+    {
+        return $query->where('email', 'like', '%' . $email . '%');
+    }
+
+    public function scopeGroupRole($query, $groupRole)
+    {
+        return $query->where('group_role', $groupRole);
+    }
+
+    public function scopeIsActive($query, $isActive)
+    {
+        return $query->where('is_active', $isActive);
+    }
+    public function scopeNotDeleted($query)
+    {
+        return $query->where('is_delete', 0);
+    }
 }

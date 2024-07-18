@@ -45,7 +45,7 @@
                         @endif
                     </div>
                     <div class="form group mt-2 ml-2">
-                        <input type="checkbox" id="remember_token" {{ old('remember_token') ? 'checked' : '' }}>
+                        <input type="checkbox" id="remember_token" name="remember_token" {{ old('remember_token') ? 'checked' : '' }}>
                         <label for="remember_token" class="pl-3">Remmber</label>
                     </div>
                     <div class="form-group mt-3 text-right">

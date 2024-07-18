@@ -24,22 +24,22 @@ class UserController extends Controller
             $query = User::query();
 
             if ($request->filled('name')) {
-                $query->where('name', 'like', '%' . $request->name . '%');
+                $query->nameLike($request->name);
             }
 
             if ($request->filled('email')) {
-                $query->where('email', 'like', '%' . $request->email . '%');
+                $query->emailLike($request->email);
             }
 
             if ($request->filled('group_role')) {
-                $query->where('group_role', $request->group_role);
+                $query->groupRole($request->group_role);
             }
 
             if ($request->filled('is_active')) {
-                $query->where('is_active', $request->is_active);
+                $query->isActive($request->is_active);
             }
 
-            $users = $query->where('is_delete',0)->orderBy('created_at', 'desc')->paginate(20);
+            $users = $query->notDeleted()->orderBy('created_at', 'desc')->paginate(20);
             return response()->json($users);
     }
     // Thêm user

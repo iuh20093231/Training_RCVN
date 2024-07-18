@@ -27,24 +27,22 @@ class CustomerController extends Controller
             $query = Customer::query();
 
             if ($request->filled('customer_name')) {
-                 $query->where('customer_name', 'like', '%' . $request->customer_name . '%');
+                $query->customerNameLike($request->customer_name);
             }
 
             if ($request->filled('email')) {
-                $query->where('email', 'like', '%' . $request->email . '%');
+                $query->emailLike($request->email);
             }
 
             if ($request->filled('is_active')) {
-                $query->where('is_active', $request->is_active);
+                $query->isActive($request->is_active);
             }
 
             if ($request->filled('address')) {
-                $query->where('address', 'like', '%' . $request->address . '%');
+                $query->addressLike($request->address);
             }
-
-            $customer = $query->orderBy('created_at', 'desc')->paginate(20);
-
-            return response()->json($customer);
+            $customers = $query->orderBy('created_at', 'desc')->paginate(20);
+            return response()->json($customers);
     }
     public function create()
     {
@@ -93,18 +91,20 @@ class CustomerController extends Controller
     {
             $query = Customer::query();
 
-            // Thêm các điều kiện tìm kiếm vào đây nếu cần
             if ($request->filled('customer_name')) {
-                $query->where('customer_name', 'like', '%' . $request->input('customer_name') . '%');
+                $query->customerNameLike($request->customer_name);
             }
+
             if ($request->filled('email')) {
-                $query->where('email', 'like', '%' . $request->input('email') . '%');
+                $query->emailLike($request->email);
             }
+
             if ($request->filled('is_active')) {
-                $query->where('is_active', $request->input('is_active'));
+                $query->isActive($request->is_active);
             }
+
             if ($request->filled('address')) {
-                $query->where('address', 'like', '%' . $request->input('address') . '%');
+                $query->addressLike($request->address);
             }
 
             $customers = $query->get()->take(20);

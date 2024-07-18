@@ -33,4 +33,18 @@ class Product extends Model
     {
         return $query->orderBy('created_at', 'desc')->paginate(20);
     }
+    public function scopeProductNameLike($query, $productName)
+    {
+        return $query->where('product_name', 'like', '%' . $productName . '%');
+    }
+
+    public function scopeIsSales($query, $isSales)
+    {
+        return $query->where('is_sales', $isSales);
+    }
+
+    public function scopePriceRange($query, $from, $to)
+    {
+        return $query->whereBetween('product_price', [$from, $to]);
+    }
 }

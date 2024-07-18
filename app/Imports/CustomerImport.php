@@ -26,9 +26,7 @@ class CustomerImport implements ToCollection, WithHeadingRow, SkipsOnFailure
         $failures = [];
         foreach ($rows as $index => $row) {
             $rowArray = $row->toArray();
-           //dd($rowArray);
             $validator = Validator::make($rowArray,(new CustomerRequest)->rules(),(new CustomerRequest)-> messages());
-
             if ($validator->fails()) {
                 $failures[] = [
                     'row' => $index + 1,

@@ -22,4 +22,23 @@ class Customer extends Model
     {
        return $query->orderBy('created_at', 'desc')->paginate(20);
     }
+    public function scopeCustomerNameLike($query, $customerName)
+    {
+        return $query->where('customer_name', 'like', '%' . $customerName . '%');
+    }
+
+    public function scopeEmailLike($query, $email)
+    {
+        return $query->where('email', 'like', '%' . $email . '%');
+    }
+
+    public function scopeIsActive($query, $isActive)
+    {
+        return $query->where('is_active', $isActive);
+    }
+
+    public function scopeAddressLike($query, $address)
+    {
+        return $query->where('address', 'like', '%' . $address . '%');
+    }
 }

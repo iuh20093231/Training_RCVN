@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 class LoginController extends Controller
 {
     /**
@@ -34,15 +35,12 @@ class LoginController extends Controller
             $user->last_login_ip = $request->ip();
             $user->updated_at = now();
             // nếu có nhấn remember
-           // if ($request->has('remember_token')) {
-               // $user->remember_token = Str::random(60);
-               // Session::put('remember_token', $user->remember_token);
-            //}
+            if ($request->has('remember_token')) {
+                $user->update(['remember_token' => Str::random(60)]);
+            }
             $user->save();
-
             // Lưu thông tin vào session
-            Session::put('user',$user);
-            Session::flash('success', 'Đăng nhập thành công!');
+            session(['user' => $user]);
             return redirect()->route('product.index');
         }
         else
