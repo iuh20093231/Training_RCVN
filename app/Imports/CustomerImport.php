@@ -11,6 +11,7 @@ use Maatwebsite\Excel\Concerns\Importable;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Concerns\SkipsFailures;
 use Maatwebsite\Excel\Concerns\SkipsOnFailure;
+use App\Http\Requests\CustomerRequest;
 class CustomerImport implements ToCollection, WithHeadingRow, SkipsOnFailure
 {
     /**
@@ -18,15 +19,6 @@ class CustomerImport implements ToCollection, WithHeadingRow, SkipsOnFailure
     *
     * @return \Illuminate\Database\Eloquent\Model|null
     */
-   /* public function model(array $row)
-    {
-        return new Customer([
-            'customer_name'=> $row[0], 
-            'email'    => $row[1], 
-            'tel_num' => $row[2], 
-            'address' => $row[3], 
-        ]);
-    }*/
     use Importable, SkipsFailures;
 
     public function collection(Collection $rows)
@@ -35,13 +27,7 @@ class CustomerImport implements ToCollection, WithHeadingRow, SkipsOnFailure
         foreach ($rows as $index => $row) {
             $rowArray = $row->toArray();
            //dd($rowArray);
-            // Kiểm tra dữ liệu
-            $validator = Validator::make($rowArray, [
-                'ten_khach_hang' => 'required|min:5',
-                'email' => 'required|email|unique:custormers,email',
-                'so_dien_thoai' => 'required|string|regex:/^[0-9]{10,15}$/',
-                'dia_chi' => 'required|string',
-            ]);
+            $validator = Validator::make($rowArray,(new CustomerRequest)->rules(),(new CustomerRequest)-> messages());
 
             if ($validator->fails()) {
                 $failures[] = [
@@ -52,11 +38,11 @@ class CustomerImport implements ToCollection, WithHeadingRow, SkipsOnFailure
             }
 
             Customer::create([
-                'customer_name' => $row['ten_khach_hang'],
+                'customer_name' => $row['customer_name'],
                 'email' => $row['email'],
-                'tel_num' => $row['so_dien_thoai'],
-                'address' => $row['dia_chi'],
-                'is_active' => $row['trang_thai']
+                'tel_num' => $row['tel_num'],
+                'address' => $row['address'],
+                'is_active' => $row['is_active']
             ]);
         }
 

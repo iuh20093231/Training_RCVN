@@ -23,11 +23,10 @@ document.addEventListener("DOMContentLoaded", function() {
         // input.value = '';
     }
     function removeImage() {
-        var input = document.getElementById('product_image');
-        var preview = document.getElementById('imagePreview');
-        
-        input.value = '';  // Clear the input file
-        preview.src = '';  // Clear the preview image
+        if (confirm('Bạn có chắc chắn muốn xóa hình ảnh hiện tại không?')) {
+            document.getElementById('imagePreview').src = ''; // Xóa hiển thị hình ảnh
+            document.getElementById('remove_image').value = '1'; // Đặt giá trị input hidden để đánh dấu xóa
+        }
     }
 
     window.uploadImage = uploadImage;

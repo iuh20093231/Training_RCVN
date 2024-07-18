@@ -15,10 +15,14 @@
             <input type="text" name="tenfile" id="tenfile" readonly style="border: 1px solid white; width: auto;">
         </form>        
         <div class="row">
-            <div class="col-lg-7 pt-3 pl-0 pagination" id="pagination1">
-                {{-- Phân trang --}}
+            <div class="col-lg-7">
+                @if($customer->total() > 20)
+                    <div class="pt-3 pl-0 pagination" id="pagination1">
+                        {{-- Phân trang --}}
+                    </div>
+                @endif
             </div>
-            <p class="col-lg-5 text-center pt-5" style="font-size: 14px;">Hiển thị từ {{ $customer->firstItem() }} đến {{ $customer->lastItem() }} trong tổng số <strong>{{ $customer->total() }}</strong> khách hàng</p>
+            <p class="col-lg-5 pt-5 text-center float-right " style="font-size: 14px;">Hiển thị từ {{ $customer->firstItem() }} đến {{ $customer->lastItem() }} trong tổng số <strong>{{ $customer->total() }}</strong> khách hàng</p>
         </div>
          <div class="row mt-1">
                 <table class="table table-striped">
@@ -35,11 +39,13 @@
                     <tbody id="user-table">
                     </tbody>
                   </table>
-        </div> 
+         </div> 
             <div class="row mt-2 text-center">
-                <div class="pagination" id="pagination2">
-                    {{-- Phân trang --}}
-                </div>
+                @if ($customer->total()>20)
+                    <div class="pagination" id="pagination2">
+                        {{-- Phân trang --}}
+                    </div> 
+                @endif
             </div> 
         </div>
         @if (session('import_failures'))
@@ -54,21 +60,7 @@
         {{-- Popup add customer --}}
         @include('custormer.add')
         {{-- Modal xóa khách hàng --}}
-        <div class='modal fade' id='myModal' role='dialog' aria-label='resultModalLabel'  aria-hidden='true'>
-            <div class='modal-dialog modal-dialog-centered'>
-                <div class='modal-content min-h-65'>
-                    <div class='modal-body text-center'>
-                        <div class='icon-status mt-2 p-5'>     
-                            <i class="fa fa-exclamation-triangle text-warning " aria-hidden="true" style="font-size: 70px;"></i>
-                            <h3 class='text-danger mt-2'>Nhắc nhở</h3>
-                            <p class="p">Bạn có chắc muốn xóa khách hàng <span id="customer-name"></span> <span id="customer-id" style="display: none;"></span> này không?</p>
-                        </div>
-                            <input type='button' class='btn btn-dark mb-3' data-dismiss='modal' value='Hủy'>
-                            <input type='button' class='btn btn-danger mb-3' id="btn-delete" value='Okay'>
-                        </div>
-                </div>
-            </div>
-        </div>
+        @include('custormer.modal')
         <script src="{{ asset('js/customer.js') }}"></script>
         @if ($errors->any())
             <script>

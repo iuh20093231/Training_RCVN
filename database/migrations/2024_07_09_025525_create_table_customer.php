@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('custormers', function (Blueprint $table) {
             $table->increments('id'); // Tạo cột customer_id kiểu INT với AUTO_INCREMENT và PRIMARY KEY
             $table->string('customer_name', 255);
-            $table->string('email', 255);
+            $table->string('email', 255)->unique();
             $table->string('tel_num', 14);
             $table->string('address', 255);
             $table->tinyInteger('is_active')->nullable();

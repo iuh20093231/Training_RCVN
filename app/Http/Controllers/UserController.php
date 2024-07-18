@@ -6,12 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\UserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $tittle = 'User';
@@ -23,11 +21,10 @@ class UserController extends Controller
     // Lấy dữ liệu json của người dùng
     public function getUsers(Request $request)
     {
-        try {
             $query = User::query();
 
             if ($request->filled('name')) {
-            $query->where('name', 'like', '%' . $request->name . '%');
+                $query->where('name', 'like', '%' . $request->name . '%');
             }
 
             if ($request->filled('email')) {
@@ -44,11 +41,6 @@ class UserController extends Controller
 
             $users = $query->where('is_delete',0)->orderBy('created_at', 'desc')->paginate(20);
             return response()->json($users);
-
-        } catch (\Exception $e) {
-            \Log::error('Error fetching users: ' . $e->getMessage());
-            return response()->json(['error' => 'Internal Server Error'], 500);
-        }
     }
     // Thêm user
     public function create()
@@ -80,43 +72,23 @@ class UserController extends Controller
 
     public function edit($id)
     {
-        $tittle = 'Update User';
         $user = User::findOrFail($id);
-       return view('users.edit',compact('tittle','user'));
+       return response()->json($user);
     }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request,$id)
+    public function update(UpdateUserRequest $request,$id)
     {
         $user = User::findOrFail($id);
-        $request->validate([
-            'name' => 'required|string|min:5',
-            'email' => 'required|string|email|max:255|unique:users,email,' . $id,
-        ]);
-        if($request->has('is_active'))
-        {
-            $is_active = 1;
-        }
-        else
-        {
-            $is_active = 0;
-        }
+        $data = $request->validated();
         $user->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => bcrypt($data['password']),
             'group_role' => $request->group_role,
-            'is_active' => $is_active,
+            'is_active' => $request->is_active,
         ]);
-        return redirect()->route('users.index')->with('success', 'Thông tin người dùng đã được cập nhật thành công.');
+        return response()->json(['success' => 'User updated successfully.']);
 
     }
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy($id)
     {
         $user = User::findOrFail($id);

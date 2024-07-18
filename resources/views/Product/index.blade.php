@@ -8,11 +8,15 @@
                         <a href="#" class="float-right col-2">Sản phẩm</a>
             </div>
             @include('Product.search')
-            <div class="row text-center">
-                <div class="col-lg-7 pt-3 pl-0 pagination" id="pagination1">
-                    {{-- Phân trang --}}
+           <div class="row">
+                <div class="col-lg-7">
+                    @if($product->total()>20)
+                        <div class="pt-3 pl-0 pagination" id="pagination1">
+                            {{-- Phân trang --}}
+                        </div>
+                    @endif
                 </div>
-                <p class="col-lg-5 text-center pt-5 " style="font-size: 14px;">Hiển thị từ {{ $product->firstItem() }} đến {{ $product->lastItem() }} trong tổng số <strong>{{ $product->total() }}</strong> sản phẩm</p>
+                <p class="col-lg-5 pt-5 text-center float-right " style="font-size: 14px;">Hiển thị từ {{ $product->firstItem() }} đến {{ $product->lastItem() }} trong tổng số <strong>{{ $product->total() }}</strong> sản phẩm</p>
             </div>
             <div class="row">
                 <table class="table table-striped mt-3">
@@ -31,9 +35,11 @@
                   </table>
             </div>
             <div class="row mt-2 text-center">
+                @if($product->total()>20)
                 <div class="pagination" id="pagination2">
                     {{-- Phân trang --}}
                 </div>
+                @endif
             </div> 
         </div>
     </div>

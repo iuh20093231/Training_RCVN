@@ -49,8 +49,8 @@ Route::group(['middleware'=> Authenticate::class], function()
     Route::get('/users/list',[UserController::class,'getUsers'])->name('users.list'); // lấy dữ liệu JSON
     Route::get('/users/add',[UserController::class,'create'])->name('users.create');
     Route::post('/users/add',[UserController::class,'store'])->name('users.add');
-    Route::get('/users/{user}/edit',[UserController::class,'edit'])->name('users.edit');
-    Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
+    Route::get('/users/{id}',[UserController::class,'edit'])->name('users.edit');
+    Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
     Route::post('/users/{id}/updatestatus', [UserController::class, 'updateStatus']);
     

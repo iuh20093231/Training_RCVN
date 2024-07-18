@@ -1,65 +1,5 @@
-@include('includes.header');
-<body>
-    <div class="container">
-        <div class="add-user">
-            <div class="header-add p-1">
-                 <h3 class="text-center">Chỉnh sửa user</h3>
-            </div>
-            <form action="{{ route('users.update',$user->id) }}" method="POST" class="form form-add">
-                @csrf
-                @method('PUT')
-                <div class="row form-group">
-                    <label for="name" class="col-3 lbl">Tên</label>
-                    <input type="text" name="name" id="name" class="col-8 form-control" placeholder="Nhập họ tên" value="{{ $user->name }}">
-                    @if ($errors->has('name'))
-                    <span class="text-danger">{{ $errors->first('name') }}</span>
-                    @endif
-                </div>
-                <div class="row form-group">
-                    <label for="email" class="col-3 lbl">Email</label>
-                    <input type="text" name="email" id="email" class="col-8 form-control" placeholder="Nhập email" value="{{ $user->email }}">
-                    @if ($errors->has('email'))
-                    <span class="text-danger">{{ $errors->first('email') }}</span>
-                    @endif
-                </div>
-                <div class="row form-group">
-                    <label for="password" class="col-3 lbl">Mật khẩu</label>
-                    <input type="password" name="password" id="password" class="col-8 form-control" placeholder="Mật khẩu" >
-                    @if ($errors->has('password'))
-                    <span class="text-danger">{{ $errors->first('password') }}</span>
-                    @endif
-                </div>
-                <div class="row form-group">
-                    <label for="reset_password" class="col-3 lbl">Xác nhận</label>
-                    <input type="password" name="reset_password" id="reset_password" class="col-8 form-control" placeholder="Xác mật khẩu">
-                    @if ($errors->has('reset_password'))
-                    <span class="text-danger">{{ $errors->first('reset_password') }}</span>
-                    @endif
-                </div>
-                <div class="row form-group">
-                    <label for="group_role" class="col-3 lbl">Chọn nhóm</label>
-                    <select name="group_role" id="group_role" class="col-8 form-control">
-                        <option value="Admin" {{ $user->group_role == 'Admin' ? 'selected' : '' }}>Admin</option>
-                        <option value="Reviewer" {{ $user->group_role == 'Reviewer' ? 'selected' : '' }}>Reviewer</option>
-                        <option value="Editor" {{ $user->group_role == 'Editor' ? 'selected' : '' }}>Editor</option>
-                    </select>
-                </div>
-                <div class="row form-group">
-                    <label for="is_active" class="col-3 lbl">Trạng thái</label>
-                    <input type="checkbox" name="is_active" id="is_active" {{ $user->is_active ? 'checked' : '' }}>
-                    <label class="form-check-label" for="is_active">Trạng thái hoạt động</label>
-                </div>
-                <div class="row form-group float-right">
-                    <button type="submit" class="btn btn-gray mr-3"><a href="{{ route('users.index') }}" style="text-decoration: none;">Hủy</a></button>
-                    <button type="submit" class="btn btn-danger">Cập nhật</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</body>
-</html>
 
-{{-- <div class="modal fade" id="updateUser">
+<div class="modal fade" id="updateUser" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-form">
       <div class="modal-content">
         <div class="modal-header">
@@ -68,63 +8,49 @@
            </div>
         </div>
         <div class="modal-body">
-            <form action="{{ route('users.update',$user->id) }}" method="POST" class="form form-add">
+            <form  class="form form-add" id="editUserForm">
                 @csrf
                 @method('PUT')
+                <input type="hidden" name="user_id" id="user_id"> 
                 <div class="row form-group">
                     <label for="name" class="col-3 lbl">Tên</label>
-                    <input type="text" name="name" id="name" class="col-8 form-control @error('name') is-invalid @enderror" placeholder="Nhập họ tên"  value="{{ $user->name }}">
-                    @error('name')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                    @enderror
+                    <input type="text" name="name" id="edit_name" class="col-8 form-control" placeholder="Nhập họ tên">
                 </div>
                 <div class="row form-group">
                     <label for="email" class="col-3 lbl">Email</label>
-                    <input type="text" name="email" id="email" class="col-8 form-control @error('email') is-invalid @enderror" placeholder="Nhập email" value="{{ $user->email }}">
-                    @error('email')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                    @enderror
+                    <input type="text" name="email" id="edit_email" class="col-8 form-control" placeholder="Nhập email">
+                
                 </div>
                 <div class="row form-group">
                     <label for="password" class="col-3 lbl">Mật khẩu</label>
-                    <input type="password" name="password" id="password" class="col-8 form-control @error('password') is-invalid @enderror" placeholder="Mật khẩu" value="{{ old('password') }}">
-                    @error('password')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                    @enderror
+                    <input type="password" name="password" id="edit_password" class="col-8 form-control" placeholder="Mật khẩu">
+                   
                 </div>
                 <div class="row form-group">
                     <label for="reset_password" class="col-3 lbl">Xác nhận</label>
-                    <input type="password" name="reset_password" id="reset_password" class="col-8 form-control @error('reset_password') is-invalid @enderror" placeholder="Xác mật khẩu" value="{{ old('reset_password') }}" >
-                    @error('reset_password')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                    @enderror
+                    <input type="password" name="reset_password" id="edit_reset_password" class="col-8 form-control" placeholder="Xác mật khẩu">
+                 
                 </div>
                 <div class="row form-group">
                     <label for="group" class="col-3 lbl">Chọn nhóm</label>
-                    <select name="group" id="group" class="col-8 form-control">
-                        <option value="Admin" {{ $user->group_role == 'Admin' ? 'selected' : '' }}>Admin</option>
-                        <option value="Reviewer" {{ $user->group_role == 'Reviewer' ? 'selected' : '' }}>Reviewer</option>
-                        <option value="Editor" {{ $user->group_role == 'Editor' ? 'selected' : '' }}>Editor</option>
+                    <select name="group_role" id="edit_group" class="col-8 form-control">
+                        <option value="Admin" >Admin</option>
+                        <option value="Reviewer">Reviewer</option>
+                        <option value="Editor">Editor</option>
                     </select>
                 </div>
-                <div class="row form-group ml-4 mt-3">
-                    <input class="form-check-input" type="checkbox" id="is_active" name="is_active" {{ $user->is_active ? 'checked' : '' }}>
+                <div class="row form-group">
+                    <label for="is_active" class="col-3 lbl">Trạng thái</label>
+                    <input type="checkbox" name="is_active" id="edit_is_active">
                     <label class="form-check-label" for="is_active">Trạng thái hoạt động</label>
                 </div>
+            </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-gray mr-3" data-dismiss="modal">Hủy</button>
-          <button type="submit" class="btn btn-danger">Lưu</button>
+          <button type="submit" class="btn btn-danger" id="btn-update">Lưu</button>
         </div>
         </form>
       </div>
     </div>
   </div>
-</div> --}}
+</div>

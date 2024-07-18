@@ -16,19 +16,14 @@ use Illuminate\Database\Eloquent\Builder;
 use Exception;
 class CustomerController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $tittle = 'Customer';
-        //$query = Customer::query();
         $customer = Customer::popular();
         return view('custormer.index',compact("tittle","customer"));
     }
     public function getCustomer(Request $request)
     {
-        try {
             $query = Customer::query();
 
             if ($request->filled('customer_name')) {
@@ -50,25 +45,12 @@ class CustomerController extends Controller
             $customer = $query->orderBy('created_at', 'desc')->paginate(20);
 
             return response()->json($customer);
-
-        } catch (\Exception $e) {
-            \Log::error('Error fetching customer: ' . $e->getMessage());
-            return response()->json(['error' => 'Internal Server Error'], 500);
-        }
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         $tittle = 'Add customer';
         return view('custormer.add',compact('tittle'));
     }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(CustomerRequest $request)
     {
         if($request->has('is_active'))
@@ -89,52 +71,26 @@ class CustomerController extends Controller
         ]);
         return redirect()->route('custormer.index')->with('success', 'Người dùng đã được tạo thành công.');
     }
-
-    /**
-     * Display the specified resource.
-     */
     public function show($id)
     {
-       $customer = Customer::findOrFail($id);
+        $customer = Customer::findOrFail($id);
         return response()->json($customer);
     }
 
-    public function update(Request $request,$id)
+    public function update(CustomerRequest $request,$id)
     {
-        try {
-            $request->validate([
-                'customer_name' => 'required|string|min:5',
-                'email' => 'required|string|email|max:255'. $id,
-                'tel_num' => 'required|string|regex:/^[0-9]{10,15}$/',
-                'address' => 'required',
-            ]);
-
+            $data = $request->validated();
             $customer = Customer::findOrFail($id);
-
-            $customer->update([
-                'customer_name' => $request->customer_name,
-                'email' => $request->email,
-                'tel_num' => $request->tel_num,
-                'address' => $request->address,
-            ]);
-
+            $customer->update($data);
             return response()->json($customer);
-        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-            return response()->json(['message' => 'Customer not found'], 404);
-        } catch (\Exception $e) {
-            \Log::error('Error updating customer: '.$e->getMessage());
-            return response()->json(['message' => 'Internal Server Error'], 500);
-        }
     }
     public function import(Request $request)
     {
-
         Excel::import(new CustomerImport, $request->file('file'));
         return back();
     }
     public function export(Request $request)
     {
-        try {
             $query = Customer::query();
 
             // Thêm các điều kiện tìm kiếm vào đây nếu cần
@@ -152,19 +108,12 @@ class CustomerController extends Controller
             }
 
             $customers = $query->get()->take(20);
-            //dd($customers);
             return Excel::download(new CustomerExport($customers), 'customer.csv', \Maatwebsite\Excel\Excel::CSV, [
             'Content-Type' => 'text/csv',
             'charset' => 'UTF-8',
             'encoding' => 'UTF-8-BOM',
             ]);
-        } catch (Exception $e) {
-            return response()->json(['error' => $e->getMessage()]);
-        }
     }
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy($id)
     {
         $customer = Customer::findOrFail($id);

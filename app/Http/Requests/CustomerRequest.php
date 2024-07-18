@@ -21,10 +21,11 @@ class CustomerRequest extends FormRequest
      */
     public function rules(): array
     {
+        $id = $this->route('id');
         return [
             'customer_name' => 'required|min:5',
-            'email' => 'required|email|unique:custormers,email',
-            'tel_num' => 'required|string|regex:/^[0-9]{10,15}$/',
+            'email' => 'required|email|unique:custormers,email,'  .$id,
+            'tel_num' => 'required|regex:/^[0-9]{10}$/',
             'address' => 'required|string',
         ];
     }
@@ -37,6 +38,7 @@ class CustomerRequest extends FormRequest
             'email.unique' => 'Email không được trùng.',
             'email.email' => 'Email không đúng định dạng.',
             'tel_num.required' => 'Số điện thoại không được để trống',
+            //'tel_num.string' => 'Số điện thoại phải là số',
             'tel_num.regex' => 'Số điện thoại không đúng định dạng',
             'address.required' => 'Địa chỉ không được trống',
         ];

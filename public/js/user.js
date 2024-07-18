@@ -48,13 +48,12 @@ $(document).ready(function(){
                                 break;
                         }                               // Index phân trang 10
                         userTable.append(`<tr><td>${index + 1 + (page - 1) * 20}</td><td>${user.name}</td><td>${user.email}</td><td>${user.group_role}</td>${statusText}<td>
-                            <a href="/users/${user.id}/edit" class="update mr-1"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                            <button class="btn update mr-1 edit-user"><i class="fa fa-pencil" aria-hidden="true"></i></button>
                             <button  class="btn delete mr-1 deleteUser" data-id="${user.id}" data-name="${user.name}"><i class="fa fa-trash" aria-hidden="true"></i></button>
                             <button  class="btn deloy  mr-1 lockUpUser" data-id="${user.id}" data-name="${user.name}" data-status="${user.is_active}"><i class="fa fa-user-times" aria-hidden="true"></i></button>
                             </td></tr>`);
                     });
-                    // if(users.count() > 20){
-                        for (let i = 1; i <= response.last_page; i++) {
+                    for (let i = 1; i <= response.last_page; i++) {
                             let activeClass = (i === response.current_page) ? 'current' : '';
                             pagination1.append(`
                                  <a href="#" data-page="${i}" class="page-link ${activeClass}" style="line-height:13px;">${i}</a>
@@ -85,9 +84,7 @@ $(document).ready(function(){
                             if (currentPage > 1) {
                                 loadUser(currentPage - 1);
                             }
-                        });
-                    // } 
-                    
+                        }); 
                 }
             },
             error: function(xhr, status, error) {
@@ -114,6 +111,93 @@ $(document).ready(function(){
         loadUser(1); // Gọi lại hàm loadUsers để load lại danh sách người dùng ban đầu
     });
     loadUser(1);
+    // Update
+    $(document).on('click', '.edit-user', function(e) {
+        e.preventDefault();
+        var userId = $(this).closest('tr').find('.deleteUser').data('id');
+
+        // Gọi Ajax để lấy thông tin user
+        $.ajax({
+            url: '/users/' + userId,
+            method: 'GET',
+            success: function(response) {
+                // Điền thông tin vào form
+                $('#user_id').val(response.id);
+                $('#edit_name').val(response.name);
+                $('#edit_email').val(response.email);
+                $('#edit_group').val(response.group_role);
+
+                // Kiểm tra giá trị của is_active và cập nhật trạng thái của checkbox
+                $('#edit_is_active').prop('checked', response.is_active == 1);
+
+                // Hiện modal
+                $('#updateUser').modal('show');
+            },
+            error: function(xhr, status, error) {
+                console.error('Lỗi khi lấy thông tin người dùng:', error);
+            }
+        });
+    });
+
+    // Xử lý submit form chỉnh sửa
+    $('#editUserForm').submit(function(e) {
+        e.preventDefault();
+
+        var userId = $('#user_id').val();
+        var formData = $(this).serializeArray();
+        formData.push({ name: 'is_active', value: $('#edit_is_active').is(':checked') ? 1 : 0 });
+        $.ajax({
+            url: '/users/' + userId,
+            method: 'PUT',
+            data: formData,
+            success: function(response) {
+                // Cập nhật thông tin user trong bảng (nếu cần)
+                loadUser(1);
+
+                // Đóng modal
+                $('#updateUser').modal('hide');
+            },
+            error: function(xhr, status, error) {
+                var response = xhr.responseJSON;
+                if (response.errors) {
+                    if (response.errors.name) {
+                        $('#edit_name').after('<span class="error text-danger">' + response.errors.name[0] + '</span>');
+                    }
+                    if (response.errors.email) {
+                        $('#edit_email').after('<span class="error text-danger">' + response.errors.email[0] + '</span>');
+                    }
+                    if (response.errors.password) {
+                        $('#edit_password').after('<span class="error text-danger">' + response.errors.password[0] + '</span>');
+                    }
+                    if (response.errors.reset_password) {
+                        $('#edit_reset_password').after('<span class="error text-danger">' + response.errors.reset_password[0] + '</span>');
+                    }
+                    if (response.errors.group_role) {
+                        $('#edit_group_role').after('<span class="error text-danger">' + response.errors.group_role[0] + '</span>');
+                    }
+                    if (response.errors.is_active) {
+                        $('#edit_is_active').after('<span class="error text-danger">' + response.errors.is_active[0] + '</span>');
+                    }
+                } else {
+                    console.error('Lỗi khi cập nhật người dùng:', error);
+                }
+            }
+        });
+    });
+    $('#addUsers').on('hidden.bs.modal', function () {
+        $(this).find('form')[0].reset();
+        $(this).find('.form-control').removeClass('is-invalid'); // Xoá lớp lỗi
+        $(this).find('.invalid-feedback').text(''); // Xoá thông báo lỗi
+        $('#add_name').val('');
+        $('#add_email').val('');
+        $('#add_password').val('');
+        $('#add_reset_password').val('');
+        $('#add_is_active').prop('checked', false);   
+    });
+    $('#updateUser').on('hidden.bs.modal', function() {
+        $('#editUserForm')[0].reset();
+        $('.error').remove();
+    });
     // Delete Người dùng
     $(document).on('click', '.deleteUser', function() {
         var userID = $(this).data('id');

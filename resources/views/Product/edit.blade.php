@@ -46,7 +46,8 @@
                     <img src="{{ asset('storage/'. $product->product_image) }}" alt="Hình ảnh sản phẩm" id="imagePreview" style="height: 390px; width:100%;">
                 </div>
                 <label class="btn btn-success mt-2" for="product_image">Upload images</label>
-                <button type="button" class="btn btn-danger"  onclick="removeImage()"> Xóa images</button>
+                <input type="button" class="btn btn-danger" onclick="removeImage()" value="Xóa images" id="remove_image_button"> 
+                <input type="hidden" name="remove_image" id="remove_image" value="0"> <!-- Giá trị mặc định -->
                 <input hidden type="file" name="product_image" id="product_image" accept="image/*" onchange="uploadImage()">
                 <input type="text" name="tenfile" id="tenfile" readonly style="border: 1px solid rgb(152, 151, 151);" placeholder="tên file">
                 <br>

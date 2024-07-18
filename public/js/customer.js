@@ -102,6 +102,16 @@ $(document).ready(function(){
         $('#address').val('');
         loadCustomer(1); // Gọi lại hàm loadUsers để load lại danh sách người dùng ban đầu
     });
+    $('#addCustomer').on('hidden.bs.modal', function () {
+        $(this).find('form')[0].reset();
+        $(this).find('.form-control').removeClass('is-invalid'); // Xoá lớp lỗi
+        $(this).find('.invalid-feedback').text(''); // Xoá thông báo lỗi
+        $('#add_customer_name').val('');
+        $('#add_email').val('');
+        $('#add_tel_num').val('');
+        $('#add_address').val('');
+        $('#add_is_active').prop('checked', false);
+    });
     $('#export').on('click', function(e) {
         e.preventDefault();
         const data = {
@@ -127,12 +137,16 @@ $(document).ready(function(){
         // Tạo form update ngay trên hàng dữ liệu
         var editForm = `
             <td>${stt}</td>
-            <td><input type="text" class="form-control" name="customer_name" id="customer_name" value="${customer_name}"></td>
-            <td><input type="email" class="form-control" name="email" id="email" value="${email}"></td>
-            <td><input type="text" class="form-control" name="address" id="address" value="${address}"></td>
-            <td><input type="text" class="form-control" name="tel_num" id="tel_num" value="${tel_num}"></td>
+            <td><input type="text" class="form-control" name="customer_name" id="customer_name" value="${customer_name}">
+            <div class="error-message"></div></td>
+            <td><input type="email" class="form-control" name="email" id="email" value="${email}">
+            <div class="error-message"></div></td>
+            <td><input type="text" class="form-control" name="address" id="address" value="${address}">
+            <div class="error-message"></div></td>
+            <td><input type="text" class="form-control" name="tel_num" id="tel_num" value="${tel_num}">
+            <div class="error-message"></div></td>
             <td>
-                <button class="btn btn-success btn-sm save-user" data-id="${customerID}">Save</button>
+                <button type="submit" class="btn btn-success btn-sm save-user" data-id="${customerID}">Save</button>
                 <button class="btn btn-secondary btn-sm cancel-edit" data-id="${customerID}">Cancel</button>
             </td>
         `;
@@ -172,8 +186,22 @@ $(document).ready(function(){
                 row.html(updateRow);
                 // alert('Update thành công');
             },
-            error: function(error) {
-                console.error('Error updating user:', error);
+            error: function(xhr) {
+                console.log('Error:', xhr); // Debugging
+    
+                // Clear previous error messages
+                row.find('.error-message').remove();
+    
+                var errors = xhr.responseJSON.errors;
+                if (errors) {
+                    for (var key in errors) {
+                        var errorMessages = errors[key];
+                        var errorMessageHtml = `<div class="error-message text-danger">${errorMessages.join(', ')}</div>`;
+                        row.find('input[name="' + key + '"]').after(errorMessageHtml);
+                    }
+                } else {
+                    console.error('Error updating user:', xhr);
+                }
             }
         });
     });
