@@ -21,14 +21,12 @@ $(document).ready(function(){
                 console.log(response); // Kiểm tra dữ liệu trả về
                 let custormer = response.data;
                 let userTable = $('#user-table');
+                userTable.empty();// Xóa nội dung hiện tại của bảng
                 let pagination1 = $('#pagination1');
                 let pagination2 = $('#pagination2');
-                userTable.empty();// Xóa nội dung hiện tại của bảng
                 pagination1.empty();// Xóa nội dung hiện tại của phân trang
                 pagination2.empty();
-                 // Thêm nút phân trang ngược lại
-                 pagination1.append('<a href="#" class="prev-page">&laquo;</a>');
-                 pagination2.append('<a href="#" class="prev-page">&laquo;</a>');
+                $('#pagination-info').empty();
                 if (custormer.length === 0) {
                     userTable.append('<tr><td colspan="6" id="no-data">Không có dữ liệu</td></tr>');
                 } else {
@@ -49,7 +47,12 @@ $(document).ready(function(){
                         </td>
                       </tr>`);
                     });
-                    // if(custormer.length >= 20){
+                    if(total>20){
+                        $('#pagination-wrapper').show();
+                        $('#pagination-wrapper2').show();
+                         // Thêm nút phân trang ngược lại
+                        pagination1.append('<a href="#" class="prev-page">&laquo;</a>');
+                        pagination2.append('<a href="#" class="prev-page">&laquo;</a>');
                         for (let i = 1; i <= response.last_page; i++) {
                             let activeClass = (i === response.current_page) ? 'current' : '';
                             pagination1.append(`
@@ -82,7 +85,10 @@ $(document).ready(function(){
                                 loadCustomer(currentPage - 1);
                             }
                         });
-                    // }
+                    } else {
+                        $('#pagination-wrapper').hide();
+                        $('#pagination-wrapper2').hide();
+                    }
                 }
             },
             error: function(xhr, status, error) {

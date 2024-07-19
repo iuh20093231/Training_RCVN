@@ -6,21 +6,12 @@
                 <p class="float-left col-10 pl-0">Danh sách khách hàng</p>
                 <a href="#" class="float-right col-2">Khách hàng</a>
             </div>
-        @include('custormer.search')
-        <form action="{{ route('import') }}" method="POST" enctype="multipart/form-data" class="form mt-3">
-            @csrf
-            <label for="file"><i class="fa fa-upload import-csv" aria-hidden="true"></i></label>
-            <input type="file" name="file" id="file" accept=".csv" style="display:none;">
-            <button  class="btn btn-success" type="submit">Import CSV</button>
-            <input type="text" name="tenfile" id="tenfile" readonly style="border: 1px solid white; width: auto;">
-        </form>        
+        @include('custormer.search')       
         <div class="row">
-            <div class="col-lg-7">
-                @if($customer->total() > 20)
-                    <div class="pt-3 pl-0 pagination" id="pagination1">
-                        {{-- Phân trang --}}
-                    </div>
-                @endif
+            <div class="col-lg-7" id="pagination-wrapper">
+                <div class="pt-3 pl-0 pagination" id="pagination1">
+                    {{-- Phân trang --}}
+                </div>
             </div>
             <p class="col-lg-5 pt-5 text-center float-right " style="font-size: 14px;" id="pagination-info"></p>
         </div>
@@ -40,12 +31,10 @@
                     </tbody>
                   </table>
          </div> 
-            <div class="row mt-2 text-center">
-                @if ($customer->total()>20)
-                    <div class="pagination" id="pagination2">
-                        {{-- Phân trang --}}
-                    </div> 
-                @endif
+            <div class="row mt-2 text-center" id="pagination-wrapper2">
+                <div class="pagination" id="pagination2">
+                    {{-- Phân trang --}}
+                </div> 
             </div> 
         </div>
         @if (session('import_failures'))
@@ -70,6 +59,11 @@
                 });
             </script>
         @endif
+        <script>
+            function submitForm() {
+                document.getElementById('import-form').submit();
+            }
+        </script>
 </body>
 
 </html>

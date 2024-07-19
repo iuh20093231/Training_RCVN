@@ -28,5 +28,11 @@
     <button type="button" class="btn btn-search btn-success ml-5" id="clear-search"><i class="fa fa-times" aria-hidden="true">  Xóa tìm</i></button>
     <i class="fa fa-download import-csv ml-5" aria-hidden="true"></i>
     <button type="button" class="btn btn-success" id="export">Export CSV</button>
+    <i class="fa fa-upload import-csv ml-5" aria-hidden="true"></i>
+    <button  class="btn btn-success" type="button" onclick="document.getElementById('file-input').click();">Import CSV</button>
 </form>
+<form action="{{ route('import') }}" method="POST" enctype="multipart/form-data" class="form mt-3" id="import-form">
+    @csrf
+    <input type="file" name="file" id="file-input" accept=".csv" style="display:none;" onchange="submitForm()">
+</form> 
 

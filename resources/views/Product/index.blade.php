@@ -9,12 +9,10 @@
             </div>
             @include('Product.search')
            <div class="row">
-                <div class="col-lg-7">
-                    @if($product->total()>20)
-                        <div class="pt-3 pl-0 pagination" id="pagination1">
-                            {{-- Phân trang --}}
-                        </div>
-                    @endif
+                <div class="col-lg-7" id="pagination-wrapper">
+                    <div class="pt-3 pl-0 pagination" id="pagination1">
+                        {{-- Phân trang --}}
+                    </div>
                 </div>
                 <p class="col-lg-5 pt-5 text-center float-right " style="font-size: 14px;" id="pagination-info"></p>
             </div>
@@ -34,12 +32,10 @@
                     </tbody>
                   </table>
             </div>
-            <div class="row mt-2 text-center">
-                @if($product->total()>20)
+            <div class="row mt-2 text-center" id="pagination-wrapper2">
                 <div class="pagination" id="pagination2">
                     {{-- Phân trang --}}
                 </div>
-                @endif
             </div> 
         </div>
     </div>

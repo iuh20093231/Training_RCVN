@@ -14,12 +14,7 @@ class UserController extends Controller
     {
         $tittle = 'User';
         $users = User::popular();
-        $currentPage = $users->currentPage();
-        $perPage = $users->perPage();
-        $total = $users->total();
-        $from = ($currentPage - 1) * $perPage + 1;
-        $to = min($total, $currentPage * $perPage);
-        return view('users.index', compact('tittle','users','from','to'));
+        return view('users.index', compact('tittle','users'));
 
     }
     // Lấy dữ liệu json của người dùng
