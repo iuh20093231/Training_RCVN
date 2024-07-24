@@ -45,13 +45,9 @@
     @include('users.modal')
     <script src="{{ asset('js/user.js') }}"></script>
     @if ($errors->any())
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var addCustomerModal = new bootstrap.Modal(document.getElementById('addUsers'));
-            addCustomerModal.show();
-        });
-    </script>
+    <script src="{{ asset('js/modal.js') }}"></script>
     @endif
+    <script src="{{ asset('js/password.js') }}"></script>
 </body>
 
 </html>

@@ -9,7 +9,7 @@
     </div>
     <div class="col-lg-3 form-group search-name float-left pl-5">
         <label for="group_role">Nhóm</label>
-        <select name="group_role" id="group_role" class="form-control" style="width:200px;">
+        <select name="group_role" id="group_role" class="form-control custom-select" style="width:200px;">
             <option value="">Chọn nhóm</option>
             <option value="Reviewer">Reviewer</option>
             <option value="Admin">Admin</option>
@@ -18,7 +18,7 @@
     </div>
     <div class="col-lg-3 form-group search-name float-left pl-5">
         <label for="is_active">Trạng thái</label>
-        <select name="is_active" id="is_active" class="form-control" style="width:200px;">
+        <select name="is_active" id="is_active" class="form-control custom-select" style="width:200px;">
             <option value="">Chọn trạng thái</option>
             <option value="1">Đang hoạt động</option>
             <option value="0">Tạm khóa</option>

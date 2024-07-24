@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('custormers', function (Blueprint $table) {
+        Schema::create('mst_customer', function (Blueprint $table) {
             $table->increments('id'); // Tạo cột customer_id kiểu INT với AUTO_INCREMENT và PRIMARY KEY
             $table->string('customer_name', 255);
             $table->string('email', 255)->unique();
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('custormers');
+        Schema::dropIfExists('mst_customer');
     }
 };

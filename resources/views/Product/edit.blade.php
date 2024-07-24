@@ -32,7 +32,7 @@
                 @endif
                 <br>
                 <label for="is_sales" class="lbl pt-2">Trạng thái</label>
-                <select name="is_sales" id="is_sales" class="form-control">
+                <select name="is_sales" id="is_sales" class="form-control custom-select">
                     <option value="0" {{ $product->is_sales == 0 ? 'selected' : '' }}>Ngừng bán</option>
                     <option value="1" {{ $product->is_sales == 1 ? 'selected' : '' }}>Đang bán</option>
                 </select>

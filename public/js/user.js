@@ -19,13 +19,13 @@ $(document).ready(function(){
             type: 'GET',
             data: data,
             success: function(response){
-                console.log(response); // Kiểm tra dữ liệu trả về
+                console.log(response); 
                 let users = response.data;
                 let userTable = $('#user-table');
-                userTable.empty();// Xóa nội dung hiện tại của bảng
+                userTable.empty();
                 let pagination1 = $('#pagination1');
                 let pagination2 = $('#pagination2');
-                pagination1.empty();// Xóa nội dung hiện tại của phân trang
+                pagination1.empty();
                 pagination2.empty();
                 $('#pagination-info').empty();
                 if (users.length === 0) {
@@ -48,7 +48,7 @@ $(document).ready(function(){
                             default:
                                 statusText = 'Không xác định';
                                 break;
-                        }                               // Index phân trang 10
+                        }                             
                         userTable.append(`<tr><td>${index + 1 + (page - 1) * 20}</td><td>${user.name}</td><td>${user.email}</td><td>${user.group_role}</td>${statusText}<td>
                             <button class="btn update mr-1 edit-user"><i class="fa fa-pencil" aria-hidden="true"></i></button>
                             <button  class="btn delete mr-1 deleteUser" data-id="${user.id}" data-name="${user.name}"><i class="fa fa-trash" aria-hidden="true"></i></button>
@@ -108,20 +108,19 @@ $(document).ready(function(){
     }
     $('#search-form').on('submit', function(e) {
         e.preventDefault();
-        loadUser(1); // Gọi hàm loadUsers khi form được submit
+        loadUser(1);
     });
-    // Gắn sự kiện click cho nút tìm kiếm
     $('#search').on('click', function(e) {
         e.preventDefault();
-        $('#search-form').submit(); // Submit form khi nút tìm kiếm được click
+        $('#search-form').submit(); 
     });
     $('#clear-search').on('click', function(e) {
         e.preventDefault();
-        $('#name').val(''); // Xóa dữ liệu trên input Tên
-        $('#email').val(''); // Xóa dữ liệu trên input Email
-        $('#group_role').val(''); // Xóa dữ liệu trên dropdown Nhóm
-        $('#is_active').val(''); // Xóa dữ liệu trên dropdown Trạng thái
-        loadUser(1); // Gọi lại hàm loadUsers để load lại danh sách người dùng ban đầu
+        $('#name').val(''); 
+        $('#email').val(''); 
+        $('#group_role').val(''); 
+        $('#is_active').val(''); 
+        loadUser(1); 
     });
     loadUser(1);
     // Update
@@ -139,11 +138,7 @@ $(document).ready(function(){
                 $('#edit_name').val(response.name);
                 $('#edit_email').val(response.email);
                 $('#edit_group').val(response.group_role);
-
-                // Kiểm tra giá trị của is_active và cập nhật trạng thái của checkbox
                 $('#edit_is_active').prop('checked', response.is_active == 1);
-
-                // Hiện modal
                 $('#updateUser').modal('show');
             },
             error: function(xhr, status, error) {
@@ -151,7 +146,6 @@ $(document).ready(function(){
             }
         });
     });
-
     // Xử lý submit form chỉnh sửa
     $('#editUserForm').submit(function(e) {
         e.preventDefault();
@@ -164,10 +158,7 @@ $(document).ready(function(){
             method: 'PUT',
             data: formData,
             success: function(response) {
-                // Cập nhật thông tin user trong bảng (nếu cần)
                 loadUser(1);
-
-                // Đóng modal
                 $('#updateUser').modal('hide');
             },
             error: function(xhr, status, error) {
@@ -203,7 +194,7 @@ $(document).ready(function(){
         $(this).find('.invalid-feedback').text(''); // Xoá thông báo lỗi
         $('#add_name').val('');
         $('#add_email').val('');
-        $('#add_password').val('');
+        sessionStorage.removeItem('password');
         $('#add_reset_password').val('');
         $('#add_is_active').prop('checked', false);   
     });

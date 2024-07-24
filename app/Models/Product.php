@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 class Product extends Model
 {
     use HasFactory;
-    protected $table = 'product';
+    protected $table = 'mst_product';
     protected $primaryKey = 'product_id';
     public $incrementing = false;
     protected $keyType = 'string';
@@ -23,11 +23,28 @@ class Product extends Model
         'updated_at'
     ];
     // Tạo ID sản phẩm
-    public static function generateProductId()
+    public static function boot()
     {
-        $maxId = DB::table('product')->max(DB::raw('CAST(SUBSTRING(product_id, 3, 3) AS UNSIGNED)'));
-        $newId = $maxId ? $maxId + 1 : 1;
-        return 'SP' . str_pad($newId, 3, '0', STR_PAD_LEFT);
+        parent::boot();
+
+        static::creating(function ($product) {
+            $product->product_id = self::generateProductId($product->product_name);
+        });
+    }
+
+    private static function generateProductId($name)
+    {
+        $firstChar = strtoupper(substr($name, 0, 1)); 
+        $latestProduct = self::where('product_id', 'LIKE', $firstChar . '%')->orderBy('product_id', 'desc')->first();
+
+        if ($latestProduct) {
+            $lastIdNumber = (int)substr($latestProduct->product_id, 1); 
+            $newIdNumber = str_pad($lastIdNumber + 1, 9, '0', STR_PAD_LEFT); 
+        } else {
+            $newIdNumber = str_pad(1, 9, '0', STR_PAD_LEFT); 
+        }
+
+        return $firstChar . $newIdNumber;
     }
     public function scopePopular($query)
     {

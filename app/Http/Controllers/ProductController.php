@@ -44,7 +44,6 @@ class ProductController extends Controller
     public function store(ProductRequest $request)
     {
         $product = new Product();
-        $product->product_id= Product::generateProductId();
         $product->product_name= $request->product_name;
         if($request->hasFile('product_image')){
             $file = $request->file('product_image');

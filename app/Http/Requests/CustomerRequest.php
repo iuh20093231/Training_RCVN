@@ -24,7 +24,7 @@ class CustomerRequest extends FormRequest
         $id = $this->route('id');
         return [
             'customer_name' => 'required|min:5',
-            'email' => 'required|email|unique:custormers,email,'  .$id,
+            'email' => 'required|email|unique:mst_customer,email,'  .$id,
             'tel_num' => 'required|regex:/^[0-9]{10}$/',
             'address' => 'required|string',
         ];

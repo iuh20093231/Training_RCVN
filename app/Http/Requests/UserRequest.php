@@ -24,7 +24,7 @@ class UserRequest extends FormRequest
         return [
             //
             'name' => 'required|min:5',
-            'email' => 'required|email|unique:users,email',
+            'email' => 'required|email|unique:mst_users,email,',
             'password' => 'required|min:6|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/',
             'reset_password' => 'required|same:password',
             'group' => 'required',

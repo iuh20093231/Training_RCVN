@@ -2,14 +2,7 @@ document.addEventListener("DOMContentLoaded", function() {
     function uploadImage() {
         var input = document.getElementById('product_image');
         var file = input.files[0] ?? input.value;
-        // console.log('file ne', file.name);
         if (file) {
-            var allowedExtensions = /(\.png|\.jpg|\.jpeg)$/i;
-            if (!allowedExtensions.exec(file.name)) {
-                alert('Chỉ cho phép upload các file có định dạng: png, jpg, jpeg.');
-                input.value = '';
-                return false;
-            }
             var reader = new FileReader();
             reader.onload = function(e) {
                 var preview = document.getElementById('imagePreview');
@@ -20,7 +13,6 @@ document.addEventListener("DOMContentLoaded", function() {
             }
             reader.readAsDataURL(file);
         }
-        // input.value = '';
     }
     function removeImage() {
         if (confirm('Bạn có chắc chắn muốn xóa hình ảnh hiện tại không?')) {

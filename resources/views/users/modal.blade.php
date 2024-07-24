@@ -16,7 +16,7 @@
 </div>
 {{-- Modal khóa người dùng --}}
 <div class='modal fade' id='lockUser' role='dialog' aria-label='resultModalLabel'  aria-hidden='true'>
-    <div class='modal-dialog modal-dialog-centered'>
+    <div class='modal-dialog modal-dialog-centered '>
         <div class='modal-content min-h-65'>
             <div class='modal-body text-center'>
                 <div class='icon-status mt-2 p-5'>     

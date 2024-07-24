@@ -22,11 +22,16 @@ class UpdateUserRequest extends FormRequest
     public function rules(): array
     {
         $id = $this->route('id');
-        return [
+        $rules = [
             'name' => 'required|string|min:5',
-            'email' => 'required|string|email|max:255|unique:users,email,' . $id,
-            'password' => 'nullable|string|min:6|confirmed',
+            'email' => 'required|string|email|max:255|unique:mst_users,email,' . $id,
         ];
+        if ($this->filled('password')) {
+            $rules['password'] = 'min:6|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/';
+            $rules['reset_password'] = 'same:password';
+        }
+
+        return $rules;
     }
     public function messages()
     {
@@ -39,9 +44,9 @@ class UpdateUserRequest extends FormRequest
             'email.email' => 'Email không đúng định dạng.',
             'email.max' => 'Email không được vượt quá 255 ký tự.',
             'email.unique' => 'Email đã tồn tại trong hệ thống.',
-            'password.string' => 'Mật khẩu phải là chuỗi.',
             'password.min' => 'Mật khẩu phải có ít nhất 6 ký tự.',
-            'password.confirmed' => 'Xác nhận mật khẩu không khớp.',
+            'password.regex' => 'Mật khẩu không bảo mật. Phải có ít nhất một chữ hoa, một chữ thường và một số.',
+            'reset_password.same' => 'Mật khẩu và xác nhận mật khẩu không chính xác.'
         ];
     }
 }

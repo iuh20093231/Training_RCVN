@@ -27,8 +27,7 @@ class ProductRequest extends FormRequest
             'product_price' => 'required|numeric|min:0',
             'description' => 'nullable',
             'is_sales' => 'required',
-            'product_image' => 'max:2048',
-            // mimes:png,jpg,jpeg required|
+            'product_image' => 'mimes:png,jpg,jpeg|max:2048|dimensions:max_width=1024,max_height=1024',
         ];
     }
     public function messages(): array
@@ -40,9 +39,9 @@ class ProductRequest extends FormRequest
             'product_price.numeric' => 'Giá bán chỉ được nhập số.',
             'product_price.min' => 'Giá bán không được nhỏ hơn 0.',
             'is_sales.required' => 'Trạng thái không được để trống.',
-           // 'product_image.required' => 'Vui lòng upload hình sản phẩm.',
-           // 'product_image.mimes' => 'Chỉ cho upload các file hình png, jpg, jpeg.',
+            'product_image.mimes' => 'Chỉ cho upload các file hình png, jpg, jpeg.',
             'product_image.max' => 'Dung lượng hình không quá 2Mb.',
+            'product_image.dimensions' => 'Kích thước hình không được quá 1024px x 1024px.',
         ];
     }
 }

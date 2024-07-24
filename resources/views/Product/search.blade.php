@@ -5,7 +5,7 @@
     </div>
     <div class="col-lg-3 form-group search-name float-left pl-5">
         <label for="is_sales">Trạng thái</label>
-        <select name="is_sales" id="is_sales" class="form-control" style="width:200px;">
+        <select name="is_sales" id="is_sales" class="form-control custom-select" style="width:200px;">
             <option value="">Chọn trạng thái</option>
             <option value="1">Đang bán</option>
             <option value="0">Ngừng bán</option>
@@ -15,8 +15,7 @@
         <label for="product_price_to">Giá bán từ</label>
         <input type="text" name="product_price_to" id="product_price_to" class="form-control"> 
     </div>
-    <span class="col-lg-1 text-center"><i class="fa fa-minus float-left mt-5 ml-4" aria-hidden="true"></i></span>
-    <div class="col-lg-2 form-group search-name float-right">
+    <div class="col-lg-3 form-group search-name float-left pl-5">
         <label for="product_price_end">Giá bán đến</label>
         <input type="text" name="product_price_end" id="product_price_end" class="form-control"> 
     </div>

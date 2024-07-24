@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('product', function (Blueprint $table) {
+        Schema::create('mst_product', function (Blueprint $table) {
             $table->string('product_id', 20)->primary(); // Tạo cột product_id kiểu VARCHAR với PRIMARY KEY
             $table->string('product_name', 255);
             $table->string('product_image', 255)->nullable();
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('product');
+        Schema::dropIfExists('mst_product');
     }
 };

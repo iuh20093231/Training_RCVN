@@ -98,7 +98,7 @@ class DatabaseSeeder extends Seeder
                 'created_at' => now()
             ]
         ];
-        DB::table('users')->insert($data);
+        DB::table('mst_users')->insert($data);
         $data2 = [
             [
                 'customer_name' => 'Nguyễn Đức Thiện',
@@ -117,7 +117,7 @@ class DatabaseSeeder extends Seeder
                 'created_at' => now()
             ]
         ];
-        DB::table('custormers')->insert($data2);
+        DB::table('mst_customer')->insert($data2);
         
     }
 }

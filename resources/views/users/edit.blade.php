@@ -28,12 +28,11 @@
                 </div>
                 <div class="row form-group">
                     <label for="reset_password" class="col-3 lbl">Xác nhận</label>
-                    <input type="password" name="reset_password" id="edit_reset_password" class="col-8 form-control" placeholder="Xác mật khẩu">
-                 
+                    <input type="password" name="reset_password" id="edit_reset_password" class="col-8 form-control" placeholder="Xác mật khẩu"> 
                 </div>
                 <div class="row form-group">
                     <label for="group" class="col-3 lbl">Chọn nhóm</label>
-                    <select name="group_role" id="edit_group" class="col-8 form-control">
+                    <select name="group_role" id="edit_group" class="col-8 form-control custom-select">
                         <option value="Admin" >Admin</option>
                         <option value="Reviewer">Reviewer</option>
                         <option value="Editor">Editor</option>

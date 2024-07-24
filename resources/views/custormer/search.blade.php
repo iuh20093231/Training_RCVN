@@ -11,7 +11,7 @@
         </div>
         <div class="col-lg-3 form-group search-name float-left pl-5">
             <label for="is_active">Trạng thái</label>
-            <select name="is_active" id="is_active" class="form-control" style="width:200px;">
+            <select name="is_active" id="is_active" class="form-control custom-select" style="width:200px;">
                 <option value="">Chọn trạng thái</option>
                 <option value="1">Hoạt động</option>
                 <option value="0">Không hoạt động</option>

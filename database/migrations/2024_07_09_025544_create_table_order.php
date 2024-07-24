@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('order', function (Blueprint $table) {
+        Schema::create('mst_order', function (Blueprint $table) {
             $table->increments('order_id'); // Tạo cột order_id kiểu INT với AUTO_INCREMENT và PRIMARY KEY
             $table->string('order_shop', 40);
             $table->unsignedInteger('customer_id'); // Khóa ngoại tới bảng customers
@@ -28,7 +28,7 @@ return new class extends Migration
             $table->timestamps(); // Tạo 2 cột created_at và updated_at
 
             // Thiết lập khóa ngoại
-            $table->foreign('customer_id')->references('id')->on('custormers')->onDelete('cascade');
+            $table->foreign('customer_id')->references('id')->on('mst_customer')->onDelete('cascade');
         });
     }
 
@@ -37,6 +37,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('order');
+        Schema::dropIfExists('mst_order');
     }
 };

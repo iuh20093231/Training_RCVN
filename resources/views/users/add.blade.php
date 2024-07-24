@@ -8,7 +8,7 @@
            </div>
         </div>
         <div class="modal-body">
-            <form action="{{ route('users.create') }}" method="post" class="form form-add">
+            <form action="{{ route('users.create') }}" method="post" class="form form-add" id="createUsers">
                 {{ csrf_field() }}
                 <div class="row form-group">
                     <label for="name" class="col-3 lbl">Tên</label>
@@ -30,7 +30,7 @@
                 </div>
                 <div class="row form-group">
                     <label for="password" class="col-3 lbl">Mật khẩu</label>
-                    <input type="password" name="password" id="add_password" class="col-8 form-control @error('password') is-invalid @enderror" placeholder="Mật khẩu" value="{{ !$errors->has('password') ? old('password') : '' }}">
+                    <input type="password" name="password" id="add_password" class="col-8 form-control @error('password') is-invalid @enderror" placeholder="Mật khẩu" >
                     @error('password')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -47,8 +47,8 @@
                     @enderror
                 </div>
                 <div class="row form-group">
-                    <label for="group" class="col-3 lbl">Chọn nhóm</label>
-                    <select name="group" id="add_group" class="col-8 form-control">
+                    <label for="group" class="col-3 lbl ">Chọn nhóm</label>
+                    <select name="group" id="add_group" class="col-8 form-control custom-select">
                         <option value="Admin" {{ old('group_role') == 'Admin' ? 'selected' : '' }}>Admin</option>
                         <option value="Reviewer" {{ old('group_role') == 'Reviewer' ? 'selected' : '' }}>Reviewer</option>
                         <option value="Editor" {{ old('group_role') == 'Editor' ? 'selected' : '' }}>Editor</option>

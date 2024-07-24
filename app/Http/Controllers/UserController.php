@@ -50,6 +50,7 @@ class UserController extends Controller
      
     public function store(UserRequest $request)
     {
+        $validator = $request->validated();
         if($request->has('is_active'))
         {
             $is_active = 1;
@@ -59,9 +60,9 @@ class UserController extends Controller
             $is_active = 0;
         }
         User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'name' => $validator['name'],
+            'email' => $validator['email'],
+            'password' => Hash::make($validator['password']),
             'is_active' => $is_active,
             'group_role' => $request->group,
             'created_at' => now()
@@ -78,15 +79,20 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $data = $request->validated();
-        $user->update([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-            'group_role' => $request->group_role,
-            'is_active' => $request->is_active,
-        ]);
-        return response()->json(['success' => 'User updated successfully.']);
+        $updateData = [
+        'name' => $data['name'],
+        'email' => $data['email'],
+        'group_role' => $request->group_role,
+        'is_active' => $request->is_active,
+        ];
 
+        if (!empty($data['password'])) {
+            $updateData['password'] = bcrypt($data['password']);
+        }
+
+        $user->update($updateData);
+
+        return response()->json(['success' => 'User updated successfully.']);
     }
     public function destroy($id)
     {
@@ -95,6 +101,8 @@ class UserController extends Controller
             return response()->json(['message' => 'User not found'], 404);
         }
         $user->is_delete = 1;
+        $user->is_active = 0;
+        $user->email = '';
         $user->save();
 
         return response()->json(['message' => 'User deleted successfully']);
