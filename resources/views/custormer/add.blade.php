@@ -12,7 +12,7 @@
                 {{ csrf_field() }}
                 <div class="row form-group">
                     <label for="customer_nameame" class="col-3 lbl">Tên</label>
-                    <input type="text" name="customer_name" id="add_customer_name" class="col-8 form-control @error('customer_name') is-invalid @enderror" placeholder="Nhập họ tên" value="{{ !$errors->has('customer_name') ? old('customer_name') : '' }}">
+                    <input type="text" name="customer_name" id="add_customer_name" class="col-8 form-control @error('customer_name') is-invalid @enderror" placeholder="Nhập họ tên" value="{{ old('customer_name') }}">
                     @error('customer_name')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -21,7 +21,7 @@
                 </div>
                 <div class="row form-group">
                     <label for="email" class="col-3 lbl">Email</label>
-                    <input type="text" name="email" id="add_email" class="col-8 form-control @error('email') is-invalid @enderror" placeholder="Nhập email" value="{{ !$errors->has('email') ? old('email') : '' }}">
+                    <input type="text" name="email" id="add_email" class="col-8 form-control @error('email') is-invalid @enderror" placeholder="Nhập email" value="{{ old('email') }}">
                     @error('email')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -30,7 +30,7 @@
                 </div>
                 <div class="row form-group">
                     <label for="tel_num" class="col-3 lbl">Điện thoại</label>
-                    <input type="text" name="tel_num" id="add_tel_num" class="col-8 form-control @error('tel_num') is-invalid @enderror" placeholder="Điện thoại" value="{{ !$errors->has('tel_num') ? old('tel_num') : '' }}">
+                    <input type="text" name="tel_num" id="add_tel_num" class="col-8 form-control @error('tel_num') is-invalid @enderror" placeholder="Điện thoại" value="{{  old('tel_num') }}">
                     @error('tel_num')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -39,7 +39,7 @@
                 </div>
                 <div class="row form-group">
                     <label for="address" class="col-3 lbl">Địa chỉ</label>
-                    <input type="text" name="address" id="add_address" class="col-8 form-control @error('address') is-invalid @enderror" placeholder="Địa chỉ" value="{{ !$errors->has('address') ? old('address') : '' }}">
+                    <input type="text" name="address" id="add_address" class="col-8 form-control @error('address') is-invalid @enderror" placeholder="Địa chỉ" value="{{ old('address') }}">
                     @error('address')
                             <div class="invalid-feedback">
                                 {{ $message }}
