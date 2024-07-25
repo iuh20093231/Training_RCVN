@@ -92,17 +92,17 @@ class UserController extends Controller
 
         $user->update($updateData);
 
-        return response()->json(['success' => 'User updated successfully.']);
+        return response()->json(['success' => 'Chỉnh sửa người dùng thành công']);
     }
     public function destroy($id)
     {
         $user = User::findOrFail($id);
         if ($user) {
             $user->is_delete = 1;
-            $user->email = 'NULL'.$id;
+            $user->email ='user'.$id.'@gmail.com';
             $user->save();   
         }
-        return response()->json(['message' => 'User deleted successfully']);
+        return response()->json(['message' => 'Xóa người dùng thành công']);
     }
     public function updateStatus($id)
     {

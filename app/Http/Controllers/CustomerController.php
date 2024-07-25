@@ -118,6 +118,6 @@ class CustomerController extends Controller
     {
         $customer = Customer::findOrFail($id);
         $customer->delete();
-        return response()->json(['message' => 'Customer deleted successfully']);
+        return response()->json(['message' => 'Xóa khách hàng thành công']);
     }
 }

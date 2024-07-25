@@ -108,7 +108,7 @@ $(document).ready(function(){
                 }
             },
             error: function(xhr, status, error) {
-                console.error('Lỗi khi lấy danh sách người dùng:', error);
+                console.error('Lỗi khi lấy danh sách sản phẩm:', error);
             }
         });
     }
@@ -143,7 +143,7 @@ $(document).ready(function(){
             url: '/product/'+product_id,
             method: 'DELETE',
             success: function(response){
-                if(response.message === 'Product deleted successfully'){
+                if(response.message === 'Xóa sản phẩm thành công'){
                     $(this).closest('tr').remove();
                     alert('Xóa thành công');
                     $('#myModal').modal('hide');
@@ -154,7 +154,7 @@ $(document).ready(function(){
             },
             error: function(error) {
                 console.error(error);
-                alert('Error deleting product');
+                alert('Xóa sản phẩm bị lỗi');
             }
         });
     });

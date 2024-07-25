@@ -19,9 +19,6 @@ use App\Http\Controllers\UserController;
 Route::get('/',[LoginController::class,'index']);
 Route::get('/login',[LoginController::class,'index'])->name('login');
 Route::post('/logout',[LoginController::class,'logout'])->name('logout');
-Route::get('/demo', function(){
-    return view('phantrang');
-});
 //login
 Route::post('/login',[LoginController::class,'login']);
 Route::group(['middleware'=> Authenticate::class], function()
@@ -46,7 +43,7 @@ Route::group(['middleware'=> Authenticate::class], function()
     Route::delete('/custormer/{id}',[CustomerController::class,'destroy'])->name('custormer.destroy');
     //USER
     Route::get('/users',[UserController::class,'index'])->name('users.index');
-    Route::get('/users/list',[UserController::class,'getUsers'])->name('users.list'); // lấy dữ liệu JSON
+    Route::get('/users/list',[UserController::class,'getUsers'])->name('users.list'); 
     Route::get('/users/add',[UserController::class,'create'])->name('users.create');
     Route::post('/users/add',[UserController::class,'store'])->name('users.add');
     Route::get('/users/{id}',[UserController::class,'edit'])->name('users.edit');

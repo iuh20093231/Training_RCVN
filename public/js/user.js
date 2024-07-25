@@ -212,7 +212,7 @@ $(document).ready(function(){
             url: '/users/'+userId,
             method: 'DELETE',
             success: function(response){
-                if(response.message === 'User deleted successfully'){
+                if(response.message === 'Xóa người dùng thành công'){
                     $(this).closest('tr').remove();
                     alert('Xóa thành công');
                     $('#myModal').modal('hide');
@@ -223,7 +223,7 @@ $(document).ready(function(){
             },
             error: function(error) {
                 console.error(error);
-                alert('Error deleting user');
+                alert('Xóa người dùng bị lỗi');
             }
         });
     });

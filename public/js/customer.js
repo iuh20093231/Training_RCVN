@@ -92,7 +92,7 @@ $(document).ready(function(){
                 }
             },
             error: function(xhr, status, error) {
-                console.error('Lỗi khi lấy danh sách người dùng:', error);
+                console.error('Lỗi khi lấy danh sách khách hàng:', error);
             }
         })
     }
@@ -203,7 +203,7 @@ $(document).ready(function(){
                         row.find('input[name="' + key + '"]').after(errorMessageHtml);
                     }
                 } else {
-                    console.error('Error updating user:', xhr);
+                    console.error('Lỗi sửa khách hàng:', xhr);
                 }
             }
         });
@@ -230,7 +230,7 @@ $(document).ready(function(){
                 row.html(originalRow);
             },
             error: function(error) {
-                console.error('Error fetching user:', error);
+                console.error('Lỗi thông tin khách hàng', error);
             }
         });
     });
@@ -252,7 +252,7 @@ $(document).ready(function(){
             url: '/custormer/'+id,
             method: 'DELETE',
             success: function(response){
-                if(response.message === 'Customer deleted successfully'){
+                if(response.message === 'Xóa khách hàng thành công'){
                     // xóa 
                     $(this).closest('tr').remove();
                     $('#myModal').modal('hide');
@@ -263,7 +263,7 @@ $(document).ready(function(){
             },
             error: function(error) {
                 console.error(error);
-                alert('Error deleting product');
+                alert('Xóa khách hàng bị lỗi');
             }
         });
     });
