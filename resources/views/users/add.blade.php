@@ -12,7 +12,7 @@
                 {{ csrf_field() }}
                 <div class="row form-group">
                     <label for="name" class="col-3 lbl">Tên</label>
-                    <input type="text" name="name" id="add_name" class="col-8 form-control @error('name') is-invalid @enderror" placeholder="Nhập họ tên" value="{{ !$errors->has('name') ? old('name') : '' }}">
+                    <input type="text" name="name" id="add_name" class="col-8 form-control @error('name') is-invalid @enderror" placeholder="Nhập họ tên" value="{{ old('name') }}">
                     @error('name')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -21,7 +21,7 @@
                 </div>
                 <div class="row form-group">
                     <label for="email" class="col-3 lbl">Email</label>
-                    <input type="text" name="email" id="add_email" class="col-8 form-control @error('email') is-invalid @enderror" placeholder="Nhập email" value="{{ !$errors->has('email') ? old('email') : '' }}">
+                    <input type="text" name="email" id="add_email" class="col-8 form-control @error('email') is-invalid @enderror" placeholder="Nhập email" value="{{ old('email') }}">
                     @error('email')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -39,7 +39,7 @@
                 </div>
                 <div class="row form-group">
                     <label for="reset_password" class="col-3 lbl">Xác nhận</label>
-                    <input type="password" name="reset_password" id="add_reset_password" class="col-8 form-control @error('reset_password') is-invalid @enderror" placeholder="Xác mật khẩu" value="{{ !$errors->has('reset_password') ? old('reset_password') : '' }}" >
+                    <input type="password" name="reset_password" id="add_reset_password" class="col-8 form-control @error('reset_password') is-invalid @enderror" placeholder="Xác mật khẩu" >
                     @error('reset_password')
                         <div class="invalid-feedback">
                             {{ $message }}

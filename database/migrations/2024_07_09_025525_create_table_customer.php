@@ -12,13 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('mst_customer', function (Blueprint $table) {
-            $table->increments('id'); // Tạo cột customer_id kiểu INT với AUTO_INCREMENT và PRIMARY KEY
+            $table->increments('id'); 
             $table->string('customer_name', 255);
             $table->string('email', 255)->unique();
             $table->string('tel_num', 14);
             $table->string('address', 255);
             $table->tinyInteger('is_active')->nullable();
-            $table->timestamps(); // Tạo 2 cột created_at và updated_at
+            $table->timestamps(); 
         });
     }
 

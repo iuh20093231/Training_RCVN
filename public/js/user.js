@@ -127,13 +127,10 @@ $(document).ready(function(){
     $(document).on('click', '.edit-user', function(e) {
         e.preventDefault();
         var userId = $(this).closest('tr').find('.deleteUser').data('id');
-
-        // Gọi Ajax để lấy thông tin user
         $.ajax({
             url: '/users/' + userId,
             method: 'GET',
             success: function(response) {
-                // Điền thông tin vào form
                 $('#user_id').val(response.id);
                 $('#edit_name').val(response.name);
                 $('#edit_email').val(response.email);
@@ -149,7 +146,6 @@ $(document).ready(function(){
     // Xử lý submit form chỉnh sửa
     $('#editUserForm').submit(function(e) {
         e.preventDefault();
-
         var userId = $('#user_id').val();
         var formData = $(this).serializeArray();
         formData.push({ name: 'is_active', value: $('#edit_is_active').is(':checked') ? 1 : 0 });
@@ -190,8 +186,8 @@ $(document).ready(function(){
     });
     $('#addUsers').on('hidden.bs.modal', function () {
         $(this).find('form')[0].reset();
-        $(this).find('.form-control').removeClass('is-invalid'); // Xoá lớp lỗi
-        $(this).find('.invalid-feedback').text(''); // Xoá thông báo lỗi
+        $(this).find('.form-control').removeClass('is-invalid'); 
+        $(this).find('.invalid-feedback').text(''); 
         $('#add_name').val('');
         $('#add_email').val('');
         sessionStorage.removeItem('password');
@@ -217,9 +213,7 @@ $(document).ready(function(){
             method: 'DELETE',
             success: function(response){
                 if(response.message === 'User deleted successfully'){
-                    // xóa 
                     $(this).closest('tr').remove();
-                    // Hiển thị thông báo thành công
                     alert('Xóa thành công');
                     $('#myModal').modal('hide');
                     location.reload();

@@ -47,7 +47,6 @@
     @if ($errors->any())
     <script src="{{ asset('js/modal.js') }}"></script>
     @endif
-    <script src="{{ asset('js/password.js') }}"></script>
 </body>
 
 </html>

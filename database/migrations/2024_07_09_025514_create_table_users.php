@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('mst_users', function (Blueprint $table) {
-            $table->id(); // Tương đương với $table->bigIncrements('id')
+            $table->id(); 
             $table->string('name', 255);
             $table->string('email', 255)->unique();
             $table->string('password', 255);
@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('group_role', 50)->default('user');
             $table->timestamp('last_login_at')->nullable();
             $table->string('last_login_ip', 40)->nullable();
-            $table->timestamps(); // Tạo 2 cột created_at và updated_at
+            $table->timestamps(); 
         });
     }
 

@@ -20,10 +20,10 @@ $(document).ready(function(){
             success: function(response){
                 let product = response.data;
                 let userTable = $('#user-table');
-                userTable.empty();// Xóa nội dung hiện tại của bảng
+                userTable.empty();
                 let pagination1 = $('#pagination1');
                 let pagination2 = $('#pagination2');
-                pagination1.empty();// Xóa nội dung hiện tại của phân trang
+                pagination1.empty();
                 pagination2.empty();
                 $('#pagination-info').empty();
                 if(product.length === 0){
@@ -114,11 +114,11 @@ $(document).ready(function(){
     }
     $('#search-form').on('submit', function(e) {
         e.preventDefault();
-        loadProduct(1); // Gọi hàm loadUsers khi form được submit
+        loadProduct(1); 
     });
     $('#search').on('click', function(e) {
         e.preventDefault();
-        $('#search-form').submit(); // Submit form khi nút tìm kiếm được click
+        $('#search-form').submit(); 
     });
     $('#clear-search').on('click', function(e) {
         e.preventDefault();
@@ -126,7 +126,7 @@ $(document).ready(function(){
         $('#is_sales').val(''); 
         $('#product_price_to').val('');
         $('#product_price_end').val('');
-        loadProduct(1); // Gọi lại hàm loadUsers để load lại danh sách người dùng ban đầu
+        loadProduct(1); 
     });
     loadProduct(1);
     // Delete Product
@@ -144,9 +144,7 @@ $(document).ready(function(){
             method: 'DELETE',
             success: function(response){
                 if(response.message === 'Product deleted successfully'){
-                    // xóa 
                     $(this).closest('tr').remove();
-                    // Hiển thị thông báo thành công
                     alert('Xóa thành công');
                     $('#myModal').modal('hide');
                     loadProduct(1);

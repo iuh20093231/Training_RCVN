@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('mst_order', function (Blueprint $table) {
-            $table->increments('order_id'); // Tạo cột order_id kiểu INT với AUTO_INCREMENT và PRIMARY KEY
+            $table->increments('order_id'); 
             $table->string('order_shop', 40);
-            $table->unsignedInteger('customer_id'); // Khóa ngoại tới bảng customers
+            $table->unsignedInteger('customer_id'); 
             $table->integer('total_price');
             $table->tinyInteger('payment_method')->comment('1: COD, 2: PayPal, 3: GMO');
             $table->integer('ship_charge')->nullable();
@@ -25,7 +25,7 @@ return new class extends Migration
             $table->tinyInteger('order_status');
             $table->string('note_customer', 255)->nullable();
             $table->string('error_code_api', 20)->nullable();
-            $table->timestamps(); // Tạo 2 cột created_at và updated_at
+            $table->timestamps(); 
 
             // Thiết lập khóa ngoại
             $table->foreign('customer_id')->references('id')->on('mst_customer')->onDelete('cascade');

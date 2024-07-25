@@ -17,7 +17,6 @@ class UserController extends Controller
         return view('users.index', compact('tittle','users'));
 
     }
-    // Lấy dữ liệu json của người dùng
     public function getUsers(Request $request)
     {
             $query = User::query();
@@ -41,7 +40,7 @@ class UserController extends Controller
             $users = $query->notDeleted()->orderBy('created_at', 'desc')->paginate(20);
             return response()->json($users);
     }
-    // Thêm user
+
     public function create()
     {
         $tittle = 'Add user';
@@ -68,6 +67,7 @@ class UserController extends Controller
             'created_at' => now()
         ]);
         return redirect()->route('users.index')->with('success', 'Người dùng đã được tạo thành công.');
+        
     }
 
     public function edit($id)
@@ -97,14 +97,11 @@ class UserController extends Controller
     public function destroy($id)
     {
         $user = User::findOrFail($id);
-        if (!$user) {
-            return response()->json(['message' => 'User not found'], 404);
+        if ($user) {
+            $user->is_delete = 1;
+            $user->email = 'NULL'.$id;
+            $user->save();   
         }
-        $user->is_delete = 1;
-        $user->is_active = 0;
-        $user->email = '';
-        $user->save();
-
         return response()->json(['message' => 'User deleted successfully']);
     }
     public function updateStatus($id)

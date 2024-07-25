@@ -18,13 +18,13 @@ $(document).ready(function(){
             type: 'GET',
             data: data,
             success: function(response){
-                console.log(response); // Kiểm tra dữ liệu trả về
+                console.log(response); 
                 let custormer = response.data;
                 let userTable = $('#user-table');
-                userTable.empty();// Xóa nội dung hiện tại của bảng
+                userTable.empty();
                 let pagination1 = $('#pagination1');
                 let pagination2 = $('#pagination2');
-                pagination1.empty();// Xóa nội dung hiện tại của phân trang
+                pagination1.empty();
                 pagination2.empty();
                 $('#pagination-info').empty();
                 if (custormer.length === 0) {
@@ -98,11 +98,11 @@ $(document).ready(function(){
     }
     $('#search-form').on('submit', function(e) {
         e.preventDefault();
-        loadCustomer(1); // Gọi hàm loadUsers khi form được submit
+        loadCustomer(1);
     });
     $('#search').on('click', function(e) {
         e.preventDefault();
-        $('#search-form').submit(); // Submit form khi nút tìm kiếm được click
+        $('#search-form').submit(); 
     });
     $('#clear-search').on('click', function(e) {
         e.preventDefault();
@@ -110,12 +110,12 @@ $(document).ready(function(){
         $('#email').val(''); 
         $('#is_active').val('');
         $('#address').val('');
-        loadCustomer(1); // Gọi lại hàm loadUsers để load lại danh sách người dùng ban đầu
+        loadCustomer(1); 
     });
     $('#addCustomer').on('hidden.bs.modal', function () {
         $(this).find('form')[0].reset();
-        $(this).find('.form-control').removeClass('is-invalid'); // Xoá lớp lỗi
-        $(this).find('.invalid-feedback').text(''); // Xoá thông báo lỗi
+        $(this).find('.form-control').removeClass('is-invalid'); 
+        $(this).find('.invalid-feedback').text(''); 
         $('#add_customer_name').val('');
         $('#add_email').val('');
         $('#add_tel_num').val('');
@@ -132,19 +132,17 @@ $(document).ready(function(){
         };
         const queryString = $.param(data);
         const url = `/export?${queryString}`;
-        window.location.href = url; // Chuyển hướng tới URL để tải file CSV
+        window.location.href = url; 
     });
     loadCustomer(1);
     $(document).on('click','.edit-customer',function(){
         var customerID = $(this).data('id');
         var row = $('#custormer_'+customerID);
-        // lấy thông tin người dùng để hiển thị lên form update
         var stt = row.find('td:eq(0)').text();
         var customer_name = row.find('td:eq(1)').text();
         var email = row.find('td:eq(2)').text();
         var address = row.find('td:eq(3)').text();
         var tel_num = row.find('td:eq(4)').text();
-        // Tạo form update ngay trên hàng dữ liệu
         var editForm = `
             <td>${stt}</td>
             <td><input type="text" class="form-control" name="customer_name" id="customer_name" value="${customer_name}">
@@ -160,13 +158,11 @@ $(document).ready(function(){
                 <button class="btn btn-secondary btn-sm cancel-edit" data-id="${customerID}">Cancel</button>
             </td>
         `;
-        row.html(editForm); // Thay thế nội dung của hàng dữ liệu bằng form chỉnh sửa
+        row.html(editForm); 
     });
-    // Xử lý dữ liệu khi click vào nút Save
     $(document).on('click','.save-user',function(){
         var customerID = $(this).data('id');
         var row = $('#custormer_'+customerID);
-        // Lấy dữ liệu từ form chỉnh sửa
         var customer_name = row.find('input[name="customer_name"]').val();
         var email = row.find('input[name="email"]').val();
         var tel_num = row.find('input[name="tel_num"]').val();
@@ -194,12 +190,9 @@ $(document).ready(function(){
                 </td>
                 `;
                 row.html(updateRow);
-                // alert('Update thành công');
             },
             error: function(xhr) {
-                console.log('Error:', xhr); // Debugging
-    
-                // Clear previous error messages
+                console.log('Error:', xhr); 
                 row.find('.error-message').remove();
     
                 var errors = xhr.responseJSON.errors;
@@ -262,8 +255,6 @@ $(document).ready(function(){
                 if(response.message === 'Customer deleted successfully'){
                     // xóa 
                     $(this).closest('tr').remove();
-                    // Hiển thị thông báo thành công
-                   // alert('Xóa thành công');
                     $('#myModal').modal('hide');
                     loadCustomer(1);
                 }else{

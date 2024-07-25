@@ -12,20 +12,18 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('mst_order_detail', function (Blueprint $table) {
-            $table->increments('detail_line'); // Tạo cột detail_line kiểu INT với AUTO_INCREMENT và PRIMARY KEY
+            $table->increments('detail_line');
             $table->unsignedInteger('order_id');
             $table->string('product_id', 20);
             $table->integer('price_buy');
             $table->integer('quantity');
             $table->string('shop_id', 50);
             $table->integer('receiver_id');
-            $table->timestamps(); // Tạo 2 cột created_at và updated_at
+            $table->timestamps(); 
 
             // Thiết lập khóa ngoại
             $table->foreign('order_id')->references('order_id')->on('mst_order')->onDelete('cascade');
-            // Bạn có thể thêm các khóa ngoại khác nếu cần
             $table->foreign('product_id')->references('product_id')->on('mst_product')->onDelete('cascade');
-            // $table->foreign('receiver_id')->references('customer_id')->on('customers')->onDelete('cascade');
         });
     }
 

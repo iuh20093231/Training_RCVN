@@ -69,14 +69,12 @@ class ProductController extends Controller
         $product = Product::find($product_id);
         if ($request->has('remove_image')) {
             if ($request->remove_image && $product->product_image) {
-                // Delete image from storage
                 Storage::delete('public/' . $product->product_image);
-                // Update product image field in database
                 $product->product_image = null;
             }
         }
         if ($request->hasFile('product_image')) {
-            // Upload and store new image
+
             $imagePath = $request->file('product_image')->store('public/images');
             $product->product_image = str_replace('public/', '', $imagePath);
         }

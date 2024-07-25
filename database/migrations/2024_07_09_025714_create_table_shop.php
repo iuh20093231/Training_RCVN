@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('mst_shop', function (Blueprint $table) {
-            $table->tinyIncrements('shop_id'); // Tạo cột shop_id kiểu TINYINT với AUTO_INCREMENT và PRIMARY KEY
+            $table->tinyIncrements('shop_id'); 
             $table->string('shop_name', 255);
-            $table->timestamps(); // Tạo 2 cột created_at và updated_at
+            $table->timestamps(); 
         });
     }
 

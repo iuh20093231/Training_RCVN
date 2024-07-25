@@ -14,7 +14,7 @@
                 <input type="hidden" name="user_id" id="user_id"> 
                 <div class="row form-group">
                     <label for="name" class="col-3 lbl">Tên</label>
-                    <input type="text" name="name" id="edit_name" class="col-8 form-control" placeholder="Nhập họ tên">
+                    <input type="text" name="name" id="edit_name" class="col-8 form-control " placeholder="Nhập họ tên">
                 </div>
                 <div class="row form-group">
                     <label for="email" class="col-3 lbl">Email</label>
@@ -23,12 +23,12 @@
                 </div>
                 <div class="row form-group">
                     <label for="password" class="col-3 lbl">Mật khẩu</label>
-                    <input type="password" name="password" id="edit_password" class="col-8 form-control" placeholder="Mật khẩu">
+                    <input type="password" name="password" id="edit_password" class="col-8 form-control " placeholder="Mật khẩu">
                    
                 </div>
                 <div class="row form-group">
                     <label for="reset_password" class="col-3 lbl">Xác nhận</label>
-                    <input type="password" name="reset_password" id="edit_reset_password" class="col-8 form-control" placeholder="Xác mật khẩu"> 
+                    <input type="password" name="reset_password" id="edit_reset_password" class="col-8 form-control " placeholder="Xác mật khẩu"> 
                 </div>
                 <div class="row form-group">
                     <label for="group" class="col-3 lbl">Chọn nhóm</label>
