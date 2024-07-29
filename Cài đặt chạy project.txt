@@ -1,0 +1,43 @@
+Cài đặt chạy project
+Cài đặt vite 
+
+npm install --save-dev vite laravel-vite-plugin
+
+Cài đặt vue cho project
+
+npm install vue
+
+Cài đặt axios lấy API
+
+npm install axios
+
+Cài đặt plugin vue cho vite
+
+npm install @vitejs/plugin-vue
+
+//Cài đặt vuex
+
+//npm install vuedraggable@next --save
+
+Cài đặt kéo thả  vue-draggable-next
+
+npm install vuedraggable@next
+
+Cài đặt chạy một lệnh duy nhất cho project
+
+npm install npm-run-all --save-dev
+
+Cài đặt boostrap
+
+npm install bootstrap @popperjs/core
+
+Sau đó chạy lệnh 
+
+npm run dev
+
+Tài liệu tham khảo
+
+https://viblo.asia/p/bai-16-su-dung-axios-de-goi-laravel-api-trong-vuejs-GrLZDw7OKk0
+https://viblo.asia/p/vuejs-thuc-hanh-tao-mot-ung-dung-todo-list-don-gian-voi-vuejs-va-vuex-yMnKMjwEZ7P
+https://www.npmjs.com/package/vue-draggable-next
+https://vi.vuejs.org/v2/style-guide/#Ten-cac-component-co-lien-he-chat-che-voi-nhau-rat-khuyen-khich

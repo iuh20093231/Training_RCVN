@@ -1,6 +1,6 @@
 @include('includes.header')
 <body>
-    
+    <div id="app">
     <div class="container">
         @include('users.navbar')
             <div class="row tittle pt-2">
@@ -38,6 +38,7 @@
                 </div>
             </div>
     </div>
+</div>
     {{-- Popup addUsers --}}
     @include('users.add')
     {{-- Popup updateUser --}}

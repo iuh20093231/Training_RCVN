@@ -10,6 +10,9 @@
                 <li class="nav-item">
                     <a href="{{ route('users.index') }}" class="nav-link">User</a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('task') }}" class="nav-link">Task</a>
+                </li>
             </ul>
     </div>
     <div class="col-lg-3 col-xs-12 admin pl-5">

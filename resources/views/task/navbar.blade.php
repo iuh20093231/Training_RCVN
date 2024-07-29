@@ -1,4 +1,4 @@
-<div class="header mt-1 row">
+<div class="header row">
     <div class="col-lg-9 col-xs-12 menu pl-0">
             <ul id="nav" class="nav nav-pills" role="tablist">
                 <li class="nav-item">
@@ -8,10 +8,10 @@
                     <a href="{{ route('custormer.index') }}" class="nav-link ">Khách hàng</a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('users.index') }}" class="nav-link active">User</a>
+                    <a href="{{ route('users.index') }}" class="nav-link">User</a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('task') }}" class="nav-link">Task</a>
+                    <a href="{{ route('task') }}" class="nav-link active">Task</a>
                 </li>
             </ul>
     </div>

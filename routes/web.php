@@ -5,7 +5,7 @@ use App\Http\Middleware\Authenticate;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\UserController;
-
+use App\Http\Controllers\TaskController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -50,6 +50,11 @@ Route::group(['middleware'=> Authenticate::class], function()
     Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
     Route::post('/users/{id}/updatestatus', [UserController::class, 'updateStatus']);
-    
+    // VUEJS
+    Route::get('/manager-task', function () {
+    return view('task.welcome');
+    })->name('task');
+    Route::resource('tasks', TaskController::class);
+    Route::patch('tasks/{id}/toggle', [TaskController::class, 'toggleCompletion']);
 });
 
