@@ -118,6 +118,17 @@ class DatabaseSeeder extends Seeder
             ]
         ];
         DB::table('mst_customer')->insert($data2);
-        
+        $data3 = [
+            [
+                'name' => 'Task 1',
+                'created_at' => now()
+
+            ],
+            [
+                'name' => 'Task 2',
+                'created_at' => now()
+            ]
+        ];
+        DB::table('tasks')->insert($data3);
     }
 }

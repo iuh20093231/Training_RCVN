@@ -29,19 +29,22 @@ export const cancelUpdate = (component,id) => {
     if(task)
     {
         component.editTaskId = null;
+        task.name = task.name;
+        component.errors[task.id]={};
     }
 }
 export const updateTask = (component,id) => {
     const task = component.tasks.data.find(task => task.id === id);
-    axios.put(`/tasks/${id}`, {
-    name: task.name,
-    created_at: component.formatDate(task.created_at),
-    }).then(() => {
+    const data = {
+        name: task.name,
+        created_at: component.formatDate(task.created_at),
+    };
+    axios.put(`/tasks/${id}`, data).then(() => {
         component.editTaskId = null;
         component.errors = {};
     }).catch(error => {
-      if (error.response && error.response.status === 422) {
-        component.errors = error.response.data.errors; 
+      if (error.response && error.response.data.errors) {
+        component.errors[task.id] = error.response.data.errors;
       }
     });
 };
@@ -50,10 +53,16 @@ export const deleteTask = (component,id) => {
         component.tasks.data = component.tasks.data.filter(task => task.id !== id);
     });
 };
-export const toggleCompletion = (component,id) => {
-    axios.patch(`/tasks/${id}/toggle`).then(response => {
+export const updateCompleted = (component,id) => {
     const task = component.tasks.data.find(task => task.id === id);
-    task.completed = response.data.completed;
+    task.completed = !task.completed;
+    const data = {
+        name: task.name,
+        created_at: component.formatDate(task.created_at),
+        completed: task.completed
+    };
+    axios.put(`/tasks/${id}`,data).then(response => {
+        console.log('update status success');
     });
 };
 export const loadMore = (component) => {

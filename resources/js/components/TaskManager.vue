@@ -24,18 +24,18 @@
                   <td class="p-3">
                     <input v-if="editTaskId === element.id" v-model="element.name" class="form-control" />
                     <span v-else>{{ element.name }}</span>
+                    <div v-if="errors[element.id]?.name" class="error text-danger">{{ errors[element.id].name }}</div>
                   </td>
                   <td class="p-3">
                     <input v-if="editTaskId === element.id" type="date" v-model="element.created_at"  class="form-control"/>
                     <span v-else >{{ formatDate(element.created_at) }}</span>
                   </td>
                   <td class="p-3">
-                    <input type="checkbox" name="completed" :checked="element.completed === 1 "
-                    @change="toggleCompletion(element.id)"/>
+                    <input type="checkbox" name="completed"  :checked="element.completed === 1 "
+                    @change="updateCompleted(element.id)"/>
                   </td>
                   <td>
                     <button v-if="editTaskId === element.id" @click="updateTask(element.id)" class="btn btn-success m-2">Save</button>
-                    <button v-if="editTaskId === element.id" @click="cancelUpdate(element.id)" class="btn btn-danger m-2">Cancel</button>
                     <button v-else @click="editTask(element)" class="btn btn-primary m-2">Edit</button>
                     <button @click="deleteTask(element.id)" class="btn btn-danger m-2">Delete</button>
                   </td>
@@ -51,8 +51,9 @@
   </template>
 
  <script>
-import { showTask, addTask, editTask, updateTask, deleteTask, toggleCompletion, loadMore, cancelUpdate } from '../taskMethod';
+import { showTask, addTask, editTask, updateTask, deleteTask, loadMore, cancelUpdate, updateCompleted } from '../taskMethod';
 import draggable from 'vuedraggable';
+import axios from 'axios';
   export default {
     components: {
       draggable,
@@ -95,14 +96,16 @@ import draggable from 'vuedraggable';
         deleteTask(id) {
             deleteTask(this,id);
         },
-        toggleCompletion(id) {
-            toggleCompletion(this,id);
+        updateCompleted(id) {
+          updateCompleted(this,id);
         },
         loadMore() {
             loadMore(this);
         },
-        onDragEnd(event) {
-          console.log('Sự kiện kéo thả kết thúc', event);
+        onDragEnd() {
+          axios.post('/tasks/update-order', { tasks: this.tasks }).then(response => {
+          console.log('Order updated');
+        });
         }
       }
     };

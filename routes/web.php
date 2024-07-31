@@ -55,6 +55,6 @@ Route::group(['middleware'=> Authenticate::class], function()
     return view('task.welcome');
     })->name('task');
     Route::resource('tasks', TaskController::class);
-    Route::patch('tasks/{id}/toggle', [TaskController::class, 'toggleCompletion']);
+    Route::post('tasks/update-order', [TaskController::class, 'updateOrder']);
 });
 

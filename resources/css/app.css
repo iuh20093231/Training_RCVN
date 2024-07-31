@@ -1,3 +1,8 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;
     text-align: center;
@@ -5,28 +10,28 @@
     margin-top: 30px;
     }
 
-    header {
-    background-color: #7d2b7e;
-    color: white;
-    padding: 10px;
-    }
+header {
+background-color: #7d2b7e;
+color: white;
+padding: 10px;
+}
 
-    footer {
-    background-color: #f1f1f1;
-    padding: 10px;
-    text-align: center;
-    margin-top: 20px;
-    }
-    .thead-danger{
-        background-color: red;
-        color: white;
-    }
-    #name{
-    border-radius: 0px;
-    }
-    #days{
-    border-radius: 0px;
-    }
-    #btn-add{
-    border-radius: 0px;
-    }
+footer {
+background-color: #f1f1f1;
+padding: 10px;
+text-align: center;
+margin-top: 20px;
+}
+.thead-danger{
+    background-color: red;
+    color: white;
+}
+#name{
+border-radius: 0px;
+}
+#days{
+border-radius: 0px;
+}
+#btn-add{
+border-radius: 0px;
+}
