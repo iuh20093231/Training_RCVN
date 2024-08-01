@@ -1,26 +1,29 @@
 <template>
-    <!-- <div class="container"> -->
       <div class="mt-5">
        <form action="" class="row" @submit.prevent="addTask" method="POST">
         <input type="text" v-model="newTaskName" placeholder="Task Name" class="form-control form-control-lg float-left w-50" id="name" />
         <input v-model="newTaskDate" type="date" class="form-control form-control-lg float-left w-25" id="days" />
-        <button class="btn btn-success btn-lg float-left w-25" id="btn-add">Add Task</button>
+        <button class="btn btn-success btn-lg float-left w-25" id="btn-add">ADD+</button>
         <span v-if="errors.name" class="text-danger pt-2" style="text-align: left; font-weight: bold;">{{ errors.name[0] }}</span>
       </form>
       </div>
       <div class="row mt-5">
-        <table class="table table-striped">
+        <table class="table table-hover">
             <thead class="thead-danger">
               <tr>
+                <th>DONE?</th>
                 <th>TASK</th>
                 <th>DATE</th>
-                <th>DONE?</th>
                 <th>ACTIONS</th>
               </tr>
             </thead>
             <draggable tag="tbody" :list="tasks.data" @end="onDragEnd">
               <template #item="{element}">
                 <tr :key="element.id">
+                  <td class="p-3">
+                    <input type="checkbox" name="completed"  :checked="element.completed === 1 "
+                    @change="updateCompleted(element.id)"/>
+                  </td>
                   <td class="p-3">
                     <input v-if="editTaskId === element.id" v-model="element.name" class="form-control" />
                     <span v-else>{{ element.name }}</span>
@@ -29,10 +32,6 @@
                   <td class="p-3">
                     <input v-if="editTaskId === element.id" type="date" v-model="element.created_at"  class="form-control"/>
                     <span v-else >{{ formatDate(element.created_at) }}</span>
-                  </td>
-                  <td class="p-3">
-                    <input type="checkbox" name="completed"  :checked="element.completed === 1 "
-                    @change="updateCompleted(element.id)"/>
                   </td>
                   <td>
                     <button v-if="editTaskId === element.id" @click="updateTask(element.id)" class="btn btn-success m-2">Save</button>
@@ -47,11 +46,10 @@
         <button v-if="tasks.next_page_url" @click="loadMore" class="btn btn-info btn-lg w-50">Load More</button>
       </div>
     </div>
-    <!-- </div> -->
   </template>
 
  <script>
-import { showTask, addTask, editTask, updateTask, deleteTask, loadMore, cancelUpdate, updateCompleted } from '../taskMethod';
+import { showTask, addTask, editTask, updateTask, deleteTask, loadMore, updateCompleted, onDragEnd } from '../taskMethod';
 import draggable from 'vuedraggable';
 import axios from 'axios';
   export default {
@@ -87,9 +85,6 @@ import axios from 'axios';
         editTask(task) {
             editTask(this,task);
         },
-        cancelUpdate(id) {
-            cancelUpdate(this,id);
-        },
         updateTask(id) {
             updateTask(this,id);
         },
@@ -103,10 +98,11 @@ import axios from 'axios';
             loadMore(this);
         },
         onDragEnd() {
-          axios.post('/tasks/update-order', { tasks: this.tasks }).then(response => {
-          console.log('Order updated');
-        });
+          onDragEnd(this);
         }
+      },
+      mounted() {
+        this.showTask();
       }
     };
   </script> 

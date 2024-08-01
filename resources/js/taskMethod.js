@@ -14,6 +14,7 @@ export const addTask = (component) => {
         component.newTaskName = '';
         component.newTaskDate = '';
         component.errors = {};
+        showTask(component);
     })
     .catch(error => {
       if (error.response && error.response.status === 422) {
@@ -24,15 +25,6 @@ export const addTask = (component) => {
 export const editTask = (component,task) => {
     component.editTaskId = task.id;
 };
-export const cancelUpdate = (component,id) => {
-    const task = component.tasks.data.find(task => task.id === id);
-    if(task)
-    {
-        component.editTaskId = null;
-        task.name = task.name;
-        component.errors[task.id]={};
-    }
-}
 export const updateTask = (component,id) => {
     const task = component.tasks.data.find(task => task.id === id);
     const data = {
@@ -42,6 +34,7 @@ export const updateTask = (component,id) => {
     axios.put(`/tasks/${id}`, data).then(() => {
         component.editTaskId = null;
         component.errors = {};
+        showTask(component);
     }).catch(error => {
       if (error.response && error.response.data.errors) {
         component.errors[task.id] = error.response.data.errors;
@@ -51,6 +44,7 @@ export const updateTask = (component,id) => {
 export const deleteTask = (component,id) => {
     axios.delete(`/tasks/${id}`).then(() => {
         component.tasks.data = component.tasks.data.filter(task => task.id !== id);
+        showTask(component);
     });
 };
 export const updateCompleted = (component,id) => {
@@ -63,6 +57,7 @@ export const updateCompleted = (component,id) => {
     };
     axios.put(`/tasks/${id}`,data).then(response => {
         console.log('update status success');
+        showTask(component);
     });
 };
 export const loadMore = (component) => {
@@ -70,4 +65,10 @@ export const loadMore = (component) => {
         component.tasks.data.push(...response.data.data);
         component.tasks.next_page_url = response.data.next_page_url;
     });
-}
+};
+export const onDragEnd = (component) => {
+    axios.post('/tasks/update-order', { tasks: component.tasks }).then(response => {
+        console.log('update sort order success'); 
+        showTask(component);
+    });
+};

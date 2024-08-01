@@ -14,11 +14,7 @@ npm install axios
 Cài đặt plugin vue cho vite
 
 npm install @vitejs/plugin-vue
-
-//Cài đặt vuex
-
-//npm install vuedraggable@next --save
-
+ 
 Cài đặt kéo thả  vue-draggable-next
 
 npm install vuedraggable@next
