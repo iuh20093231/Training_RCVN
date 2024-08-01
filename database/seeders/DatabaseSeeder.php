@@ -121,11 +121,13 @@ class DatabaseSeeder extends Seeder
         $data3 = [
             [
                 'name' => 'Task 1',
+                'date' => now(),
                 'created_at' => now()
 
             ],
             [
                 'name' => 'Task 2',
+                'date' => now(),
                 'created_at' => now()
             ]
         ];

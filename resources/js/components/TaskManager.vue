@@ -30,8 +30,8 @@
                     <div v-if="errors[element.id]?.name" class="error text-danger">{{ errors[element.id].name }}</div>
                   </td>
                   <td class="p-3">
-                    <input v-if="editTaskId === element.id" type="date" v-model="element.created_at"  class="form-control"/>
-                    <span v-else >{{ formatDate(element.created_at) }}</span>
+                    <input v-if="editTaskId === element.id" type="date" v-model="element.date"  class="form-control"/>
+                    <span v-else >{{ formatDate(element.date) }}</span>
                   </td>
                   <td>
                     <button v-if="editTaskId === element.id" @click="updateTask(element.id)" class="btn btn-success m-2">Save</button>
@@ -51,8 +51,7 @@
  <script>
 import { showTask, addTask, editTask, updateTask, deleteTask, loadMore, updateCompleted, onDragEnd } from '../taskMethod';
 import draggable from 'vuedraggable';
-import axios from 'axios';
-  export default {
+export default {
     components: {
       draggable,
     },
@@ -74,7 +73,8 @@ import axios from 'axios';
         const year = date.getFullYear();
         const month = String(date.getMonth() + 1).padStart(2, '0');
         const day = String(date.getDate()).padStart(2, '0');
-        return [month, day, year].join('/');
+        return `${year}-${month}-${day}`;
+        //return [month, day, year].join('/');
         },
         showTask() {
           showTask(this);

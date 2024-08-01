@@ -17,7 +17,8 @@ class TaskController extends Controller
     {
         $task = Task::create([
             'name' => $request->name,
-            'created_at' => $request->date ?: now(),
+            'date' => $request->date ?: now(),
+            'created_at' => now()
         ]);
 
         return response()->json($task);
@@ -31,7 +32,7 @@ class TaskController extends Controller
             $task->completed = !$task->completed;
         }
         $task->name = $request->name;
-        $task->created_at = $request->created_at ?: now()->toDateString();
+        $task->date = $request->date ?: now()->toDateString();
         $task->save();
         return response()->json($task);
     }

@@ -5,7 +5,7 @@ export const showTask = (component) => {
     });
 };
 export const addTask = (component) => {
-    const taskDate = component.newTaskDate ? component.newTaskDate : new Date();
+    const taskDate = component.newTaskDate ? component.formatDate(component.newTaskDate) : component.formatDate(new Date());
     axios.post('/tasks', {
       name: component.newTaskName,
       date: taskDate 
@@ -29,7 +29,7 @@ export const updateTask = (component,id) => {
     const task = component.tasks.data.find(task => task.id === id);
     const data = {
         name: task.name,
-        created_at: component.formatDate(task.created_at),
+        date: task.date,
     };
     axios.put(`/tasks/${id}`, data).then(() => {
         component.editTaskId = null;
@@ -52,7 +52,7 @@ export const updateCompleted = (component,id) => {
     task.completed = !task.completed;
     const data = {
         name: task.name,
-        created_at: component.formatDate(task.created_at),
+        date: task.date,
         completed: task.completed
     };
     axios.put(`/tasks/${id}`,data).then(response => {
