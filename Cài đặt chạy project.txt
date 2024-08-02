@@ -37,3 +37,5 @@ https://viblo.asia/p/bai-16-su-dung-axios-de-goi-laravel-api-trong-vuejs-GrLZDw7
 https://viblo.asia/p/vuejs-thuc-hanh-tao-mot-ung-dung-todo-list-don-gian-voi-vuejs-va-vuex-yMnKMjwEZ7P
 https://www.npmjs.com/package/vue-draggable-next
 https://vi.vuejs.org/v2/style-guide/#Ten-cac-component-co-lien-he-chat-che-voi-nhau-rat-khuyen-khich
+https://freetuts.net/tich-hop-vuejs-vao-laravel-5718.html
+https://vueschool.io/articles/vuejs-tutorials/how-do-i-drag-and-drop-in-vue/

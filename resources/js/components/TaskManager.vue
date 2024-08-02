@@ -17,7 +17,7 @@
                 <th>ACTIONS</th>
               </tr>
             </thead>
-            <draggable tag="tbody" :list="tasks.data" @end="onDragEnd">
+            <draggable tag="tbody" :list="tasks.data" :itemKey="'id'" @end="onDragEnd">
               <template #item="{element}">
                 <tr :key="element.id">
                   <td class="p-3">
@@ -74,7 +74,6 @@ export default {
         const month = String(date.getMonth() + 1).padStart(2, '0');
         const day = String(date.getDate()).padStart(2, '0');
         return `${year}-${month}-${day}`;
-        //return [month, day, year].join('/');
         },
         showTask() {
           showTask(this);
@@ -100,10 +99,10 @@ export default {
         onDragEnd() {
           onDragEnd(this);
         }
-      },
-      mounted() {
+    },
+    mounted() {
         this.showTask();
-      }
-    };
+    }
+};
   </script> 
   
