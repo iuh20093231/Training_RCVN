@@ -22,10 +22,10 @@
                 <input type="text" name="address" id="address" v-model="find.address" placeholder="Nhập địa chỉ" class="form-control" style="border-radius: 0px;">
             </div>
         </div>
-        <div class="row mt-2">
+        <div class="row mt-3">
             <div class="col-lg-2">
                 <i class="fa fa-user-plus text-primary me-1" aria-hidden="true"></i>
-                <button type="button" id="add" name="add" class="btn btn-primary" @click="showModal = true">Thêm mới</button>
+                <button type="button" id="add" name="add" class="btn btn-primary" style="font-weight: bold;" @click="showModal = true">Thêm mới</button>
             </div>
             <div class="col-lg-2">
                 <button type="button" class="btn btn-search btn-primary" @click="searchCustomer"><i class="fa fa-search" aria-hidden="true"> Tìm kiếm</i></button>
@@ -35,11 +35,11 @@
             </div>
             <div class="col-lg-3">
                 <i class="fa fa-download text-success" style="margin-right: 10px;" aria-hidden="true"></i>
-                <button type="button" class="btn btn-success" id="export" @click="exportCSV">Export CSV</button>
+                <button type="button" class="btn btn-success" style="font-weight: bold;" id="export" @click="exportCSV">Export CSV</button>
             </div>
             <div class="col-lg-3">
                 <i class="fa fa-upload  text-success" style="margin-right: 10px;" aria-hidden="true"></i>
-                <button  class="btn btn-success" type="button" @click="triggerFileInput">Import CSV</button>
+                <button  class="btn btn-success" type="button" style="font-weight: bold;" @click="triggerFileInput">Import CSV</button>
             </div>
         </div>
     </form>
@@ -62,18 +62,18 @@
                 <a href="#" style="text-decoration: none;" class="next-page" @click.prevent="changePage(customers.current_page + 1)" :disabled = "customers.current_page === customers.last_page">&raquo;</a>
             </div>
         </div>
-        <p class="col-lg-5 pt-5 text-center float-right " style="font-size: 14px;">Hiển thị từ {{ (customers.current_page -1) * customers.per_page +1 }} đến {{ ((customers.current_page -1) * customers.per_page + 1) + customers.data.length - 1 }} trong tổng số <strong>{{ customers.total }}</strong> người dùng</p>
+        <p class="col-lg-5 pt-5 text-center float-end " style="font-size: 14px;">Hiển thị từ {{ (customers.current_page -1) * customers.per_page +1 }} đến {{ ((customers.current_page -1) * customers.per_page + 1) + customers.data.length - 1 }} trong tổng số <strong>{{ customers.total }}</strong> người dùng</p>
     </div> 
     <div class="row">
         <table class="table table-striped mt-2">
             <thead class="thead-danger">
             <tr>
-                <th>#</th>
-                <th>Họ tên</th>
-                <th>Email</th>
-                <th>Địa chỉ</th>
-                <th>Điện thoại</th>
-                <th>Action</th>
+                <th class="bg-danger text-white">#</th>
+                <th class="bg-danger text-white">Họ tên</th>
+                <th class="bg-danger text-white">Email</th>
+                <th class="bg-danger text-white">Địa chỉ</th>
+                <th class="bg-danger text-white">Điện thoại</th>
+                <th class="bg-danger text-white">Action</th>
             </tr>
             </thead>
             <tbody id="user-table">

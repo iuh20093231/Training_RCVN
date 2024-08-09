@@ -20,10 +20,10 @@ class LoginController extends Controller
     public function login(LoginRequest $request)
     {
         $credentials =[
-            'email' => $request->input('email'), 
-            'password' =>$request->input('password')
+            'email' => $request->email, 
+            'password' =>$request->password,
         ];
-        $remember = $request->has('remember');
+        $remember = $request->has('remember_token');
         if(Auth::attempt($credentials, $remember))
         {
             $user = Auth::user();
@@ -35,13 +35,11 @@ class LoginController extends Controller
             }
             $user->save();
             session(['user' => $user]);
-            return redirect()->route('product.index');
+            return response()->json(['redirect' => route('product.index')]);
         }
         else
         {
-            return redirect()-> route('login')->withErrors([
-            'error' => 'Email hoặc mật khẩu không chính xác.',
-        ]);
+            return response()->json(['errors' => ['email' => ['Email hoặc mật khẩu không chính xác.']]], 422);
         }
     }
     public function logout()

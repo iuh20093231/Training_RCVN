@@ -35,47 +35,53 @@
     </div>
     <div class="row">
         <div class="col-lg-7" id="pagination-wrapper" v-if="products.total>20">
-            <div class="pt-3 pl-0 pagination" id="pagination1"> 
+            <div class="pt-3 ps-0 pagination" id="pagination1"> 
                 <a href="#" style="text-decoration: none;" class="prev-page" @click.prevent="changePage(products.current_page - 1)" :disabled = "products.current_page === 1">&laquo;</a>
                 <a href="#" v-for="page in numberPage" :key="page" class="page-link" @click.prevent="changePage(page)" :class="{'active': products.current_page === page,'current': products.current_page ===  page}" style="line-height:20px; ">{{page}}</a>
                 <a href="#" style="text-decoration: none;" class="next-page" @click.prevent="changePage(products.current_page + 1)" :disabled = "products.current_page === products.last_page">&raquo;</a>
             </div>
         </div>
-        <p class="col-lg-5 pt-5 text-center float-right " style="font-size: 14px;">Hiển thị từ {{ (products.current_page -1) * products.per_page +1 }} đến {{ ((products.current_page -1) * products.per_page + 1) + products.data.length - 1 }} trong tổng số <strong>{{ products.total }}</strong> người dùng</p>
+        <p class="col-lg-5 pt-5 text-center float-end " style="font-size: 14px;">Hiển thị từ {{ (products.current_page -1) * products.per_page +1 }} đến {{ ((products.current_page -1) * products.per_page + 1) + products.data.length - 1 }} trong tổng số <strong>{{ products.total }}</strong> người dùng</p>
     </div>
     <div class="row">
         <table class="table table-striped mt-3">
-            <thead class="thead-danger">
+            <thead>
                 <tr>
-                <th>#</th>
-                <th>Tên sản phẩm</th>
-                <th>Mô tả</th>
-                <th>Giá</th>
-                <th>Tình trạng</th>
-                <th>Action</th>
+                <th class="bg-danger text-white">#</th>
+                <th class="bg-danger text-white">Tên sản phẩm</th>
+                <th class="bg-danger text-white">Mô tả</th>
+                <th class="bg-danger text-white">Giá</th>
+                <th class="bg-danger text-center text-white">Tình trạng</th>
+                <th class="bg-danger text-white">Action</th>
                 </tr>
             </thead>
             <tbody id="user-table">
                 <tr v-for="(product,index) in products.data" :key="product.id">
-                    <td>{{ (products.current_page - 1) * 20 + index + 1 }}</td>
-                    <td>{{ product.product_name }}</td>
-                    <td>{{ product.description }}</td>
-                    <td>{{ product.product_price }}</td>
-                    <td :class="statusClass(product.is_sales)">{{ statusText(product.is_sales) }}</td>
-                    <td>
-                        <a @click.prevent="editProduct(product)" class="btn update mr-1"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                        <button  class="btn delete mr-1 deleteProduct" data-id="${product.product_id}" data-name="${product.product_name}"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                    <td class="pt-3">{{ (products.current_page - 1) * 20 + index + 1 }}</td>
+                    <td @mouseover="showImage(`/storage/${product.product_image}`)" @mouseleave="hideImage" class="product-name pt-3">{{ product.product_name }}
+                        <img v-if="currentImage" :src="currentImage" alt="Product Image" class="product-image" />
+                    </td>
+                    <td class="pt-3">{{ product.description }}</td>
+                    <td class="pt-3">{{ product.product_price }}</td>
+                    <td class="pt-3"><p :class="statusClass(product.is_sales)">{{ statusText(product.is_sales) }}</p></td>
+                    <td class="pt-3">
+                        <a @click.prevent="editProduct(product)" class="btn text-primary"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                        <button  class="btn text-danger" @click="showModalDelete(product.product_id)"><i class="fa fa-trash" aria-hidden="true"></i></button>
                     </td>
                 </tr>
                 <p v-if="products.total === 0">Không có dữ liệu</p>
             </tbody>
         </table>
     </div>
+    <delete-product  ref="confirmDeleteModal" @delete-confirmed="searchProduct"></delete-product>
 </template>
 <script>
 import axios from 'axios';
-
+import DeleteProduct from './DeleteProduct.vue';
 export default {
+    components: {
+        DeleteProduct
+    },
     data() {
         return {
             products: { data: [] },
@@ -86,7 +92,8 @@ export default {
                 product_price_end: ''
             },
             isEdit: false,
-            productId: null
+            productId: null,
+            currentImage: null
         }
     },
     methods: {
@@ -105,9 +112,9 @@ export default {
         statusClass(is_sales) {
             switch(is_sales) {
                 case 0:
-                    return 'text-danger';
+                    return 'text-danger unActive';
                 case 1:
-                    return 'text-success';
+                    return 'text-success isActive';
             }
         },
         statusText(isActive) {
@@ -125,6 +132,19 @@ export default {
                 this.searchProduct(page);
             }
         },
+        showImage(imageUrl) {
+            this.currentImage = imageUrl; // Gán URL hình ảnh hiện tại
+        },
+        hideImage() {
+            this.currentImage = null; // Ẩn hình ảnh khi di chuột ra khỏi tên sản phẩm
+        },
+        showModalDelete(productId) {
+            if (this.$refs.confirmDeleteModal) {
+                this.$refs.confirmDeleteModal.show(productId);
+            } else {
+                console.error('Errors delete');
+            }
+        }
 
     },
     created() {

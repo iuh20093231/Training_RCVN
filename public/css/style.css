@@ -82,6 +82,7 @@
 {
     color: white;
     font-weight: bold;
+    text-decoration: none;
 }
 .add-a:hover
 {
@@ -182,4 +183,16 @@
 
 .next-page:hover, .prev-page:hover {
     background-color: #ddd;
+}
+.isActive {
+    border-radius: 20px 20px;
+    background-color: rgb(185, 237, 190);
+    /* font-weight: bold; */
+    text-align: center;
+}
+.unActive {
+    border-radius: 20px 20px;
+    background-color: rgb(234, 193, 184);
+    /* font-weight: bold; */
+    text-align: center;
 }

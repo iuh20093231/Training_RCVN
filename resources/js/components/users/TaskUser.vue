@@ -29,7 +29,7 @@
     <div class="row mt-3">
         <div class="col-lg-6 add-product">
             <i class="fa fa-user-plus text-primary me-1" aria-hidden="true"></i>
-            <button type="button" id="add" name="add" class="btn btn-primary" @click="showModalAdd">Thêm mới</button>
+            <button type="button" id="add" name="add" class="btn btn-primary" style="font-weight: bold;" @click="showModalAdd">Thêm mới</button>
         </div>
         <div class=" col-lg-3">
             <button type="button" class="btn btn-search btn-primary" @click="searchUsers" ><i class="fa fa-search" aria-hidden="true"> Tìm kiếm</i></button>
@@ -40,7 +40,7 @@
     </div>
     <div class="row">
         <div class="col-lg-7" id="pagination-wrapper" v-if="users.total>20">
-            <div class="pt-3 pl-0 pagination" id="pagination1"> 
+            <div class="pt-3 pl-0 pagination"> 
                 <a href="#" style="text-decoration: none;" class="prev-page" @click.prevent="changePage(users.current_page - 1)" :disabled = "users.current_page === 1">&laquo;</a>
                 <a href="#" v-for="page in numberPage" :key="page" class="page-link" @click.prevent="changePage(page)" :class="{'active': users.current_page === page,'current': users.current_page ===  page}" style="line-height:20px; ">{{page}}</a>
                 <a href="#" style="text-decoration: none;" class="next-page" @click.prevent="changePage(users.current_page + 1)" :disabled = "users.current_page === users.last_page">&raquo;</a>
@@ -52,22 +52,22 @@
         <table class="table table-striped mt-1">
             <thead>
                 <tr>
-                <th>#</th>
-                <th>Họ tên</th>
-                <th>Email</th>
-                <th>Nhóm</th>
-                <th>Trạng thái</th>
-                <th>Action</th>
+                <th class="bg-danger text-white text-center">#</th>
+                <th class="bg-danger text-white">Họ tên</th>
+                <th class="bg-danger text-white">Email</th>
+                <th class="bg-danger text-white">Nhóm</th>
+                <th class="bg-danger text-white text-center">Trạng thái</th>
+                <th class="bg-danger text-white">Action</th>
                 </tr>
             </thead>
             <tbody id="user-table">
                 <tr v-for="(user,index) in users.data" :key="user.id">
-                    <td>{{ (users.current_page - 1) * 20 + index + 1 }}</td>
-                    <td>{{ user.name }}</td>
-                    <td>{{ user.email }}</td>
-                    <td>{{ user.group_role }}</td>
-                    <td :class="statusClass(user.is_active)">{{ statusText(user.is_active) }}</td>
-                    <td>
+                    <td class="pt-3 text-center" style="font-weight: bold;">{{ (users.current_page - 1) * 20 + index + 1 }}</td>
+                    <td class="pt-3">{{ user.name }}</td>
+                    <td class="pt-3">{{ user.email }}</td>
+                    <td class="pt-3">{{ user.group_role }}</td>
+                    <td class="pt-3" ><p :class="statusClass(user.is_active)">{{ statusText(user.is_active) }}</p></td>
+                    <td class="pt-3">
                         <button class="btn text-primary mr-1" @click="showModalUpdate(user)"><i class="fa fa-pencil" aria-hidden="true"></i></button>
                         <button  class="btn text-danger mr-1" @click="showConfirmDeleteModal(user.name, user.id)"><i class="fa fa-trash" aria-hidden="true"></i></button>
                         <button  class="btn mr-1" @click="showConfirmLockUpModal(user.name,user.id)"><i class="fa fa-user-times" aria-hidden="true"></i></button>
@@ -139,9 +139,9 @@ export default {
         statusClass(is_active) {
             switch(is_active) {
                 case 0:
-                    return 'text-danger';
+                    return 'text-danger unActive';
                 case 1:
-                    return 'text-success';
+                    return 'text-success isActive';
             }
         },
         statusText(isActive) {

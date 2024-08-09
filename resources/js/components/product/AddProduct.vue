@@ -6,7 +6,7 @@
             <span>{{ isEdit ? '> Chỉnh sửa sản phẩm' : '> Thêm sản phẩm'}}</span>
             </div>
     </div>
-    <form class="form float-start mt-2 pb-5" style="width:100%;" enctype="multipart/form-data" @submit.prevent="handleOK">
+    <form class="form float-start mt-2 pb-5" style="width:100%;" @submit.prevent="handleOK">
             <div class="float-start p-0" style="width:50%;">
                 <label for="product_name" class="lbl"> Tên sản phẩm </label>
                 <input type="text" name="product_name" id="product_name" v-model="product.product_name" placeholder="Nhập tên sản phẩm" class="form-control mt-2">
@@ -29,7 +29,7 @@
                     <img :src="product.imageUrl" alt="Hình ảnh sản phẩm" id="imagePreview" style="height: 340px; width:100%;">
                 </div>
                 <label class="btn btn-success" for="product_image">Upload images</label>
-                <button type="button" class="btn btn-danger ms-2"  @click="removeImage"> Xóa images</button>
+                <button type="button" class="btn btn-danger ms-2" @click="removeImage"> Xóa images</button>
                 <input hidden type="file" ref="imageInput" name="product_image" id="product_image" accept="image/*" @change="uploadImage">
                 <input type="text" name="tenfile" id="tenfile" :value="fileName"  style="border: 1px solid rgb(152, 151, 151); width:auto; height:35px;" placeholder="tên file upload" class="ms-2" readonly><br>
                 <span v-if="errors.product_image" class="text-danger" style="font-weight: bold;">{{ errors.product_image[0] }}</span><br>
@@ -68,7 +68,7 @@ export default {
     methods: {
         getProductDetails() {
             axios.get(`/product/${this.productId}/edit`).then(response => {
-                const product = response.data.product;
+                const product = response.data;
                 this.product.product_name = product.product_name;
                 this.product.product_price = product.product_price;
                 this.product.description = product.description;
@@ -129,12 +129,17 @@ export default {
             formData.append('is_sales', this.product.is_sales);
             if (this.product.image) {
                 formData.append('product_image', this.product.image);
-            }
-            axios.put(`/product/${this.productId}`,formData).then(response => {
+            } 
+            axios.post(`/product/${this.productId}`,formData,{
+                        headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }).then(response => {
                 window.location.href = '/product';
             }).catch(error => {
                 if (error.response && error.response.data.errors) {
                     this.errors = error.response.data.errors;
+                    console.log(error.response.data.errors);
                 }
             });
         },

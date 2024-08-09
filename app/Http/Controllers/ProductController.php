@@ -61,27 +61,29 @@ class ProductController extends Controller
     public function edit($product_id)
     {
         $product = Product::find($product_id);
-        return response()->json(['product' => $product]);
+        return response()->json($product);
     } 
     public function update(ProductRequest $request,$product_id)
     {
         $product = Product::find($product_id);
+        $updateData = [
+            'product_name' => $request->product_name,
+            'product_price' => $request->product_price,
+            'description' => $request->description,
+            'is_sales' => $request->is_sales,
+        ];
         if ($request->has('remove_image')) {
             if ($request->remove_image && $product->product_image) {
                 Storage::delete('public/' . $product->product_image);
-                $product->product_image = null;
+                $updateData['product_image'] = null;
             }
         }
         if ($request->hasFile('product_image')) {
 
             $imagePath = $request->file('product_image')->store('public/images');
-            $product->product_image = str_replace('public/', '', $imagePath);
+            $updateData['product_image'] = str_replace('public/', '', $imagePath);
         }
-        $product->product_name = $request->product_name;
-        $product->product_price = $request->product_price;
-        $product->description = $request->description;
-        $product->is_sales = $request->is_sales;
-        $product->save();
+        $product->update($updateData);
         return response()->json($product);
     }
     public function destroy($product_id)

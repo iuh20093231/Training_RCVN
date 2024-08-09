@@ -1,5 +1,5 @@
 <div class="header row">
-    <div class="col-lg-9 col-xs-12 menu ps-0">
+    <div class="col-lg-10 menu ps-0">
             <ul id="nav" class="nav nav-pills" role="tablist">
                 <li class="nav-item">
                     <a href="{{ route('product.index') }}" class="nav-link" >Sản phẩm</a>
@@ -15,16 +15,20 @@
                 </li>
             </ul>
     </div>
-    <div class="col-lg-3 col-xs-12 admin float-right">
+    <div class="col-lg-2">
         <div class="dropdown">
-                <i class="fa fa-user-circle-o" aria-hidden="true" data-bs-toggle="dropdown" class="dropdown-toggle"></i>
-            <div class="dropdown-menu mt-2">
-                <form action="{{ route('logout') }}" method="post">
-                    @csrf
-                    <input type="submit" name="btn" class="btn btn-block btn-logout" value="Đăng xuất">
-                </form>
+            <div data-bs-toggle="dropdown">
+                <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                <p class="p float-start" style="line-height: 70px;">ADMIN</p>
             </div>
+            <ul class="dropdown-menu dropdown-menu-start mt-5 p-0">
+                <li>
+                    <form action="{{ route('logout') }}" method="post" class="dropdown-item p-0 text-center">
+                        @csrf
+                        <button type="submit" class="btn btn-block">Đăng xuất</button>
+                    </form>
+                </li>
+            </ul>
         </div>
-        <p class="p float-left">ADMIN</p>
     </div>
 </div>
