@@ -20,10 +20,10 @@ class CustomerImport implements ToCollection, WithHeadingRow, SkipsOnFailure
     * @return \Illuminate\Database\Eloquent\Model|null
     */
     use Importable, SkipsFailures;
+    protected $failures = [];
 
     public function collection(Collection $rows)
     {
-        $failures = [];
         foreach ($rows as $index => $row) {
             $rowArray = $row->toArray();
             $validator = Validator::make($rowArray,(new CustomerRequest)->rules(),(new CustomerRequest)-> messages());
@@ -43,10 +43,10 @@ class CustomerImport implements ToCollection, WithHeadingRow, SkipsOnFailure
                 'is_active' => $row['is_active']
             ]);
         }
-
-        if (!empty($failures)) {
-            session()->flash('import_failures', $failures);
-        }
+    }
+    public function getFailures()
+    {
+        return $this->failures;
     }
 
 }

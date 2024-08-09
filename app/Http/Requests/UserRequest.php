@@ -26,7 +26,6 @@ class UserRequest extends FormRequest
             'email' => 'required|email|unique:mst_users,email',
             'password' => 'required|min:6|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/',
             'reset_password' => 'required|same:password',
-            'group' => 'required',
         ];
 
     }

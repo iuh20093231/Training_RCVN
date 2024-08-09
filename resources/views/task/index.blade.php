@@ -30,6 +30,7 @@
                 </nav>
             </header>
             <task-manager></task-manager>
+            <add-user></add-user>
             <footer class="row mt-2">
                 <p>&copy; 2024 To Do List</p>
             </footer>

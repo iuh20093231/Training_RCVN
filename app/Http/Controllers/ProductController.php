@@ -55,14 +55,13 @@ class ProductController extends Controller
         $product->is_sales = $request->is_sales;
         $product->created_at=now();
         $product->save();
-        return redirect()->route('product.index')->with('success', 'Sản phẩm đã được lưu thành công.');
+        return response()->json($product);
     }
 
     public function edit($product_id)
     {
         $product = Product::find($product_id);
-        $tittle = 'Update Product';
-        return view('Product.edit',compact('product','tittle'));
+        return response()->json(['product' => $product]);
     } 
     public function update(ProductRequest $request,$product_id)
     {
@@ -83,7 +82,7 @@ class ProductController extends Controller
         $product->description = $request->description;
         $product->is_sales = $request->is_sales;
         $product->save();
-        return redirect()->route('product.index')->with('success', 'Sản phẩm đã được cập nhật thành công.');
+        return response()->json($product);
     }
     public function destroy($product_id)
     {

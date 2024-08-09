@@ -7,7 +7,7 @@
                     <h3 class='text-danger mt-2'>Nhắc nhở</h3>
                     <p class="p">Bạn có chắc muốn xóa khách hàng <span id="customer-name"></span> <span id="customer-id" style="display: none;"></span> này không?</p>
                 </div>
-                    <input type='button' class='btn btn-dark mb-3' data-dismiss='modal' value='Hủy'>
+                    <input type='button' class='btn btn-dark mb-3' data-bs-dismiss="modal" value='Hủy'>
                     <input type='button' class='btn btn-danger mb-3' id="btn-delete" value='Okay'>
                 </div>
         </div>

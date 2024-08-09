@@ -1,6 +1,6 @@
 <form class="form" id="search-form" action="{{ route('export') }}" method="GET" enctype="multipart/form-data" >
     @csrf
-    <div class="row">
+    <div class="row mb-3">
         <div class="col-lg-3 form-group search-name float-left">
             <label for="customer_name">Họ và tên</label>
             <input type="text" name="customer_name" id="customer_name" placeholder="Nhập họ tên" class="form-control">
@@ -34,5 +34,6 @@
 <form action="{{ route('import') }}" method="POST" enctype="multipart/form-data" class="form mt-3" id="import-form">
     @csrf
     <input type="file" name="file" id="file-input" accept=".csv" style="display:none;" onchange="submitForm()">
-</form> 
+</form>
+ 
 

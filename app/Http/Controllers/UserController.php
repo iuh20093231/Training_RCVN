@@ -49,24 +49,16 @@ class UserController extends Controller
      
     public function store(UserRequest $request)
     {
-        $validator = $request->validated();
-        if($request->has('is_active'))
-        {
-            $is_active = 1;
-        }
-        else
-        {
-            $is_active = 0;
-        }
-        User::create([
-            'name' => $validator['name'],
-            'email' => $validator['email'],
-            'password' => Hash::make($validator['password']),
+        $is_active = $request->has('is_active') && $request->is_active ? 1 : 0;
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
             'is_active' => $is_active,
-            'group_role' => $request->group,
+            'group_role' => $request->group_role,
             'created_at' => now()
         ]);
-        return redirect()->route('users.index')->with('success', 'Người dùng đã được tạo thành công.');
+        return response()->json($user);
         
     }
 
@@ -89,10 +81,9 @@ class UserController extends Controller
         if (!empty($data['password'])) {
             $updateData['password'] = bcrypt($data['password']);
         }
-
         $user->update($updateData);
 
-        return response()->json(['success' => 'Chỉnh sửa người dùng thành công']);
+        return response()->json($user);
     }
     public function destroy($id)
     {
@@ -102,7 +93,7 @@ class UserController extends Controller
             $user->email ='user'.$id.'@gmail.com';
             $user->save();   
         }
-        return response()->json(['message' => 'Xóa người dùng thành công']);
+        return response()->json(['success' => true]);
     }
     public function updateStatus($id)
     {

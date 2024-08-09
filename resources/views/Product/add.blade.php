@@ -1,8 +1,9 @@
 @include('includes.header')
 <body>
-    <div class="container">
+    <div id="app">
+        <div class="container">
         @include('Product.navbar')
-        <div class="row tittle pt-2">
+        {{-- <div class="row tittle pt-2">
             <p class="float-left col-8 pl-0">Thêm sản phẩm</p>
             <div class="col-4">
             <a href="{{ route('product.index') }}" class="float-left pr-1">Sản phẩm </a>
@@ -55,8 +56,9 @@
                 <button type="submit" class="btn btn-danger float-right mt-3 ml-3" style="border-radius:0px 0px;">Lưu</button>
                 <button class="btn btn-dark float-right mt-3" style="border-radius:0px 0px;"><a href="{{ route('product.index') }}" style="color: white; text-decoration: none;">Hủy</a></button>
             </div>  
-        </form>
+        </form> --}}
+        <add-product></add-product>
     </div>
-    <script src="{{ asset('js/addproduct.js') }}"></script>
+    </div>
 </body>
 </html>

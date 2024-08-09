@@ -29,7 +29,7 @@
         <button type="button" id="add" name="add" class="btn btn-primary" data-toggle="modal" data-target="#addUsers">Thêm mới</button>  
 </div>
 <div class="ml-5">
-        <button type="sumit" class="btn btn-search btn-primary" id="search"><i class="fa fa-search" aria-hidden="true"> Tìm kiếm</i></button>
+    <button type="sumit" class="btn btn-search btn-primary" id="search"><i class="fa fa-search" aria-hidden="true"> Tìm kiếm</i></button>
 </div>
 <div class="ml-5">
         <button type="button" class="btn btn-search btn-success" id="clear-search" ><i class="fa fa-times" aria-hidden="true">  Xóa tìm</i></button>

@@ -61,7 +61,7 @@
                 </div>
             </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-gray mr-3" data-dismiss="modal">Hủy</button>
+          <button type="button" class="btn btn-gray mr-3" data-bs-dismiss="modal">Hủy</button>
           <button type="submit" class="btn btn-danger">Lưu</button>
         </div>
         </form>

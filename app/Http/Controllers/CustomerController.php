@@ -51,15 +51,8 @@ class CustomerController extends Controller
     }
     public function store(CustomerRequest $request)
     {
-        if($request->has('is_active'))
-        {
-            $is_active = 1;
-        }
-        else
-        {
-            $is_active = 0;
-        }
-        Customer::create([
+        $is_active = $request->has('is_active') && $request->is_active ? 1 : 0;
+        $customer = Customer::create([
             'customer_name' => $request->customer_name,
             'email' => $request->email,
             'tel_num' => $request->tel_num,
@@ -67,7 +60,7 @@ class CustomerController extends Controller
             'is_active' => $is_active,
             'created_at' => now()
         ]);
-        return redirect()->route('custormer.index')->with('success', 'Người dùng đã được tạo thành công.');
+        return response()->json($customer);
     }
     public function show($id)
     {
@@ -84,8 +77,15 @@ class CustomerController extends Controller
     }
     public function import(Request $request)
     {
-        Excel::import(new CustomerImport, $request->file('file'));
-        return back();
+        $import = new CustomerImport;
+        Excel::import($import, $request->file('file'));
+
+        $failures = $import->getFailures();
+        if (!empty($failures)) {
+            return response()->json(['errors' => $failures], 422);
+        }
+
+        return response()->json(['message' => 'File imported successfully']);
     }
     public function export(Request $request)
     {

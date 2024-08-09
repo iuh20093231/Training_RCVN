@@ -7,8 +7,8 @@
         <span v-if="errors.name" class="text-danger pt-2" style="text-align: left; font-weight: bold;">{{ errors.name[0] }}</span>
       </form>
       </div>
-      <div class="row mt-5">
-        <table class="table table-hover">
+      <div class="row mt-5 table-list">
+        <table class="table table-hover text-center">
             <thead class="thead-danger">
               <tr>
                 <th>DONE?</th>
@@ -104,5 +104,5 @@ export default {
         this.showTask();
     }
 };
-  </script> 
+</script>
   
