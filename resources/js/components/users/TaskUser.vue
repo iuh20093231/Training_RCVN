@@ -2,15 +2,15 @@
     <form class="row form mt-2">
         <div class="col-lg-3 form-group search-name float-left pl-0">
             <label for="name">Tên</label>
-            <input type="text" name="name" id="name" v-model="search.name" placeholder="Nhập họ tên" class="form-control">
+            <input type="text" name="name" id="name" v-model="search.name" @keydown.enter="searchUsers" placeholder="Nhập họ tên" class="form-control">
         </div>
         <div class="col-lg-3 form-group search-name float-left">
             <label for="email">Email</label>
-            <input type="text" name="email" v-model="search.email" placeholder="Nhập email" class="form-control" style="border-radius: 0px;">
+            <input type="text" name="email" v-model="search.email" placeholder="Nhập email" @keydown.enter="searchUsers" class="form-control" style="border-radius: 0px;">
         </div>
         <div class="col-lg-3 form-group search-name float-left">
             <label for="group_role">Nhóm</label>
-            <select name="group_role" id="group_role" v-model="search.group_role" class="form-select form-control" style="border-radius: 0px;">
+            <select name="group_role" id="group_role" v-model="search.group_role" @keydown.enter="searchUsers" class="form-select form-control" style="border-radius: 0px;">
                 <option value="">Chọn nhóm</option>
                 <option value="Reviewer">Reviewer</option>
                 <option value="Admin">Admin</option>
@@ -19,7 +19,7 @@
         </div>
         <div class="col-lg-3 form-group search-name float-left">
             <label for="is_active">Trạng thái</label>
-            <select name="is_active" id="is_active" v-model="search.is_active" class="form-select form-control" style="border-radius: 0px;">
+            <select name="is_active" id="is_active" v-model="search.is_active" @keydown.enter="searchUsers" class="form-select form-control" style="border-radius: 0px;">
                 <option value="">Chọn trạng thái</option>
                 <option value="1">Đang hoạt động</option>
                 <option value="0">Tạm khóa</option>

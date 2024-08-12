@@ -3,15 +3,15 @@
         <div class="row pl-0">
             <div class="col-lg-3 form-group search-name">
                 <label for="customer_name">Họ và tên</label>
-                <input type="text" name="customer_name" id="customer_name" v-model="find.customer_name" placeholder="Nhập họ tên" class="form-control" style="border-radius: 0px;">
+                <input type="text" name="customer_name" id="customer_name" v-model="find.customer_name" @keydown.enter="searchCustomer" placeholder="Nhập họ tên" class="form-control" style="border-radius: 0px;">
             </div>
             <div class="col-lg-3 form-group search-name">
                 <label for="email">Email</label>
-                <input type="text" name="email" id="email" v-model="find.email" placeholder="Nhập email" class="form-control" style="border-radius: 0px;">
+                <input type="text" name="email" id="email" v-model="find.email" placeholder="Nhập email" @keydown.enter="searchCustomer" class="form-control" style="border-radius: 0px;">
             </div>
             <div class="col-lg-3 form-group search-name">
                 <label for="is_active">Trạng thái</label>
-                <select name="is_active" id="is_active" v-model="find.is_active" class="form-select form-control custom-select" style="border-radius: 0px;">
+                <select name="is_active" id="is_active" v-model="find.is_active" class="form-select form-control custom-select" style="border-radius: 0px;" @keydown.enter="searchCustomer">
                     <option value="">Chọn trạng thái</option>
                     <option value="1">Hoạt động</option>
                     <option value="0">Không hoạt động</option>
@@ -19,7 +19,7 @@
             </div>
             <div class="col-lg-3 form-group search-name">
                 <label for="address">Địa chỉ</label>
-                <input type="text" name="address" id="address" v-model="find.address" placeholder="Nhập địa chỉ" class="form-control" style="border-radius: 0px;">
+                <input type="text" name="address" id="address" v-model="find.address" placeholder="Nhập địa chỉ" class="form-control" style="border-radius: 0px;" @keydown.enter="searchCustomer">
             </div>
         </div>
         <div class="row mt-3">
@@ -46,9 +46,9 @@
     <form method="POST" enctype="multipart/form-data" class="form mt-3" id="import-form">
         <input type="file" name="file" id="file-input" style="display: none;" accept=".csv" @change="handleFile">
     </form>
-    <div v-if="importErrors.length">
+    <div v-if="importErrors.length" class="alert alert-danger">
             <div v-for="(error, index) in importErrors" :key="index">
-                <p>Lỗi tại hàng {{ error.row }}:</p>
+                <p>Lỗi tại hàng <strong>{{ error.row }}</strong>:</p>
                 <ul>
                     <li v-for="(msg, idx) in error.errors" :key="idx">{{ msg }}</li>
                 </ul>
@@ -136,11 +136,13 @@ export default {
     methods: {
         searchCustomer(page = 1) {
             axios.get('/custormer/list',{ params: {...this.find , page} }).then(response => {
+                this.importErrors = [];
                 this.customers = response.data;
             });
         },
         clearSearch() {
             this.find = {customer_name:'',email: '', is_active: '', address:''};
+            this.importErrors = [];
             this.searchCustomer();
         },
         changePage(page) {
@@ -162,6 +164,7 @@ export default {
             axios.put(`/custormer/${id}`, data).then(()=>{
                 this.editID = null;
                 this.errors = {};
+                this.importErrors = [];
                 this.searchCustomer();
             }).catch(error => {
                 if (error.response && error.response.data.errors) {
@@ -195,9 +198,11 @@ export default {
                 this.importErrors = [];
                 this.searchCustomer();
             }).catch (error => {
-                console.log('Lỗi nhận được:', error.response);
+                console.log('lỗi nhận được', error.response.data.errors);
                 if (error.response && error.response.data.errors) {
                     this.importErrors = error.response.data.errors;
+                } else {
+                    this.importErrors = [{ row: 'N/A', errors: ['Lỗi không xác định'] }];
                 }
             });
         },

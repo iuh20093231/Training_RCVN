@@ -22,6 +22,7 @@
                     <option value="0">Ngừng bán</option>
                     <option value="1">Đang bán</option>
                 </select>
+                <span v-if="errors.is_sales" class="text-danger" style="font-weight: bold;">{{ errors.is_sales[0] }}</span><br>
             </div>
             <div class="float-start ps-4" style="width:50%;">
                 <label for="product_image" class="lbl">Hình ảnh</label>
