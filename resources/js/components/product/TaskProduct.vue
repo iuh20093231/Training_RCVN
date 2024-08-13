@@ -2,11 +2,11 @@
     <form class="row form mt-2 float-left" id="search-form">
         <div class="col-lg-3 form-group search-name">
             <label for="product_name">Tên sản phẩm</label>
-            <input type="text" name="product_name" id="product_name" v-model="search.product_name" placeholder="Nhập tên sản phẩm" @keydown.enter="searchProduct" class="form-control" style="border-radius: 0px;">
+            <input type="text" name="product_name" id="product_name" v-model="search.product_name" placeholder="Nhập tên sản phẩm" @keydown.enter="searchProduct" class="form-control mt-1" style="border-radius: 0px;">
         </div>
         <div class="col-lg-3 form-group search-name float-left pl-5">
             <label for="is_sales">Trạng thái</label>
-            <select name="is_sales" id="is_sales" v-model="search.is_sales" class="form-select form-control custom-select" @keydown.enter="searchProduct" style="border-radius: 0px;">
+            <select name="is_sales" id="is_sales" v-model="search.is_sales" class="form-select form-control custom-select mt-1" @keydown.enter="searchProduct" style="border-radius: 0px;">
                 <option value="">Chọn trạng thái</option>
                 <option value="1">Đang bán</option>
                 <option value="0">Ngừng bán</option>
@@ -14,11 +14,11 @@
         </div>
         <div class="col-lg-3 form-group search-name">
             <label for="product_price_to">Giá bán từ</label>
-            <input type="text" name="product_price_to" id="product_price_to" v-model="search.product_price_to" class="form-control" style="border-radius: 0px;"> 
+            <input type="text" name="product_price_to" id="product_price_to" v-model="search.product_price_to" class="form-control mt-1" style="border-radius: 0px;"> 
         </div>
         <div class="col-lg-3 form-group search-name">
             <label for="product_price_end">Giá bán đến</label>
-            <input type="text" name="product_price_end" id="product_price_end" v-model="search.product_price_end" class="form-control" style="border-radius: 0px;"> 
+            <input type="text" name="product_price_end" id="product_price_end" v-model="search.product_price_end" class="form-control mt-1" style="border-radius: 0px;"> 
         </div>
     </form>
     <div class="row mt-3">

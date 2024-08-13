@@ -3,15 +3,15 @@
         <div class="row pl-0">
             <div class="col-lg-3 form-group search-name">
                 <label for="customer_name">Họ và tên</label>
-                <input type="text" name="customer_name" id="customer_name" v-model="find.customer_name" @keydown.enter="searchCustomer" placeholder="Nhập họ tên" class="form-control" style="border-radius: 0px;">
+                <input type="text" name="customer_name" id="customer_name" v-model="find.customer_name" @keydown.enter="searchCustomer" placeholder="Nhập họ tên" class="form-control mt-1" style="border-radius: 0px;">
             </div>
             <div class="col-lg-3 form-group search-name">
                 <label for="email">Email</label>
-                <input type="text" name="email" id="email" v-model="find.email" placeholder="Nhập email" @keydown.enter="searchCustomer" class="form-control" style="border-radius: 0px;">
+                <input type="text" name="email" id="email" v-model="find.email" placeholder="Nhập email" @keydown.enter="searchCustomer" class="form-control mt-1" style="border-radius: 0px;">
             </div>
             <div class="col-lg-3 form-group search-name">
                 <label for="is_active">Trạng thái</label>
-                <select name="is_active" id="is_active" v-model="find.is_active" class="form-select form-control custom-select" style="border-radius: 0px;" @keydown.enter="searchCustomer">
+                <select name="is_active" id="is_active" v-model="find.is_active" class="form-select form-control custom-select mt-1" style="border-radius: 0px;" @keydown.enter="searchCustomer">
                     <option value="">Chọn trạng thái</option>
                     <option value="1">Hoạt động</option>
                     <option value="0">Không hoạt động</option>
@@ -19,7 +19,7 @@
             </div>
             <div class="col-lg-3 form-group search-name">
                 <label for="address">Địa chỉ</label>
-                <input type="text" name="address" id="address" v-model="find.address" placeholder="Nhập địa chỉ" class="form-control" style="border-radius: 0px;" @keydown.enter="searchCustomer">
+                <input type="text" name="address" id="address" v-model="find.address" placeholder="Nhập địa chỉ" class="form-control mt-1" style="border-radius: 0px;" @keydown.enter="searchCustomer">
             </div>
         </div>
         <div class="row mt-3">

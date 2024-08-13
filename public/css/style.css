@@ -112,11 +112,6 @@
 {
     font-weight: bold;
 }
-.btn-logout:hover
-{
-    background-color: red;
-    color: white;
-}
 .images
 {
     height: 400px; 

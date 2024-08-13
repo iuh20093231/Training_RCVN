@@ -21,11 +21,13 @@
                 <i class="fa fa-user-circle-o" aria-hidden="true"></i>
                 <p class="p float-start" style="line-height: 70px;">ADMIN</p>
             </div>
-            <ul class="dropdown-menu dropdown-menu-start mt-5 p-0">
-                <li>
+            <ul class="dropdown-menu dropdown-menu-start mt-5 p-0" id="nav-out">
+                <li class="li-out">
                     <form action="{{ route('logout') }}" method="post" class="dropdown-item p-0 text-center">
                         @csrf
-                        <button type="submit" class="btn btn-block">Đăng xuất</button>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-block">Đăng xuất</button>
+                        </div>
                     </form>
                 </li>
             </ul>

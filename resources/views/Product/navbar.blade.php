@@ -25,7 +25,9 @@
                 <li>
                     <form action="{{ route('logout') }}" method="post" class="dropdown-item p-0 text-center">
                         @csrf
-                        <button type="submit" class="btn btn-block">Đăng xuất</button>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-block">Đăng xuất</button>
+                        </div>
                     </form>
                 </li>
             </ul>
