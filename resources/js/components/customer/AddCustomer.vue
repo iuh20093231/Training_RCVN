@@ -1,7 +1,7 @@
 <template>
-    <b-modal v-model="internalShow"  @hide="closeModal" title="Thêm khách hàng" cancel-title="Hủy">
-        <template #modal-header-close>
-            <button type="button" class="close" @click="closeModal">&times;</button>
+    <b-modal v-model="internalShow" hide-header-close>
+        <template #title>
+            <h3 class="text-center"><strong>Thêm khách hàng</strong></h3>
         </template>
         <div class="modal-body">
             <form>

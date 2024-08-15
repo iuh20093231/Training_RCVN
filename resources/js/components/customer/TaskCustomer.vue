@@ -232,9 +232,7 @@ export default {
     watch: {
         importErrors(newErrors) {
             if (newErrors.length > 0) {
-            // Thực hiện hành động khi có lỗi mới
-            console.log('Lỗi mới:', newErrors);
-            // Bạn có thể thực hiện các hành động khác như hiện thị thông báo hoặc gửi báo cáo lỗi
+               console.log('Lỗi mới:', newErrors);
             }
         }
     }

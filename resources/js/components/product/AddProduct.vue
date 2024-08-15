@@ -11,12 +11,12 @@
                 <label for="product_name" class="lbl"> Tên sản phẩm </label>
                 <input type="text" name="product_name" id="product_name" v-model="product.product_name" placeholder="Nhập tên sản phẩm" class="form-control mt-2">
                 <span v-if="errors.product_name" class="text-danger" style="font-weight: bold;">{{ errors.product_name[0] }}</span><br>
-                <label for="product_price" class="lbl">Giá bán</label>
+                <label for="product_price" class="lbl mt-2">Giá bán</label>
                 <input type="text" name="product_price" id="product_price" v-model="product.product_price" placeholder="Nhập giá bán" class="form-control mt-2">
                 <span v-if="errors.product_price" class="text-danger" style="font-weight: bold;">{{ errors.product_price[0] }}</span><br>
-                <label for="description" class="lbl">Mô tả</label>
+                <label for="description" class="lbl mt-2">Mô tả</label>
                 <textarea name="description" id="description" cols="30" rows="10" v-model="product.description" class="form-control mt-2"></textarea>
-                <label for="is_sales" class="lbl">Trạng thái</label>
+                <label for="is_sales" class="lbl mt-2">Trạng thái</label>
                 <select name="is_sales" id="is_sales" v-model="product.is_sales" class="form-select form-control mt-2">
                     <option value="">Chọn trạng thái</option>
                     <option value="0">Ngừng bán</option>
@@ -51,6 +51,7 @@ export default {
                 is_sales: '',
                 image: null,
                 imageUrl: '',
+                remove_image: false,
             },
             errors: {},
             fileName: '',
@@ -96,6 +97,7 @@ export default {
             this.product.imageUrl = '';
             this.fileName = '';
             this.$refs.imageInput.value = '';
+            this.product.remove_image = true;
         },
         handleOK() {
             if(this.isEdit) {
@@ -131,6 +133,9 @@ export default {
             if (this.product.image) {
                 formData.append('product_image', this.product.image);
             } 
+            if (this.product.remove_image) {  
+                formData.append('remove_image', this.product.remove_image);
+            }
             axios.post(`/product/${this.productId}`,formData,{
                         headers: {
                     'Content-Type': 'multipart/form-data'

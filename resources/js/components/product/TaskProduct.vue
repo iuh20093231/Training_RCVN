@@ -133,10 +133,10 @@ export default {
             }
         },
         showImage(imageUrl) {
-            this.currentImage = imageUrl; // Gán URL hình ảnh hiện tại
+            this.currentImage = imageUrl; 
         },
         hideImage() {
-            this.currentImage = null; // Ẩn hình ảnh khi di chuột ra khỏi tên sản phẩm
+            this.currentImage = null; 
         },
         showModalDelete(productId) {
             if (this.$refs.confirmDeleteModal) {

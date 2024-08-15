@@ -133,7 +133,7 @@ export default {
             }
         },
         clearSearch() {
-            this.search = { name: '', email: '', group: '', status: '' };
+            this.search = { name: '', email: '', group_role: '', is_active: '' };
             this.searchUsers();
         },
         statusClass(is_active) {

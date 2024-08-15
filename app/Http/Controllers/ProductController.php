@@ -72,8 +72,8 @@ class ProductController extends Controller
             'description' => $request->description,
             'is_sales' => $request->is_sales,
         ];
-        if ($request->has('remove_image')) {
-            if ($request->remove_image && $product->product_image) {
+        if ($request->has('remove_image') && $request->remove_image) {
+            if ($product->product_image) {
                 Storage::delete('public/' . $product->product_image);
                 $updateData['product_image'] = null;
             }

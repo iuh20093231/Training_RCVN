@@ -1,7 +1,7 @@
 <template>
-    <b-modal v-model="internalShow"  @hide="closeModal" :title="isEditModel ? 'Chỉnh sửa user' : 'Thêm user'" cancel-title="Hủy">
-        <template #modal-header-close>
-            <button type="button" class="close" @click="closeModal">&times;</button>
+    <b-modal v-model="internalShow" hide-header-close>
+        <template #title>
+            <h3 class="text-center"><strong>{{ isEditModel ? 'Chỉnh sửa user' : 'Thêm user' }}</strong></h3>
         </template>
         <div class="modal-body">
             <form @submit.prevent="handleOk">
