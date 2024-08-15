@@ -39,7 +39,7 @@ class LoginController extends Controller
         }
         else
         {
-            return response()->json(['errors' => ['email' => ['Email hoặc mật khẩu không chính xác.']]], 422);
+            return response()->json(['errors' => ['login' => ['Email hoặc mật khẩu không chính xác.']]], 422);
         }
     }
     public function logout()

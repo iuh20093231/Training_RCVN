@@ -14,6 +14,9 @@
             <input type="checkbox" class="me-5" name="remember_token" v-model="remember_token">
             <label for="remember_token">Remmber</label>
         </div>
+        <div class="form group mt-3 ms-4 text-center" >
+            <span v-if="errors.login" class="text-danger">{{ errors.login[0] }}</span>
+        </div>
         <div class="form-group mt-3 text-center">
             <button type="submit" class="btn btn-primary"><b>Đăng nhập</b></button>
         </div>
