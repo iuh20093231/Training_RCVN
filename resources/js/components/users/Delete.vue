@@ -33,10 +33,13 @@ export default {
         this.userName = '';
         this.userId = null;
         },
-        confirmDelete() {
-            axios.delete(`/users/${this.userId}`);
-            this.$emit('delete-confirmed');
-            
+        confirmDelete(event) {
+          event.preventDefault();
+          axios.delete(`/users/${this.userId}`).then(response => {
+            this.showModal = false;
+            this.$emit('delete-confirmed'); 
+          });
+            // this.$emit('delete-confirmed');    
         }
   }
 };

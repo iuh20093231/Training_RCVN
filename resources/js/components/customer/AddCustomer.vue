@@ -1,5 +1,5 @@
 <template>
-    <b-modal v-model="internalShow" @ok="handleOk" @hide="closeModal" title="Thêm khách hàng" ok-title="Lưu" cancel-title="Hủy">
+    <b-modal v-model="internalShow"  @hide="closeModal" title="Thêm khách hàng" cancel-title="Hủy">
         <template #modal-header-close>
             <button type="button" class="close" @click="closeModal">&times;</button>
         </template>
@@ -32,6 +32,10 @@
                 </div>
             </form>
         </div>
+        <template #footer>
+            <b-button variant="secondary" @click="closeModal">Hủy</b-button>
+            <b-button variant="danger" @click="handleOk">Lưu</b-button>
+        </template>
     </b-modal>
 </template>
 
@@ -68,7 +72,7 @@ export default {
             axios.post('/custormer/add', this.customer).then(response => {
                 this.resetForm();
                 this.$emit('customer_add', response.data);
-                this.$emit('close-modal');
+                this.closeModal();
             }).catch(error => {
                 if (error.response && error.response.status === 422) {
                     this.errors = error.response.data.errors;

@@ -52,7 +52,8 @@ Route::group(['middleware'=> Authenticate::class], function()
     Route::post('/users/{id}/updatestatus', [UserController::class, 'updateStatus']);
     // VUEJS
     Route::get('/manager-task', function () {
-        return view('task.index');
+        $tittle = 'Task';
+        return view('task.index',compact("tittle"));
     })->name('task');
     Route::resource('tasks', TaskController::class);
     Route::post('tasks/update-order', [TaskController::class, 'updateOrder']);

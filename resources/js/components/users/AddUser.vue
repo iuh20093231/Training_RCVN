@@ -1,10 +1,10 @@
 <template>
-    <b-modal v-model="internalShow" @ok="handleOk" @hide="closeModal" :title="isEditModel ? 'Chỉnh sửa user' : 'Thêm user'" ok-title="Lưu" cancel-title="Hủy">
+    <b-modal v-model="internalShow"  @hide="closeModal" :title="isEditModel ? 'Chỉnh sửa user' : 'Thêm user'" cancel-title="Hủy">
         <template #modal-header-close>
             <button type="button" class="close" @click="closeModal">&times;</button>
         </template>
         <div class="modal-body">
-            <form>
+            <form @submit.prevent="handleOk">
                 <div class="form-group">
                     <label for="name" class="lbl">Tên</label>
                     <input type="text" id="name" class="form-control mt-2" v-model="user.name" placeholder="Nhập họ tên">
@@ -40,12 +40,16 @@
                 </div>
             </form>
         </div>
+        <template #footer>
+            <b-button variant="secondary" @click="closeModal">Hủy</b-button>
+            <b-button variant="danger" @click="handleOk">{{ isEditModel ? 'Cập nhật' : 'Lưu' }}</b-button>
+        </template>
     </b-modal>
 </template>
 
 <script>
 import axios from 'axios';
-
+import { BModal, BButton } from 'bootstrap-vue-3';
 export default {
     props: {
         show: {
@@ -55,6 +59,10 @@ export default {
         userToEdit: {
             default: () => ({})
         }
+    },
+    components: {
+        BModal,
+        BButton
     },
     data() {
         return {
@@ -74,20 +82,20 @@ export default {
     methods: {
         handleOk() {
             if (this.isEditModel) {
-                this.updateUser().then(() => {
-                    
-                });
-            } else {
-                this.addUser().then(() => {
-                    // this.closeModal();
-                });
-            }
+            this.updateUser().then(response => {
+
+            });
+        } else {
+        this.addUser().then(response => {
+           
+        });
+    }
         },
         addUser() {
             axios.post('/users/add', this.user).then(response => {
                 this.resetForm();
                 this.$emit('user-added', response.data);
-                this.$emit('close-modal');
+                this.closeModal();
             }).catch(error => {
                 if (error.response && error.response.status === 422) {
                     this.errors = error.response.data.errors;
@@ -98,8 +106,8 @@ export default {
         },
         updateUser() {
             axios.put(`/users/${this.user.id}`,this.user).then(response => {
+                this.resetForm();
                 this.$emit('user-updated',response.data);
-                this.$emit('close-modal');
                 this.closeModal();
             }).catch(error => {
                 if (error.response && error.response.status === 422) {
@@ -121,10 +129,14 @@ export default {
             this.isEditModel = false;
         },
         closeModal() {
-            this.internalShow = false; 
-            this.$emit('update:show', false); 
-            this.$emit('close-modal');
             this.resetForm();
+            this.internalShow = false;
+            this.$emit('update:show', false);
+            this.$emit('close-modal');
+            
+        },
+        hasErrors() {
+            return Object.keys(this.errors).length > 0;
         }
     },
     watch: {
