@@ -1,12 +1,16 @@
 <template>
-    <b-modal id="confirm-delete-modal" title="Nhắc nhở" @ok="confirmDelete" @hide="resetModal" ok-title="Okay" cancel-title="Hủy" @hidden="resetModal" v-model="showModal">
-      <template #modal-title>
-        <h3 class='text-danger'>Nhắc nhở</h3>
+    <b-modal id="confirm-delete-modal"  v-model="showModal"  hide-header-close>
+      <template #title>
+        <h3 class="text-center"><strong>Nhắc nhở</strong></h3>
       </template>
       <div class="text-center">
         <i class="fa fa-exclamation-triangle text-warning" style="font-size: 70px;"></i>
         <p class="mt-2 text-danger">Bạn có chắc muốn xóa người dùng <strong>{{ userName }}</strong> này không?</p>
       </div>
+      <template #footer>
+            <b-button variant="secondary" @click="resetModal">Hủy</b-button>
+            <b-button variant="danger" @click="confirmDelete">OKay</b-button>
+      </template>
     </b-modal>
 </template>
 <script>
@@ -32,14 +36,13 @@ export default {
         resetModal() {
         this.userName = '';
         this.userId = null;
+        this.showModal = false;
         },
-        confirmDelete(event) {
-          event.preventDefault();
+        confirmDelete() {
           axios.delete(`/users/${this.userId}`).then(response => {
             this.showModal = false;
-            this.$emit('delete-confirmed'); 
+             location.reload();
           });
-            // this.$emit('delete-confirmed');    
         }
   }
 };

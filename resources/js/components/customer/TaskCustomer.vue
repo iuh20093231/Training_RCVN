@@ -46,7 +46,7 @@
     <form method="POST" enctype="multipart/form-data" class="form mt-3" id="import-form">
         <input type="file" name="file" id="file-input" style="display: none;" accept=".csv" @change="handleFile">
     </form>
-    <div v-if="importErrors.length" class="alert alert-danger">
+    <div v-if="importErrors.length > 0" class="alert alert-danger">
             <div v-for="(error, index) in importErrors" :key="index">
                 <p>Lỗi tại hàng <strong>{{ error.row }}</strong>:</p>
                 <ul>
@@ -144,6 +144,7 @@ export default {
             this.find = {customer_name:'',email: '', is_active: '', address:''};
             this.importErrors = [];
             this.searchCustomer();
+            
         },
         changePage(page) {
             if(page > 0 && page <= this.customers.last_page){
@@ -196,7 +197,8 @@ export default {
                 }
             }).then(response => {
                 this.importErrors = [];
-                this.searchCustomer();
+                // this.searchCustomer();
+                location.reload();
             }).catch (error => {
                 console.log('lỗi nhận được', error.response.data.errors);
                 if (error.response && error.response.data.errors) {
@@ -225,6 +227,15 @@ export default {
                 range.push(i);
             }
             return range;
+        }
+    },
+    watch: {
+        importErrors(newErrors) {
+            if (newErrors.length > 0) {
+            // Thực hiện hành động khi có lỗi mới
+            console.log('Lỗi mới:', newErrors);
+            // Bạn có thể thực hiện các hành động khác như hiện thị thông báo hoặc gửi báo cáo lỗi
+            }
         }
     }
 };

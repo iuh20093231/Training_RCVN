@@ -77,15 +77,18 @@ class CustomerController extends Controller
     }
     public function import(Request $request)
     {
-        $import = new CustomerImport;
-        Excel::import($import, $request->file('file'));
+        try {
+            $import = new CustomerImport;
+            Excel::import($import, $request->file('file'));
 
-        $failures = $import->getFailures();
-        if (!empty($failures)) {
-            return response()->json(['errors' => $failures], 422);
+            $failures = $import->getFailures();
+            if (!empty($failures)) {
+                return response()->json(['errors' => $failures], 422);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['errors' => $e->getMessage()], 422);
         }
-
-        return response()->json(['message' => 'File imported successfully']);
+        return response()->json(['message' => 'Import successful']);
     }
     public function export(Request $request)
     {
