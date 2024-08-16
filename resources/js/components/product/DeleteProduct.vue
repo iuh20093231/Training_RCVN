@@ -1,11 +1,11 @@
 <template>
     <b-modal id="confirm-delete-modal" v-model="showModal" hide-header-close centered size="md" no-close-on-esc no-close-on-backdrop>
       <template #title>
-        <h4 class="text-center text-primary fw-bold">NHẮC NHỞ</h4>
+        <h4 class="text-center text-danger fw-bold">NHẮC NHỞ</h4>
       </template>
       <div class="text-center">
         <i class="fas fa-exclamation-circle text-danger" style="font-size: 60px;"></i>
-        <p class="mt-3 text-dark fw-bold">Bạn có chắc chắn muốn xóa sản phẩm <strong>{{ productId }}</strong>?</p>
+        <p class="mt-3 text-dark fw-bold">Bạn có chắc chắn muốn xóa sản phẩm <strong class="text-danger">{{ productId }}</strong>?</p>
         <p class="text-muted mb-3">Thao tác này không thể khôi phục.</p>
       </div>
       <template #footer>
