@@ -1,7 +1,7 @@
 <template>
     <b-modal v-model="internalShow" hide-header-close>
         <template #title>
-            <h3 class="text-center"><strong>{{ isEditModel ? 'Chỉnh sửa user' : 'Thêm user' }}</strong></h3>
+            <h3 class="text-center"><strong>{{ isEditModel ? 'Chỉnh sửa người dùng' : 'Thêm người dùng' }}</strong></h3>
         </template>
         <div class="modal-body">
             <form @submit.prevent="handleOk">

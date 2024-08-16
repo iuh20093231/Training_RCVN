@@ -1,19 +1,25 @@
 <template>
-    <b-modal id="confirm-delete-modal" v-model="showModal" hide-header-close>
+    <b-modal id="confirm-delete-modal" v-model="showModal" hide-header-close centered size="md" no-close-on-esc no-close-on-backdrop>
       <template #title>
-        <h3 class="text-center"><strong>Nhắc nhở</strong></h3>
+        <h4 class="text-center text-primary fw-bold">NHẮC NHỞ</h4>
       </template>
       <div class="text-center">
-        <i class="fa fa-exclamation-triangle text-warning" style="font-size: 70px;"></i>
-        <p class="mt-2 text-danger">Bạn có chắc muốn xóa khách hàng <strong>{{ customerName }}</strong> này không?</p>
+        <i class="fas fa-exclamation-circle text-danger" style="font-size: 60px;"></i>
+        <p class="mt-3 text-dark fw-bold">Bạn có chắc chắn muốn xóa khách hàng <strong>{{ customerName }}</strong>?</p>
+        <p class="text-muted mb-3">Thao tác này không thể khôi phục.</p>
       </div>
       <template #footer>
-            <b-button variant="secondary" @click="resetModal">Hủy</b-button>
-            <b-button variant="danger" @click="confirmDelete">OKay</b-button>
+        <div class="d-flex justify-content-center">
+          <b-button variant="outline-secondary" class="px-3 py-2" @click="resetModal">Hủy</b-button>
+          <b-button variant="danger" class="px-3 py-2 ms-2" @click="confirmDelete">
+            <i class="fas fa-check me-2"></i> Xóa
+          </b-button>
+        </div>
       </template>
     </b-modal>
 </template>
 <script>
+
 import { BModal } from 'bootstrap-vue-3';
 import axios from 'axios';
 export default {
@@ -39,9 +45,10 @@ export default {
           this.showModal = false;
         },
         confirmDelete() {
-            axios.delete(`/custormer/${this.customerID}`);
-            this.showModal = false;
-            location.reload();
+            axios.delete(`/custormer/${this.customerID}`).then(response => {
+              this.showModal = false;
+              location.reload();
+            });
         }
   }
 };

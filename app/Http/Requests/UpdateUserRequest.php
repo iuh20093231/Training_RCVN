@@ -28,7 +28,7 @@ class UpdateUserRequest extends FormRequest
         ];
         if ($this->filled('password')) {
             $rules['password'] = 'min:6|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/';
-            $rules['reset_password'] = 'same:password';
+            $rules['reset_password'] = 'required|same:password';
         }
 
         return $rules;
@@ -46,6 +46,7 @@ class UpdateUserRequest extends FormRequest
             'email.unique' => 'Email đã tồn tại trong hệ thống.',
             'password.min' => 'Mật khẩu phải có ít nhất 6 ký tự.',
             'password.regex' => 'Mật khẩu không bảo mật. Phải có ít nhất một chữ hoa, một chữ thường và một số.',
+            'reset_password.required' => 'Xác nhận mật khẩu không được trống',
             'reset_password.same' => 'Mật khẩu và xác nhận mật khẩu không chính xác.'
         ];
     }
