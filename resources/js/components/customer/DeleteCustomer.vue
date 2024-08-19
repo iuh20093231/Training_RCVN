@@ -19,7 +19,6 @@
     </b-modal>
 </template>
 <script>
-
 import { BModal } from 'bootstrap-vue-3';
 import axios from 'axios';
 export default {
