@@ -21,5 +21,5 @@ COPY . /var/www/html
 RUN composer install
 RUN npm install && npm run build
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
-EXPOSE 8082
+EXPOSE 9000
 CMD ["php-fpm"]
