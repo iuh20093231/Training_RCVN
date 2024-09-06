@@ -6,7 +6,7 @@
         </div>
         <div class="col-lg-3 form-group search-name float-left pl-5">
             <label for="is_sales">Trạng thái</label>
-            <select name="is_sales" id="is_sales" v-model="search.is_sales" class="form-select form-control custom-select mt-1" @keydown.enter="searchProduct" style="border-radius: 0px;">
+            <select name="is_sales" id="is_sales" v-model="search.is_sales" @keydown.enter="searchProduct" style="border-radius: 0px;" class="form-select form-control custom-select mt-1" >
                 <option value="">Chọn trạng thái</option>
                 <option value="1">Đang bán</option>
                 <option value="0">Ngừng bán</option>
